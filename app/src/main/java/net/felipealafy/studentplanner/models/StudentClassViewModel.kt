@@ -39,20 +39,25 @@ class StudentClassViewModel(
     private val classRepository: ClassRepository,
     private val plannerRepository: PlannerRepository,
     private val subjectsRepository: SubjectRepository
-): ViewModel() {
+) : ViewModel() {
     private val plannerId: String = checkNotNull(savedStateHandle["plannerId"])
     private val _currentClassEntry = MutableStateFlow(getNewStudentClass())
 
     private val plannerFlow = flow {
         emit(plannerRepository.getPlannerById(plannerId))
     }.flowOn(Dispatchers.IO)
-
     private val _uiState: StateFlow<StudentClassUiState> = combine(
-        subjectsRepository.getAllSubjectsOfAPlanner(plannerId = plannerId),
         _currentClassEntry,
-        plannerFlow
-    ) {subjects, currentEntry, currentPlanner ->
-        val isCurrentEntryValid = currentEntry.title.isNotEmpty() && currentEntry.subjectId.isNotEmpty()
+        plannerFlow,
+        subjectsRepository.getAllSubjects(),
+    ) { currentEntry, currentPlanner,  subjects ->
+
+        currentPlanner.subjects = subjects.filter {
+            it.plannerId == plannerId
+        }.toTypedArray()
+
+        val isCurrentEntryValid =
+            currentEntry.title.isNotEmpty() && currentEntry.subjectId.isNotEmpty()
         StudentClassUiState(
             currentClassEntry = currentEntry,
             planner = currentPlanner,
@@ -91,7 +96,6 @@ class StudentClassViewModel(
         if (dateMillis == null) return
         val date = Instant.ofEpochMilli(dateMillis).atZone(ZoneOffset.UTC).toLocalDate()
         val time = LocalTime.of(hour, minute)
-        val dateTime = LocalDateTime.of(date, time)
 
         _currentClassEntry.update {
             it.copy(start = parseToDateTime(dateMillis, hour, minute))
@@ -105,7 +109,7 @@ class StudentClassViewModel(
         val dateTime = LocalDateTime.of(date, time)
 
         _currentClassEntry.update {
-            it.copy(start = dateTime)
+            it.copy(end = dateTime)
         }
     }
 

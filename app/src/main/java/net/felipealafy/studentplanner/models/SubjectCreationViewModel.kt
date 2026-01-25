@@ -54,17 +54,17 @@ class SubjectCreationViewModel(
         )
     }
 
-    private fun getCurrentDateTime(): LocalDateTime {
-        return LocalDateTime.now()
-    }
-
     private val _uiState: StateFlow<SubjectCreationUiState> =
         combine(
             _currentSubjectEntry,
+
             plannerFlow
+
         ) { currentSubjectEntry, currentPlanner ->
+
             val isEntryValid =
                 currentSubjectEntry.name.isNotEmpty() && currentSubjectEntry.plannerId.isNotEmpty()
+
             SubjectCreationUiState(
                 currentSubjectEntry = currentSubjectEntry,
                 planner = currentPlanner,
@@ -72,6 +72,7 @@ class SubjectCreationViewModel(
                 isDataLoading = false,
                 showingColorChooserDialog = false
             )
+
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),

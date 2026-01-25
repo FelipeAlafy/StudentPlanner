@@ -61,6 +61,10 @@ class PlannerModel(private val repository: PlannerRepository): ViewModel() {
         _planner.update {
             it.copy(color = color)
         }
+
+        _color.update {
+            color
+        }
     }
 
     fun onMinimumGradeToPassChanged(value: String) {
@@ -87,13 +91,12 @@ class PlannerModel(private val repository: PlannerRepository): ViewModel() {
     private fun getPlanner(): Planner =
         Planner(
             name = _planner.value.name,
-            color = _color.value,
+            color = _planner.value.color,
             minimumGradeToPass = _minimumGradeToPass.value.toFloatOrNull() ?: 70F,
             gradeDisplayStyle = _gradeStyle.value
         )
 
     suspend fun create() {
-        val planner = getPlanner()
         repository.insert(planner = getPlanner())
     }
 }

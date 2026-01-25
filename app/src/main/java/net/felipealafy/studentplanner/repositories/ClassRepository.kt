@@ -21,6 +21,12 @@ class ClassRepository(private val dao: ClassDao) {
         }
     }
 
+    fun getClassById(id: String): Flow<StudentClass> {
+        return dao.getClassById(id).map {
+            it.toDomainModel().first()
+        }
+    }
+
     fun getClassesByDateTime(start: LocalDateTime, end: LocalDateTime): Flow<List<StudentClass>> =
         dao.getClassesByDateTime(start = start, end = end).map { listTable ->
             listTable.toDomainModel()

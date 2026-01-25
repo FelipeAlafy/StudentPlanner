@@ -101,7 +101,7 @@
     <string name="title">Title</string>
     <string name="start_date_time">Calendar icon with a plus symbol</string>
     <string name="end_date_time">A calendar icon with letter V, representing checked.</string>
-    <string name="date_start">When your class start</string>
+    <string name="date_start">When your class starts.</string>
     <string name="confirm">Confirm\n</string>
     <string name="check_icon">Confirm the action.</string>
     <string name="close_icon">close the dialog.</string>
@@ -117,4 +117,7 @@
     <string name="subject_color_selection">Select theme color</string>
     <string name="subject_date_time_start">When your subject period starts</string>
     <string name="subject_date_time_end">When your subject period ends</string>
+    <string name="your_planners">Your planners</string>
+    <string name="date_end">When your class ends.</string>
+    <string name="class_period">"Period: "</string>
 </resources>

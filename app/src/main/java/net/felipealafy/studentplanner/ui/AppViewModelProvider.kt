@@ -6,11 +6,12 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import net.felipealafy.studentplanner.StudentPlannerApplication
 import net.felipealafy.studentplanner.models.DetailedPlannerViewModel
+import net.felipealafy.studentplanner.models.DetailedStudentClassViewModel
 import net.felipealafy.studentplanner.models.MainViewModel
 import net.felipealafy.studentplanner.models.PlannerModel
 import net.felipealafy.studentplanner.models.StudentClassViewModel
 import net.felipealafy.studentplanner.models.SubjectCreationViewModel
-import net.felipealafy.studentplanner.models.TodayModel
+import net.felipealafy.studentplanner.models.TodayViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
@@ -21,10 +22,11 @@ object AppViewModelProvider {
 
         initializer {
             val app = (this[APPLICATION_KEY] as StudentPlannerApplication)
-            TodayModel(
+            TodayViewModel(
                 plannerRepository = app.plannerRepository,
-                classRepository = app.classRepository
-                )
+                classRepository = app.classRepository,
+                subjectRepository = app.subjectRepository
+            )
         }
 
         initializer {
@@ -58,6 +60,15 @@ object AppViewModelProvider {
                 savedStateHandle = this.createSavedStateHandle(),
                 subjectRepository = app.subjectRepository,
                 plannerRepository = app.plannerRepository
+            )
+        }
+        
+        initializer { 
+            val app = (this[APPLICATION_KEY] as StudentPlannerApplication)
+            DetailedStudentClassViewModel(
+                savedStateHandle = this.createSavedStateHandle(),
+                classRepository = app.classRepository,
+                subjectRepository = app.subjectRepository
             )
         }
     }

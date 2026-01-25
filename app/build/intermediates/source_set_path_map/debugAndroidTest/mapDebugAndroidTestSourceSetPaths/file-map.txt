@@ -26,7 +26,7 @@ net.felipealafy.studentplanner.test.app-annotation-experimental-1.4.1-24 /home/v
 net.felipealafy.studentplanner.test.app-tracing-1.2.0-25 /home/viktor/.gradle/caches/8.13/transforms/ef6cf6eb1c53acd665c7f9c7c1704c3f/transformed/tracing-1.2.0/res
 net.felipealafy.studentplanner.test.app-activity-ktx-1.8.2-26 /home/viktor/.gradle/caches/8.13/transforms/fa6902a1ed7a5785c1c402b1d568c421/transformed/activity-ktx-1.8.2/res
 net.felipealafy.studentplanner.test.app-graphics-path-1.0.1-27 /home/viktor/.gradle/caches/8.13/transforms/faaf47ed443b6fd0287ec717dcb691f3/transformed/graphics-path-1.0.1/res
-net.felipealafy.studentplanner.test.app-androidTest-28 /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/generated/res/resValues/androidTest/debug
-net.felipealafy.studentplanner.test.app-mergeDebugAndroidTestResources-29 /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/merged.dir
-net.felipealafy.studentplanner.test.app-mergeDebugAndroidTestResources-30 /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/stripped.dir
-net.felipealafy.studentplanner.test.app-debugAndroidTest-31 /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/intermediates/merged_res/debugAndroidTest/mergeDebugAndroidTestResources
+net.felipealafy.studentplanner.test.app-androidTest-28 /home/viktor/Android/Projects/StudentPlanner/app/build/generated/res/resValues/androidTest/debug
+net.felipealafy.studentplanner.test.app-mergeDebugAndroidTestResources-29 /home/viktor/Android/Projects/StudentPlanner/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/merged.dir
+net.felipealafy.studentplanner.test.app-mergeDebugAndroidTestResources-30 /home/viktor/Android/Projects/StudentPlanner/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/stripped.dir
+net.felipealafy.studentplanner.test.app-debugAndroidTest-31 /home/viktor/Android/Projects/StudentPlanner/app/build/intermediates/merged_res/debugAndroidTest/mergeDebugAndroidTestResources
