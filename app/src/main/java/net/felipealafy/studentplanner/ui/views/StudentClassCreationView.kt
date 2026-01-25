@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
@@ -45,6 +46,7 @@ import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.models.StudentClassUiState
 import net.felipealafy.studentplanner.models.StudentClassViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
+import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
 import net.felipealafy.studentplanner.ui.theme.Black
 import net.felipealafy.studentplanner.ui.theme.DarkGray
 import net.felipealafy.studentplanner.ui.theme.LightGray
@@ -56,13 +58,18 @@ import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StudentClassCreationView(studentClassViewModel: StudentClassViewModel) {
+fun StudentClassCreationView(
+    studentClassViewModel: StudentClassViewModel,
+    onReturnAction: () -> Unit
+) {
     val uiState = studentClassViewModel.uiState.collectAsState()
     val planner = uiState.value.planner
 
     if (planner == null) {
         Box(
-            modifier = Modifier.fillMaxSize().background(Color.White), // Cor de fundo neutra
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White), // Cor de fundo neutra
             contentAlignment = Alignment.Center
         ) {
             if (uiState.value.isLoading) {
@@ -77,6 +84,17 @@ fun StudentClassCreationView(studentClassViewModel: StudentClassViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
+                navigationIcon = {
+                    IconButton(
+                        onClick = onReturnAction
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                            contentDescription = stringResource(R.string.back_to_past_view),
+                            tint = Color(planner.color.getContrastingColorForText())
+                        )
+                    }
+                },
                 title = {
                     Box(
                         modifier = Modifier.fillMaxWidth()
@@ -95,9 +113,12 @@ fun StudentClassCreationView(studentClassViewModel: StudentClassViewModel) {
         }
     ) { innerPadding ->
         Column(
-            modifier = Modifier.fillMaxSize().background(
-                color = Color(planner.color).copy(alpha = 0.7F)
-            ).padding(innerPadding),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = Color(planner.color).copy(alpha = 0.7F)
+                )
+                .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             NewClassTitle(planner = planner)
@@ -111,7 +132,12 @@ fun StudentClassCreationView(studentClassViewModel: StudentClassViewModel) {
                 color = planner.color
             )
             Spacer(modifier = Modifier.padding(top = 30.dp))
-            SelectSubjectCombobox(uiState = uiState)
+            SelectSubjectCombobox(
+                uiState = uiState,
+                onSubjectSelected = { id ->
+                    studentClassViewModel.updateAssociatedSubject(id)
+                }
+            )
 
             var startDateTime by rememberSaveable { mutableStateOf(false) }
             var endDateTime by rememberSaveable { mutableStateOf(false) }
@@ -128,7 +154,7 @@ fun StudentClassCreationView(studentClassViewModel: StudentClassViewModel) {
                     )
                 }
                 Text(
-                    text = uiState.value.currentClassEntry.start.formattedValue()
+                    text = uiState.value.currentClassEntry.start.getFormattedDateTime()
                 )
             }
 
@@ -140,15 +166,15 @@ fun StudentClassCreationView(studentClassViewModel: StudentClassViewModel) {
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.calendar_start),
-                        contentDescription = stringResource(R.string.date_start)
+                        contentDescription = stringResource(R.string.date_end)
                     )
                 }
                 Text(
-                    text = uiState.value.currentClassEntry.end.formattedValue()
+                    text = uiState.value.currentClassEntry.end.getFormattedDateTime()
                 )
             }
 
-            if(startDateTime) {
+            if (startDateTime) {
                 DateTimePickerDialog(
                     onDismissRequest = {
                         startDateTime = false
@@ -160,7 +186,7 @@ fun StudentClassCreationView(studentClassViewModel: StudentClassViewModel) {
                 )
             }
 
-            if(endDateTime) {
+            if (endDateTime) {
                 DateTimePickerDialog(
                     onDismissRequest = {
                         endDateTime = false
@@ -193,6 +219,7 @@ fun StudentClassCreationView(studentClassViewModel: StudentClassViewModel) {
             ButtonWithBackgroundColor(
                 onClick = {
                     studentClassViewModel.saveStudentClass()
+                    onReturnAction()
                 },
                 selectedColor = planner.color,
                 placeholderTextPath = R.string.create_button
@@ -249,18 +276,25 @@ fun EditableTextEntry(
 }
 
 @Composable
-fun SelectSubjectCombobox(uiState: State<StudentClassUiState>) {
+fun SelectSubjectCombobox(
+    uiState: State<StudentClassUiState>,
+    onSubjectSelected: (id: String) -> Unit
+) {
     var expanded by remember { mutableStateOf(false) }
+    val color = uiState.value.planner?.color ?: colorPallet[0][1]
     val subject = getCurrentSubject(uiState)
 
     Box(
-        modifier = Modifier.fillMaxWidth().padding(16.dp).border(
-            width = 2.dp,
-            color = DarkGray,
-            shape = RoundedCornerShape(30.dp)
-        )
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .border(
+                width = 2.dp,
+                color = DarkGray,
+                shape = RoundedCornerShape(30.dp)
+            )
     ) {
-        Row (
+        Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
@@ -277,7 +311,7 @@ fun SelectSubjectCombobox(uiState: State<StudentClassUiState>) {
             Text(
                 text = subject.name,
                 style = Typography.labelMedium,
-                color = Black,
+                color = Color(color.getContrastingColorForText()),
                 modifier = Modifier.padding(end = 5.dp)
             )
             DropdownMenu(
@@ -285,14 +319,21 @@ fun SelectSubjectCombobox(uiState: State<StudentClassUiState>) {
                 onDismissRequest = {
                     expanded = !expanded
                 },
-                containerColor = Color(uiState.value.planner?.color ?: colorPallet[0][1]),
+                containerColor = Color(color),
                 shape = RoundedCornerShape(30.dp)
             ) {
-                uiState.value.availableSubjects.forEach {
+                uiState.value.planner!!.subjects.forEach {
                     DropdownMenuItem(
-                        text = { Text(text = it.name, style = Typography.labelSmall) },
+                        text = {
+                            Text(
+                                text = it.name,
+                                style = Typography.labelSmall,
+                                color = Color(color.getContrastingColorForText())
+                            )
+                        },
                         onClick = {
-                            uiState.value.currentClassEntry.subjectId = it.id
+                            onSubjectSelected(it.id)
+                            expanded = false
                         }
                     )
                 }
@@ -304,7 +345,7 @@ fun SelectSubjectCombobox(uiState: State<StudentClassUiState>) {
 @Composable
 private fun getCurrentSubject(
     uiState: State<StudentClassUiState>,
-    ): Subject {
+): Subject {
     return if (uiState.value.currentClassEntry.subjectId.isNotEmpty()) {
         val subjects = uiState.value.availableSubjects.filter {
             it.id == uiState.value.currentClassEntry.subjectId

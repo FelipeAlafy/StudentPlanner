@@ -242,6 +242,7 @@ string call_notification_screening_text
 string check_color
 string check_icon
 string class_icon
+string class_period
 string classes
 string classes_taken
 string close
@@ -253,6 +254,7 @@ string confirm
 string congratulations
 string create_button
 string create_new_subject
+string date_end
 string date_icon
 string date_mode
 string date_start
@@ -411,6 +413,7 @@ string welcome
 string when_class_was_take
 string you_have_reached
 string you_must_work_on_this_subject
+string your_planners
 string your_subjects
 string zero_eight_time
 string zero_five_time

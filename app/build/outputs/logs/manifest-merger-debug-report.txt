@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:2:1-28:12
-INJECTED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:2:1-28:12
-INJECTED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:2:1-28:12
-INJECTED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:2:1-28:12
+ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:2:1-28:12
+INJECTED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:2:1-28:12
+INJECTED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:2:1-28:12
+INJECTED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:2:1-28:12
 MERGED from [androidx.room:room-runtime:2.6.1] /home/viktor/.gradle/caches/8.13/transforms/d24254397c7332a1091d0fe48c001bd4/transformed/room-runtime-2.6.1/AndroidManifest.xml:17:1-31:12
 MERGED from [androidx.room:room-ktx:2.6.1] /home/viktor/.gradle/caches/8.13/transforms/5fd7e788991c2b978053c66e5463b78a/transformed/room-ktx-2.6.1/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-runtime-android:2.9.6] /home/viktor/.gradle/caches/8.13/transforms/e05ee15f22065b5480ff2bac7a647605/transformed/navigation-runtime-release/AndroidManifest.xml:17:1-22:12
@@ -62,18 +62,18 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /home/viktor/.gradle/caches
 MERGED from [androidx.tracing:tracing:1.2.0] /home/viktor/.gradle/caches/8.13/transforms/ef6cf6eb1c53acd665c7f9c7c1704c3f/transformed/tracing-1.2.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] /home/viktor/.gradle/caches/8.13/transforms/debfff874cdef894936fe7615d6f1acc/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
 	package
-		INJECTED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml
+		INJECTED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml
 	android:versionName
-		INJECTED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml
+		INJECTED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml
 	xmlns:tools
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:3:5-51
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:3:5-51
 	android:versionCode
-		INJECTED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml
+		INJECTED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:2:11-69
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:2:11-69
 application
-ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:5:5-26:19
-INJECTED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:5:5-26:19
+ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:5:5-26:19
+INJECTED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:5:5-26:19
 MERGED from [androidx.room:room-runtime:2.6.1] /home/viktor/.gradle/caches/8.13/transforms/d24254397c7332a1091d0fe48c001bd4/transformed/room-runtime-2.6.1/AndroidManifest.xml:23:5-29:19
 MERGED from [androidx.room:room-runtime:2.6.1] /home/viktor/.gradle/caches/8.13/transforms/d24254397c7332a1091d0fe48c001bd4/transformed/room-runtime-2.6.1/AndroidManifest.xml:23:5-29:19
 MERGED from [androidx.compose.ui:ui-tooling-android:1.9.0] /home/viktor/.gradle/caches/8.13/transforms/ea8521a86399fd1d7410a3a33e800ddc/transformed/ui-tooling/AndroidManifest.xml:22:5-26:19
@@ -93,51 +93,51 @@ MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/viktor/.gra
 MERGED from [androidx.startup:startup-runtime:1.1.1] /home/viktor/.gradle/caches/8.13/transforms/7a7fc75cede5959cbc81cf19ac5c2895/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
 MERGED from [androidx.startup:startup-runtime:1.1.1] /home/viktor/.gradle/caches/8.13/transforms/7a7fc75cede5959cbc81cf19ac5c2895/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
 	android:extractNativeLibs
-		INJECTED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml
+		INJECTED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.15.0] /home/viktor/.gradle/caches/8.13/transforms/b4ee303e83dfc3366d2b0002c8a2c61c/transformed/core-1.15.0/AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:13:9-35
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:13:9-35
 	android:label
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:11:9-41
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:11:9-41
 	android:fullBackupContent
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:9:9-54
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:9:9-54
 	android:roundIcon
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:12:9-54
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:12:9-54
 	android:icon
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:10:9-43
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:10:9-43
 	android:allowBackup
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:7:9-35
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:7:9-35
 	android:theme
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:14:9-52
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:14:9-52
 	android:dataExtractionRules
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:8:9-65
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:8:9-65
 	android:name
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:6:9-50
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:6:9-50
 activity#net.felipealafy.studentplanner.MainActivity
-ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:15:9-25:20
+ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:15:9-25:20
 	android:label
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:18:13-45
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:18:13-45
 	android:exported
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:17:13-36
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:17:13-36
 	android:theme
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:19:13-56
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:19:13-56
 	android:name
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:16:13-41
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:16:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:20:13-24:29
+ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:20:13-24:29
 action#android.intent.action.MAIN
-ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:21:17-69
+ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:21:17-69
 	android:name
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:21:25-66
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:21:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:23:17-77
+ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:23:17-77
 	android:name
-		ADDED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:23:27-74
+		ADDED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:23:27-74
 uses-sdk
-INJECTED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml
-INJECTED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml
+INJECTED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml
+INJECTED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml
 MERGED from [androidx.room:room-runtime:2.6.1] /home/viktor/.gradle/caches/8.13/transforms/d24254397c7332a1091d0fe48c001bd4/transformed/room-runtime-2.6.1/AndroidManifest.xml:21:5-44
 MERGED from [androidx.room:room-runtime:2.6.1] /home/viktor/.gradle/caches/8.13/transforms/d24254397c7332a1091d0fe48c001bd4/transformed/room-runtime-2.6.1/AndroidManifest.xml:21:5-44
 MERGED from [androidx.room:room-ktx:2.6.1] /home/viktor/.gradle/caches/8.13/transforms/5fd7e788991c2b978053c66e5463b78a/transformed/room-ktx-2.6.1/AndroidManifest.xml:20:5-44
@@ -253,9 +253,9 @@ MERGED from [androidx.tracing:tracing:1.2.0] /home/viktor/.gradle/caches/8.13/tr
 MERGED from [androidx.interpolator:interpolator:1.0.0] /home/viktor/.gradle/caches/8.13/transforms/debfff874cdef894936fe7615d6f1acc/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.interpolator:interpolator:1.0.0] /home/viktor/.gradle/caches/8.13/transforms/debfff874cdef894936fe7615d6f1acc/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
 	android:targetSdkVersion
-		INJECTED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml
+		INJECTED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml
+		INJECTED from /home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml
 service#androidx.room.MultiInstanceInvalidationService
 ADDED from [androidx.room:room-runtime:2.6.1] /home/viktor/.gradle/caches/8.13/transforms/d24254397c7332a1091d0fe48c001bd4/transformed/room-runtime-2.6.1/AndroidManifest.xml:24:9-28:63
 	android:exported

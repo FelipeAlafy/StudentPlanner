@@ -194,6 +194,7 @@ fun GradeStyleCombobox(selectedColor: Long, onSelectItem: (GradeStyle) -> Unit) 
                 ) {
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowDown,
+                        tint = Color(selectedColor.getContrastingColorForText()),
                         contentDescription = stringResource(R.string.grade_style_combobox)
                     )
                     Spacer(Modifier.padding(start = 5.dp))
@@ -294,7 +295,7 @@ fun MinimumGradeToPassInput(text: String, onValueChange: (String) -> Unit, selec
             Text(
                 text = stringResource(R.string.minimum_grade_to_pass),
                 style = Typography.labelSmall,
-                color = DarkGray
+                color = Color(selectedColor.getContrastingColorForText())
             )
         },
         shape = RoundedCornerShape(25.dp),

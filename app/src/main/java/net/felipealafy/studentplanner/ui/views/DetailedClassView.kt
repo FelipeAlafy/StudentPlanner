@@ -17,6 +17,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -36,21 +37,56 @@ import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.datamodels.StudentClass
 import net.felipealafy.studentplanner.datamodels.Subject
+import net.felipealafy.studentplanner.models.DetailedStudentClassViewModel
 import net.felipealafy.studentplanner.ui.theme.Typography
-import net.felipealafy.studentplanner.ui.theme.colorPallet
-import java.time.LocalDateTime
-import java.util.UUID
+import androidx.compose.runtime.collectAsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailedClassView(
-    subject: Subject
+    viewModel: DetailedStudentClassViewModel,
+    onReturnAction: () -> Unit
 ) {
+    val uiState = viewModel.uiState.collectAsState().value
+    val subject = uiState.subject
+    val studentClass = uiState.classEntry
+
+    if (subject == null) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White),
+            contentAlignment = Alignment.Center
+        ) {
+            if (uiState.isLoading) {
+                CircularProgressIndicator()
+            } else {
+                Text(text = "No Subject available.")
+            }
+        }
+        return
+    }
+
+    if (studentClass == null) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White),
+            contentAlignment = Alignment.Center
+        ) {
+            if (uiState.isLoading) {
+                CircularProgressIndicator()
+            } else {
+                Text(text = "No StudentClass available.")
+            }
+        }
+        return
+    }
+
     Scaffold(
         modifier = Modifier.background(Color(subject.color)),
         topBar = {
@@ -70,7 +106,7 @@ fun DetailedClassView(
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = onReturnAction) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Default.ArrowBack,
                             contentDescription = stringResource(R.string.back_to_past_view),
@@ -99,19 +135,18 @@ fun DetailedClassView(
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {
-                ClassDate(subject = subject, classIndex = 0)
+                ClassDate(subject = subject, studentClass)
                 Spacer(modifier = Modifier.padding(top = 10.dp))
-                InnerClassLink(subject = subject, classIndex = 0)
+                InnerClassLink(subject = subject, studentClass)
                 Spacer(modifier = Modifier.padding(top = 10.dp))
-                Observation(subject = subject, classIndex = 0)
+                Observation(subject = subject, studentClass)
             }
         }
     }
 }
 
 @Composable
-fun ClassDate(subject: Subject, classIndex: Int) {
-    val scClass = subject.studentClasses[classIndex]
+fun ClassDate(subject: Subject, studentClass: StudentClass) {
     Column {
         Text(
             text = "${stringResource(R.string.when_class_was_take)}:",
@@ -124,7 +159,7 @@ fun ClassDate(subject: Subject, classIndex: Int) {
                 stringResource(
                     R.string.to
                 )
-            } ${scClass.end.formattedValue()}",
+            } ${studentClass.end.formattedValue()}",
             style = Typography.labelLarge,
             color = Color(subject.color.getContrastingColorForText())
         )
@@ -132,18 +167,17 @@ fun ClassDate(subject: Subject, classIndex: Int) {
 }
 
 @Composable
-fun InnerClassLink(subject: Subject, classIndex: Int) {
-    val scClass = subject.studentClasses[classIndex]
+fun InnerClassLink(subject: Subject, studentClass: StudentClass) {
     val annotatedLink = buildAnnotatedString {
         withLink(
             LinkAnnotation.Url(
-                url = scClass.noteTakingLink,
+                url = studentClass.noteTakingLink,
                 styles = TextLinkStyles(
                     style = SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline)
                 )
             )
         ) {
-            append("${stringResource(R.string.notetaking_text)} ${scClass.title} ")
+            append("${stringResource(R.string.notetaking_text)} ${studentClass.title} ")
         }
     }
     Row (
@@ -164,7 +198,7 @@ fun InnerClassLink(subject: Subject, classIndex: Int) {
 }
 
 @Composable
-fun Observation(subject: Subject, classIndex: Int) {
+fun Observation(subject: Subject, studentClass: StudentClass) {
 
     Card(
         colors = CardDefaults.cardColors(
@@ -178,31 +212,9 @@ fun Observation(subject: Subject, classIndex: Int) {
         modifier = Modifier.fillMaxWidth().fillMaxHeight(0.75F)
     ) {
         Text(
-            text = subject.studentClasses[classIndex].observation,
+            text = studentClass.observation,
             style = Typography.bodyMedium,
             modifier = Modifier.padding(12.dp)
         )
     }
-}
-
-@Preview
-@Composable
-fun DetailedClassPreview() {
-    val subject = Subject(
-        plannerId = "0",
-        name = "Orientação a objetos",
-        color = colorPallet[2][3],
-        start = LocalDateTime.now(),
-        end = LocalDateTime.now()
-    )
-    subject.studentClasses += StudentClass(
-        id = UUID.randomUUID().toString(),
-        subjectId = subject.id,
-        title = "Aula 1",
-        start = LocalDateTime.now(),
-        end = LocalDateTime.now(),
-        noteTakingLink = "https://felipealafy.net",
-        observation = "Olá Mundo. Eu me chamo Felipe Alafy."
-    )
-    DetailedClassView(subject = subject)
 }

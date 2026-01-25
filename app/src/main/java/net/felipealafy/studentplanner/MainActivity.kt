@@ -12,13 +12,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import net.felipealafy.studentplanner.models.DetailedPlannerViewModel
+import net.felipealafy.studentplanner.models.DetailedStudentClassViewModel
 import net.felipealafy.studentplanner.models.MainViewModel
 import net.felipealafy.studentplanner.models.PlannerModel
 import net.felipealafy.studentplanner.models.StudentClassViewModel
 import net.felipealafy.studentplanner.models.SubjectCreationViewModel
-import net.felipealafy.studentplanner.models.TodayModel
+import net.felipealafy.studentplanner.models.TodayViewModel
 import net.felipealafy.studentplanner.ui.AppViewModelProvider
 import net.felipealafy.studentplanner.ui.theme.StudentPlannerTheme
+import net.felipealafy.studentplanner.ui.views.DetailedClassView
 import net.felipealafy.studentplanner.ui.views.DetailedPlannerView
 import net.felipealafy.studentplanner.ui.views.PlannerCreationView
 import net.felipealafy.studentplanner.ui.views.StudentClassCreationView
@@ -63,12 +65,12 @@ class MainActivity : ComponentActivity() {
                    }
                    composable(route = StudentPlannerViews.TodayView.name) {
 
-                       val todayViewModel: TodayModel =
+                       val todayViewModel: TodayViewModel =
                            viewModel(factory = AppViewModelProvider.Factory)
                        TodayView(
                            viewModel = todayViewModel,
-                           onPlannerClick = { plannerId ->
-                               navController.navigate("${StudentPlannerViews.DetailedPlannerView.name}/$plannerId")
+                           onStudentClassClicked = { subjectId, studentClassId ->
+                               navController.navigate("${StudentPlannerViews.DetailedClassView.name}/$subjectId/$studentClassId")
                            },
                            onCreatePlannerClicked = {
                                navController.navigate(StudentPlannerViews.SetupView.name)
@@ -101,7 +103,7 @@ class MainActivity : ComponentActivity() {
                        arguments = listOf(navArgument("plannerId") { type = NavType.StringType })
                    ) {
                        val viewModel: StudentClassViewModel = viewModel(factory = AppViewModelProvider.Factory)
-                       StudentClassCreationView(studentClassViewModel = viewModel)
+                       StudentClassCreationView(studentClassViewModel = viewModel, onReturnAction = {navController.navigateUp()})
                    }
 
                    composable (
@@ -110,6 +112,16 @@ class MainActivity : ComponentActivity() {
                    ) {
                        val viewModel: SubjectCreationViewModel = viewModel(factory = AppViewModelProvider.Factory)
                        SubjectCreationView(viewModel, { navController.navigateUp() })
+                   }
+
+                   composable (
+                       route = "${StudentPlannerViews.DetailedClassView.name}/{subjectId}/{studentClassId}",
+                       arguments = listOf(navArgument("subjectId") { type = NavType.StringType },
+                           navArgument("studentClassId") { type = NavType.StringType }
+                       )
+                   ) {
+                       val viewModel: DetailedStudentClassViewModel = viewModel(factory = AppViewModelProvider.Factory)
+                       DetailedClassView(viewModel, onReturnAction = { navController.navigateUp() })
                    }
                }
            }

@@ -134,6 +134,7 @@
     <string name="check_color">This is the current selected color</string>
     <string name="check_icon">Confirm the action.</string>
     <string name="class_icon">An icon that represents a document page full of text.</string>
+    <string name="class_period">"Period: "</string>
     <string name="classes">classes</string>
     <string name="classes_taken">You have taken</string>
     <string name="close">Cancel this action.</string>
@@ -145,9 +146,10 @@
     <string name="congratulations">You nailed it!</string>
     <string name="create_button">Create</string>
     <string name="create_new_subject">Let\'s create a new subject</string>
+    <string name="date_end">When your class ends.</string>
     <string name="date_icon">A calendar icon</string>
     <string name="date_mode">Date Selection Mode</string>
-    <string name="date_start">When your class start</string>
+    <string name="date_start">When your class starts.</string>
     <string name="default_error_message">"Invalid input"</string>
     <string name="default_popup_window_title" ns1:ignore="ExtraTranslation">"Pop-Up Window"</string>
     <string name="delete">click here to delete this item.</string>
@@ -307,6 +309,7 @@
     <string name="when_class_was_take">This class was held in</string>
     <string name="you_have_reached">You have reached</string>
     <string name="you_must_work_on_this_subject">You have to work on this subject</string>
+    <string name="your_planners">Your planners</string>
     <string name="your_subjects">Your subjects</string>
     <string name="zero_eight_time">08:00</string>
     <string name="zero_five_time">05:00</string>

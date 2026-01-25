@@ -3,24 +3,24 @@
 3    package="net.felipealafy.studentplanner.test" >
 4
 5    <uses-sdk
-5-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest12195902595927376342.xml:5:5-74
+5-->/home/viktor/Android/Projects/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest6426439374100991450.xml:5:5-74
 6        android:minSdkVersion="26"
-6-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest12195902595927376342.xml:5:15-41
+6-->/home/viktor/Android/Projects/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest6426439374100991450.xml:5:15-41
 7        android:targetSdkVersion="36" />
-7-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest12195902595927376342.xml:5:42-71
+7-->/home/viktor/Android/Projects/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest6426439374100991450.xml:5:42-71
 8
 9    <instrumentation
-9-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest12195902595927376342.xml:11:5-15:80
+9-->/home/viktor/Android/Projects/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest6426439374100991450.xml:11:5-15:80
 10        android:name="androidx.test.runner.AndroidJUnitRunner"
-10-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest12195902595927376342.xml:11:22-76
+10-->/home/viktor/Android/Projects/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest6426439374100991450.xml:11:22-76
 11        android:functionalTest="false"
-11-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest12195902595927376342.xml:14:22-52
+11-->/home/viktor/Android/Projects/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest6426439374100991450.xml:14:22-52
 12        android:handleProfiling="false"
-12-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest12195902595927376342.xml:13:22-53
+12-->/home/viktor/Android/Projects/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest6426439374100991450.xml:13:22-53
 13        android:label="Tests for net.felipealafy.studentplanner"
-13-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest12195902595927376342.xml:15:22-78
+13-->/home/viktor/Android/Projects/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest6426439374100991450.xml:15:22-78
 14        android:targetPackage="net.felipealafy.studentplanner" />
-14-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest12195902595927376342.xml:12:22-76
+14-->/home/viktor/Android/Projects/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest6426439374100991450.xml:12:22-76
 15
 16    <uses-permission android:name="android.permission.REORDER_TASKS" />
 16-->[androidx.test:core:1.5.0] /home/viktor/.gradle/caches/8.13/transforms/3b262dc0ef626e8e2438a4a5d6c1de0a/transformed/core-1.5.0/AndroidManifest.xml:24:5-72
@@ -40,12 +40,12 @@
 22    </queries>
 23
 24    <application
-24-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest12195902595927376342.xml:7:5-9:19
+24-->/home/viktor/Android/Projects/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest6426439374100991450.xml:7:5-9:19
 25        android:debuggable="true"
 26        android:extractNativeLibs="false" >
 27        <uses-library android:name="android.test.runner" />
-27-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest12195902595927376342.xml:8:9-60
-27-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest12195902595927376342.xml:8:23-57
+27-->/home/viktor/Android/Projects/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest6426439374100991450.xml:8:9-60
+27-->/home/viktor/Android/Projects/StudentPlanner/app/build/intermediates/tmp/manifest/androidTest/debug/tempFile1ProcessTestManifest6426439374100991450.xml:8:23-57
 28
 29        <activity
 29-->[androidx.test:core:1.5.0] /home/viktor/.gradle/caches/8.13/transforms/3b262dc0ef626e8e2438a4a5d6c1de0a/transformed/core-1.5.0/AndroidManifest.xml:27:9-34:20

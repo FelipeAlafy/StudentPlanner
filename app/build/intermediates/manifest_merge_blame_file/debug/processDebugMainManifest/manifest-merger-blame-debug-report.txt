@@ -20,49 +20,49 @@
 15-->[androidx.core:core:1.15.0] /home/viktor/.gradle/caches/8.13/transforms/b4ee303e83dfc3366d2b0002c8a2c61c/transformed/core-1.15.0/AndroidManifest.xml:26:22-94
 16
 17    <application
-17-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:5:5-26:19
+17-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:5:5-26:19
 18        android:name="net.felipealafy.studentplanner.StudentPlannerApplication"
-18-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:6:9-50
+18-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:6:9-50
 19        android:allowBackup="true"
-19-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:7:9-35
+19-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:7:9-35
 20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 20-->[androidx.core:core:1.15.0] /home/viktor/.gradle/caches/8.13/transforms/b4ee303e83dfc3366d2b0002c8a2c61c/transformed/core-1.15.0/AndroidManifest.xml:28:18-86
 21        android:dataExtractionRules="@xml/data_extraction_rules"
-21-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:8:9-65
+21-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:8:9-65
 22        android:debuggable="true"
 23        android:extractNativeLibs="false"
 24        android:fullBackupContent="@xml/backup_rules"
-24-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:9:9-54
+24-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:9:9-54
 25        android:icon="@mipmap/ic_launcher"
-25-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:10:9-43
+25-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:10:9-43
 26        android:label="@string/app_name"
-26-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:11:9-41
+26-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:11:9-41
 27        android:roundIcon="@mipmap/ic_launcher_round"
-27-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:12:9-54
+27-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:12:9-54
 28        android:supportsRtl="true"
-28-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:13:9-35
+28-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:13:9-35
 29        android:testOnly="true"
 30        android:theme="@style/Theme.StudentPlanner" >
-30-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:14:9-52
+30-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:14:9-52
 31        <activity
-31-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:15:9-25:20
+31-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:15:9-25:20
 32            android:name="net.felipealafy.studentplanner.MainActivity"
-32-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:16:13-41
+32-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:16:13-41
 33            android:exported="true"
-33-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:17:13-36
+33-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:17:13-36
 34            android:label="@string/app_name"
-34-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:18:13-45
+34-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:18:13-45
 35            android:theme="@style/Theme.StudentPlanner" >
-35-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:19:13-56
+35-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:19:13-56
 36            <intent-filter>
-36-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:20:13-24:29
+36-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:20:13-24:29
 37                <action android:name="android.intent.action.MAIN" />
-37-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:21:17-69
-37-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:21:25-66
+37-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:21:17-69
+37-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:21:25-66
 38
 39                <category android:name="android.intent.category.LAUNCHER" />
-39-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:23:17-77
-39-->/home/viktor/Documentos/Android/StudentPlanner/StudentPlanner/app/src/main/AndroidManifest.xml:23:27-74
+39-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:23:17-77
+39-->/home/viktor/Android/Projects/StudentPlanner/app/src/main/AndroidManifest.xml:23:27-74
 40            </intent-filter>
 41        </activity>
 42
