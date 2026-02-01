@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -28,30 +29,39 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import net.felipealafy.studentplanner.R
+import net.felipealafy.studentplanner.datamodels.GradeAToF
+import net.felipealafy.studentplanner.datamodels.GradeAToFWithE
 import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.Planner
 import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.datamodels.getResourceLocation
+import net.felipealafy.studentplanner.models.StudentClassUiState
 import net.felipealafy.studentplanner.ui.theme.Black
 import net.felipealafy.studentplanner.ui.theme.DarkGray
 import net.felipealafy.studentplanner.ui.theme.LightGray
 import net.felipealafy.studentplanner.ui.theme.Red
 import net.felipealafy.studentplanner.ui.theme.Transparent
 import net.felipealafy.studentplanner.ui.theme.Typography
+import net.felipealafy.studentplanner.ui.theme.bluePallet
 import net.felipealafy.studentplanner.ui.theme.colorPallet
+import java.time.LocalDateTime
 
 
 @Composable
@@ -218,7 +228,8 @@ fun GradeStyleCombobox(selectedColor: Long, onSelectItem: (GradeStyle) -> Unit) 
                         Text(
                             text = stringResource(GradeStyle.FROM_ZERO_TO_ONE_HUNDRED.getResourceLocation()),
                             color = Color(selectedColor.getContrastingColorForText())
-                        ) },
+                        )
+                    },
                     onClick = {
                         selectedItem = GradeStyle.FROM_ZERO_TO_ONE_HUNDRED
                         onSelectItem(GradeStyle.FROM_ZERO_TO_ONE_HUNDRED)
@@ -284,8 +295,8 @@ fun MinimumGradeToPassInput(text: String, onValueChange: (String) -> Unit, selec
             focusedContainerColor = LightGray,
             disabledContainerColor = LightGray,
             errorContainerColor = Red,
-            unfocusedTextColor = DarkGray,
-            focusedTextColor = DarkGray,
+            unfocusedTextColor = Color(selectedColor.getContrastingColorForText()),
+            focusedTextColor = Color(selectedColor.getContrastingColorForText()),
             errorTextColor = Red,
             focusedLabelColor = DarkGray,
             focusedBorderColor = Color(selectedColor),
@@ -301,6 +312,386 @@ fun MinimumGradeToPassInput(text: String, onValueChange: (String) -> Unit, selec
         shape = RoundedCornerShape(25.dp),
     )
 }
+
+@Composable
+fun GradeInputFromZeroToOneHundred(
+    text: String,
+    onValueChange: (String) -> Unit,
+    onValidate: () -> Unit,
+    invalidDigit: Boolean,
+    selectedColor: Long
+) {
+    OutlinedTextField(
+        onValueChange = onValueChange,
+        value = text,
+        textStyle = Typography.bodyMedium,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 10.dp, end = 10.dp)
+            .onFocusChanged {
+                if (!it.isFocused) {
+                    onValidate()
+                }
+            },
+        isError = invalidDigit,
+        singleLine = true,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = LightGray,
+            disabledContainerColor = LightGray,
+            unfocusedTextColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
+            focusedTextColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
+            errorTextColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
+            focusedLabelColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
+            focusedBorderColor = Color(selectedColor),
+            focusedPlaceholderColor = LightGray,
+        ),
+        label = {
+            Text(
+                text = stringResource(R.string.insert_grade_value),
+                style = Typography.labelSmall,
+                color = Color(selectedColor.getContrastingColorForText())
+            )
+        },
+        shape = RoundedCornerShape(25.dp),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+    )
+}
+
+@Composable
+fun GradeInputFromZeroToTen(
+    text: String,
+    onValueChange: (String) -> Unit,
+    onValidate: () -> Unit,
+    invalidDigit: Boolean,
+    selectedColor: Long
+) {
+    OutlinedTextField(
+        onValueChange = onValueChange,
+        value = text,
+        isError = invalidDigit,
+        textStyle = Typography.bodyMedium,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 10.dp, end = 10.dp)
+            .onFocusChanged {
+                if (!it.isFocused) {
+                    onValidate()
+                }
+            },
+        singleLine = true,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = LightGray,
+            disabledContainerColor = LightGray,
+            unfocusedTextColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
+            focusedTextColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
+            errorTextColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
+            focusedLabelColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
+            focusedBorderColor = Color(selectedColor),
+            focusedPlaceholderColor = LightGray,
+        ),
+        label = {
+            Text(
+                text = stringResource(R.string.insert_grade_value),
+                style = Typography.labelSmall,
+                color = Color(selectedColor.getContrastingColorForText())
+            )
+        },
+        shape = RoundedCornerShape(25.dp),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+    )
+}
+
+@Composable
+fun GradeWeightInput(text: String, onValueChange: (String) -> Unit, onValidate: () -> Unit, invalidDigit: Boolean, selectedColor: Long) {
+    OutlinedTextField(
+        onValueChange = onValueChange,
+        value = text,
+        textStyle = Typography.bodyMedium,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 10.dp, end = 10.dp)
+            .onFocusChanged {
+                if (!it.isFocused) {
+                    onValidate()
+                }
+            },
+        singleLine = true,
+        isError = invalidDigit,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = LightGray,
+            disabledContainerColor = LightGray,
+            unfocusedTextColor = Color(selectedColor.getContrastingColorForText()),
+            focusedTextColor = Color(selectedColor.getContrastingColorForText()),
+            errorTextColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
+            focusedLabelColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
+            focusedBorderColor = Color(selectedColor),
+            focusedPlaceholderColor = LightGray,
+        ),
+        label = {
+            Text(
+                text = stringResource(R.string.insert_grade_weight),
+                style = Typography.labelSmall,
+                color = Color(selectedColor.getContrastingColorForText())
+            )
+        },
+        shape = RoundedCornerShape(25.dp),
+    )
+}
+
+@Composable
+fun GradeInputFromAToF(selectedColor: Long, onSelectItem: (GradeAToF) -> Unit) {
+    val textColor =
+        Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText())
+    var expanded by remember { mutableStateOf(false) }
+    Box(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+            .border(
+                width = 2.dp,
+                color = DarkGray,
+                shape = RoundedCornerShape(30.dp)
+            ),
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            var selectedItem by remember {
+                mutableStateOf(
+                    GradeAToF.C
+                )
+            }
+            val textToDisplay = selectedItem.name
+            IconButton(
+                { expanded = !expanded },
+            ) {
+                Spacer(Modifier.padding(start = 8.dp))
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowDown,
+                    tint = textColor,
+                    contentDescription = stringResource(R.string.grade_style_combobox)
+                )
+            }
+
+            Spacer(Modifier.padding(start = 10.dp))
+
+            Text(
+                text = textToDisplay,
+                style = Typography.labelMedium,
+                color = textColor,
+            )
+
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                containerColor = Color(selectedColor),
+                shape = RoundedCornerShape(30.dp)
+            ) {
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = GradeAToF.A.name,
+                            color = textColor
+                        )
+                    },
+                    onClick = {
+                        selectedItem = GradeAToF.A
+                        onSelectItem(GradeAToF.A)
+                        expanded = false
+                    }
+                )
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = GradeAToF.B.name,
+                            color = textColor
+                        )
+                    },
+                    onClick = {
+                        selectedItem = GradeAToF.B
+                        onSelectItem(GradeAToF.B)
+                        expanded = false
+                    }
+                )
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = GradeAToF.C.name,
+                            color = textColor
+                        )
+                    },
+                    onClick = {
+                        selectedItem = GradeAToF.C
+                        onSelectItem(GradeAToF.C)
+                        expanded = false
+                    }
+                )
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = GradeAToF.D.name,
+                            color = textColor
+                        )
+                    },
+                    onClick = {
+                        selectedItem = GradeAToF.D
+                        onSelectItem(GradeAToF.D)
+                        expanded = false
+                    }
+                )
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = GradeAToF.F.name,
+                            color = textColor
+                        )
+                    },
+                    onClick = {
+                        selectedItem = GradeAToF.F
+                        onSelectItem(GradeAToF.F)
+                        expanded = false
+                    }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun GradeInputFromAToFWithE(selectedColor: Long, onSelectItem: (GradeAToFWithE) -> Unit) {
+    val textColor =
+        Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText())
+    var expanded by remember { mutableStateOf(false) }
+    Box(
+        modifier = Modifier
+            .padding(16.dp)
+            .border(
+                width = 30.dp,
+                color = Color(selectedColor).copy(alpha = 0.8F),
+                shape = RoundedCornerShape(30.dp)
+            ),
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(3.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            var selectedItem by remember {
+                mutableStateOf(
+                    GradeAToFWithE.E
+                )
+            }
+            val textToDisplay = selectedItem.name
+            IconButton(
+                { expanded = !expanded },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowDown,
+                        tint = textColor,
+                        contentDescription = stringResource(R.string.grade_style_combobox)
+                    )
+                    Spacer(Modifier.padding(start = 5.dp))
+                    Text(
+                        text = textToDisplay,
+                        style = Typography.labelMedium,
+                        color = textColor,
+                        modifier = Modifier.padding(end = 5.dp)
+                    )
+                }
+            }
+
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                containerColor = Color(selectedColor),
+                shape = RoundedCornerShape(30.dp)
+            ) {
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = GradeAToFWithE.A.name,
+                            color = textColor
+                        )
+                    },
+                    onClick = {
+                        selectedItem = GradeAToFWithE.A
+                        onSelectItem(GradeAToFWithE.A)
+                        expanded = false
+                    }
+                )
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = GradeAToFWithE.B.name,
+                            color = textColor
+                        )
+                    },
+                    onClick = {
+                        selectedItem = GradeAToFWithE.B
+                        onSelectItem(GradeAToFWithE.B)
+                        expanded = false
+                    }
+                )
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = GradeAToF.C.name,
+                            color = textColor
+                        )
+                    },
+                    onClick = {
+                        selectedItem = GradeAToFWithE.C
+                        onSelectItem(GradeAToFWithE.C)
+                        expanded = false
+                    }
+                )
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = GradeAToFWithE.D.name,
+                            color = textColor
+                        )
+                    },
+                    onClick = {
+                        selectedItem = GradeAToFWithE.D
+                        onSelectItem(GradeAToFWithE.D)
+                        expanded = false
+                    }
+                )
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = GradeAToFWithE.E.name,
+                            color = textColor
+                        )
+                    },
+                    onClick = {
+                        selectedItem = GradeAToFWithE.E
+                        onSelectItem(GradeAToFWithE.E)
+                        expanded = false
+                    }
+                )
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = GradeAToFWithE.F.name,
+                            color = textColor
+                        )
+                    },
+                    onClick = {
+                        selectedItem = GradeAToFWithE.F
+                        onSelectItem(GradeAToFWithE.F)
+                        expanded = false
+                    }
+                )
+            }
+        }
+    }
+}
+
 
 @Composable
 fun TextInputWithColor(
@@ -392,6 +783,97 @@ fun AverageGrade(
                     " ${displayStyle.getValueInDisplayStyleForAverage(average = subject.exams.getExamsAverage())}",
             style = Typography.labelLarge,
             color = Color(subject.color.getContrastingColorForText())
+        )
+    }
+}
+
+@Composable
+fun SelectSubjectCombobox(
+    subjectId: String,
+    subjects: List<Subject>,
+    selectedColor: Long,
+    onSubjectSelected: (id: String) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+    val subject = subjects.first { it.id == subjectId }
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .border(
+                width = 2.dp,
+                color = DarkGray,
+                shape = RoundedCornerShape(30.dp)
+            )
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(
+                onClick = {
+                    expanded = true
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowDown,
+                    contentDescription = stringResource(R.string.select_subject)
+                )
+            }
+            Spacer(Modifier.padding(start = 5.dp))
+            Text(
+                text = subject.name,
+                style = Typography.labelMedium,
+                color = Color(selectedColor.getContrastingColorForText()),
+                modifier = Modifier.padding(end = 5.dp)
+            )
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = {
+                    expanded = !expanded
+                },
+                containerColor = Color(selectedColor),
+                shape = RoundedCornerShape(30.dp)
+            ) {
+                subjects.forEach {
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = it.name,
+                                style = Typography.labelSmall,
+                                color = Color(selectedColor.getContrastingColorForText())
+                            )
+                        },
+                        onClick = {
+                            onSubjectSelected(it.id)
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+    }
+}
+
+
+//Revalidate if this function should exists.
+@Composable
+private fun getCurrentSubject(
+    uiState: State<StudentClassUiState>,
+): Subject {
+    return if (uiState.value.currentClassEntry.subjectId.isNotEmpty()) {
+        val subjects = uiState.value.availableSubjects.filter {
+            it.id == uiState.value.currentClassEntry.subjectId
+        }
+        subjects.first()
+    } else {
+        Subject(
+            name = stringResource(R.string.select_a_subject),
+            id = "",
+            plannerId = "",
+            color = bluePallet[0],
+            start = LocalDateTime.now(),
+            end = LocalDateTime.now(),
         )
     }
 }

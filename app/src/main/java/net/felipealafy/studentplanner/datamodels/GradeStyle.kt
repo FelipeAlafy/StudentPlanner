@@ -9,6 +9,23 @@ enum class GradeStyle {
     FROM_A_TO_F_WITH_E
 }
 
+enum class GradeAToF {
+    A,
+    B,
+    C,
+    D,
+    F
+}
+
+enum class GradeAToFWithE {
+    A,
+    B,
+    C,
+    D,
+    E,
+    F
+}
+
 fun GradeStyle.getResourceLocation(): Int {
     return when (this) {
         GradeStyle.FROM_ZERO_TO_ONE_HUNDRED -> R.string.from_zero_to_one_hundred

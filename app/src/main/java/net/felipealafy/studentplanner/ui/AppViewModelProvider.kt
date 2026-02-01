@@ -5,8 +5,10 @@ import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import net.felipealafy.studentplanner.StudentPlannerApplication
+import net.felipealafy.studentplanner.models.DetailedExamViewModel
 import net.felipealafy.studentplanner.models.DetailedPlannerViewModel
 import net.felipealafy.studentplanner.models.DetailedStudentClassViewModel
+import net.felipealafy.studentplanner.models.ExamCreationViewModel
 import net.felipealafy.studentplanner.models.MainViewModel
 import net.felipealafy.studentplanner.models.PlannerModel
 import net.felipealafy.studentplanner.models.StudentClassViewModel
@@ -25,7 +27,8 @@ object AppViewModelProvider {
             TodayViewModel(
                 plannerRepository = app.plannerRepository,
                 classRepository = app.classRepository,
-                subjectRepository = app.subjectRepository
+                subjectRepository = app.subjectRepository,
+                examRepository = app.examRepository
             )
         }
 
@@ -69,6 +72,26 @@ object AppViewModelProvider {
                 savedStateHandle = this.createSavedStateHandle(),
                 classRepository = app.classRepository,
                 subjectRepository = app.subjectRepository
+            )
+        }
+
+        initializer {
+            val app = (this[APPLICATION_KEY] as StudentPlannerApplication)
+            ExamCreationViewModel(
+                savedStateHandle = this.createSavedStateHandle(),
+                plannerRepository = app.plannerRepository,
+                subjectRepository = app.subjectRepository,
+                examRepository = app.examRepository,
+            )
+        }
+
+        initializer {
+            val app = (this[APPLICATION_KEY] as StudentPlannerApplication)
+            DetailedExamViewModel(
+                savedStateHandler = this.createSavedStateHandle(),
+                plannerRepository = app.plannerRepository,
+                subjectRepository = app.subjectRepository,
+                examRepository = app.examRepository
             )
         }
     }

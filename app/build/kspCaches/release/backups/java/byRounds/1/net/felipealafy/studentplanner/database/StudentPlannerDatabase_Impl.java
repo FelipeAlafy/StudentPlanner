@@ -44,9 +44,9 @@ public final class StudentPlannerDatabase_Impl extends StudentPlannerDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `planner` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `color` INTEGER NOT NULL, `minimumGradeToPass` REAL NOT NULL, `gradeDisplayStyle` TEXT NOT NULL, PRIMARY KEY(`id`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `subject` (`id` TEXT NOT NULL, `plannerId` TEXT NOT NULL, `name` TEXT NOT NULL, `color` INTEGER NOT NULL, `start` TEXT NOT NULL, `end` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`plannerId`) REFERENCES `planner`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
         db.execSQL("CREATE TABLE IF NOT EXISTS `class` (`id` TEXT NOT NULL, `subjectId` TEXT NOT NULL, `title` TEXT NOT NULL, `start` TEXT NOT NULL, `end` TEXT NOT NULL, `noteTakingLink` TEXT NOT NULL, `observation` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`subjectId`) REFERENCES `subject`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `exam` (`id` TEXT NOT NULL, `subjectId` TEXT NOT NULL, `name` TEXT NOT NULL, `grade` REAL NOT NULL, `gradeWeight` INTEGER NOT NULL, `start` TEXT NOT NULL, `end` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`subjectId`) REFERENCES `subject`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `exam` (`id` TEXT NOT NULL, `subjectId` TEXT NOT NULL, `name` TEXT NOT NULL, `grade` REAL NOT NULL, `gradeWeight` REAL NOT NULL, `start` TEXT NOT NULL, `end` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`subjectId`) REFERENCES `subject`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0514a1a60a7340d5fc388743e251e227')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4d0a44af4168a3c8a57b65b10cad8ba9')");
       }
 
       @Override
@@ -154,7 +154,7 @@ public final class StudentPlannerDatabase_Impl extends StudentPlannerDatabase {
         _columnsExam.put("subjectId", new TableInfo.Column("subjectId", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsExam.put("name", new TableInfo.Column("name", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsExam.put("grade", new TableInfo.Column("grade", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsExam.put("gradeWeight", new TableInfo.Column("gradeWeight", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsExam.put("gradeWeight", new TableInfo.Column("gradeWeight", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsExam.put("start", new TableInfo.Column("start", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsExam.put("end", new TableInfo.Column("end", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysExam = new HashSet<TableInfo.ForeignKey>(1);
@@ -169,7 +169,7 @@ public final class StudentPlannerDatabase_Impl extends StudentPlannerDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "0514a1a60a7340d5fc388743e251e227", "58eb338774f81ad16697eee437f7a685");
+    }, "4d0a44af4168a3c8a57b65b10cad8ba9", "be4bb2b2d150795218324cb86c6b0cc1");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;

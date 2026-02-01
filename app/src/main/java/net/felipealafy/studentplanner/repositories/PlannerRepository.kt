@@ -1,6 +1,7 @@
 package net.felipealafy.studentplanner.repositories
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import net.felipealafy.studentplanner.database.PlannerDao
 import net.felipealafy.studentplanner.datamodels.Planner
@@ -13,7 +14,8 @@ class PlannerRepository(private val dao: PlannerDao) {
         return dao.getAllPlanners().map { it.toDomainModel() }
     }
 
-    suspend fun getPlannerById(plannerId: String): Planner {
+
+    fun getPlannerById(plannerId: String): Planner {
         return dao.getPlanner(plannerId = plannerId).toDomainModel()
     }
 

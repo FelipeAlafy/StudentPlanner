@@ -133,10 +133,12 @@ fun StudentClassCreationView(
             )
             Spacer(modifier = Modifier.padding(top = 30.dp))
             SelectSubjectCombobox(
-                uiState = uiState,
                 onSubjectSelected = { id ->
                     studentClassViewModel.updateAssociatedSubject(id)
-                }
+                },
+                subjectId = planner.subjects.first().id,
+                subjects = planner.subjects.toList(),
+                selectedColor = planner.color
             )
 
             var startDateTime by rememberSaveable { mutableStateOf(false) }
@@ -273,73 +275,6 @@ fun EditableTextEntry(
         },
         shape = RoundedCornerShape(25.dp),
     )
-}
-
-@Composable
-fun SelectSubjectCombobox(
-    uiState: State<StudentClassUiState>,
-    onSubjectSelected: (id: String) -> Unit
-) {
-    var expanded by remember { mutableStateOf(false) }
-    val color = uiState.value.planner?.color ?: colorPallet[0][1]
-    val subject = getCurrentSubject(uiState)
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .border(
-                width = 2.dp,
-                color = DarkGray,
-                shape = RoundedCornerShape(30.dp)
-            )
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(
-                onClick = {
-                    expanded = true
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowDown,
-                    contentDescription = stringResource(R.string.select_subject)
-                )
-            }
-            Spacer(Modifier.padding(start = 5.dp))
-            Text(
-                text = subject.name,
-                style = Typography.labelMedium,
-                color = Color(color.getContrastingColorForText()),
-                modifier = Modifier.padding(end = 5.dp)
-            )
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = {
-                    expanded = !expanded
-                },
-                containerColor = Color(color),
-                shape = RoundedCornerShape(30.dp)
-            ) {
-                uiState.value.planner!!.subjects.forEach {
-                    DropdownMenuItem(
-                        text = {
-                            Text(
-                                text = it.name,
-                                style = Typography.labelSmall,
-                                color = Color(color.getContrastingColorForText())
-                            )
-                        },
-                        onClick = {
-                            onSubjectSelected(it.id)
-                            expanded = false
-                        }
-                    )
-                }
-            }
-        }
-    }
 }
 
 @Composable

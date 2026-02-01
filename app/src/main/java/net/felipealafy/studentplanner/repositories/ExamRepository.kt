@@ -1,11 +1,13 @@
 package net.felipealafy.studentplanner.repositories
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import net.felipealafy.studentplanner.database.ExamDao
 import net.felipealafy.studentplanner.datamodels.Exam
 import net.felipealafy.studentplanner.mappers.toDatabaseEntry
 import net.felipealafy.studentplanner.mappers.toDomainModel
+import java.time.LocalDateTime
 
 class ExamRepository(private val dao : ExamDao) {
     fun getExams(subjectId: String): Flow<List<Exam>> {
@@ -23,5 +25,13 @@ class ExamRepository(private val dao : ExamDao) {
 
     suspend fun delete(exam: Exam) {
         dao.delete(examTable = exam.toDatabaseEntry())
+    }
+
+    fun getExamsByDateTime(todayStart: LocalDateTime, todayEnd: LocalDateTime): Flow<List<Exam>> {
+        return dao.getExamsByDateTime(todayStart = todayStart, todayEnd = todayEnd).map { it.toDomainModel() }
+    }
+
+    fun getExamById(id: String): Flow<Exam> {
+        return dao.getExamById(id = id).map { it.toDomainModel().first() }
     }
 }
