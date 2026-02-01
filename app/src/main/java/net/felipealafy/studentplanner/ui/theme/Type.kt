@@ -22,14 +22,14 @@ val Typography = Typography(
         fontFamily = mozillaFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 48.sp,
-        lineHeight = 45.sp,
+        lineHeight = 64.sp,
         letterSpacing = 0.5.sp
     ),
     headlineLarge = TextStyle(
         fontFamily = mozillaFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 38.sp,
-        lineHeight = 24.sp,
+        lineHeight = 48.sp,
         letterSpacing = 0.5.sp
     ),
     bodyLarge = TextStyle(

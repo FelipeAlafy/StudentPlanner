@@ -57,7 +57,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import net.felipealafy.studentplanner.R
+import net.felipealafy.studentplanner.datamodels.Exam
+import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.StudentClass
+import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.models.TodayViewModel
 import net.felipealafy.studentplanner.models.TodayUiState
 import net.felipealafy.studentplanner.ui.theme.Transparent
@@ -73,12 +76,12 @@ import java.time.format.DateTimeFormatter
 fun TodayView(
     viewModel: TodayViewModel,
     onStudentClassClicked: (String, String) -> Unit,
+    onExamClicked: (String, String, String) -> Unit,
     onCreatePlannerClicked: () -> Unit,
     onCreateSubjectClicked: (plannerId: String) -> Unit,
     onCreateClassClicked: (plannerId: String) -> Unit,
-    onCreateExamClicked: () -> Unit
+    onCreateExamClicked: (plannerId: String) -> Unit
 ) {
-
     val uiState = viewModel.uiState.collectAsState()
     val planner = uiState.value.selectedPlanner
 
@@ -86,7 +89,7 @@ fun TodayView(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White), // Cor de fundo neutra
+                .background(Color.White),
             contentAlignment = Alignment.Center
         ) {
             if (uiState.value.isLoading) {
@@ -146,44 +149,44 @@ fun TodayView(
             val today = DateTimeFormatter.ofPattern("EEEE").format(LocalDateTime.now())
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = Color(uiState.value.selectedPlanner!!.color)
-            ), navigationIcon = {
-                IconButton(onClick = {
-                    scope.launch {
-                        state.apply {
-                            if (isClosed) open() else close()
+                    containerColor = Color(uiState.value.selectedPlanner!!.color)
+                ), navigationIcon = {
+                    IconButton(onClick = {
+                        scope.launch {
+                            state.apply {
+                                if (isClosed) open() else close()
+                            }
                         }
-                    }
-                }) {
-                    Icon(
-                        Icons.Default.Menu,
-                        contentDescription = stringResource(R.string.planners_menu),
-                        tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
-
-                    )
-                }
-            }, title = {
-                Box(
-                    modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = today,
-                        style = Typography.labelLarge,
-                        color = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
-                    )
-                }
-            }, actions = {
-                Row {
-
-                    IconButton(onClick = {}) {
+                    }) {
                         Icon(
-                            Icons.Default.DateRange,
-                            contentDescription = stringResource(R.string.calendars_view),
+                            Icons.Default.Menu,
+                            contentDescription = stringResource(R.string.planners_menu),
                             tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
+
                         )
                     }
-                }
-            })
+                }, title = {
+                    Box(
+                        modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = today,
+                            style = Typography.labelLarge,
+                            color = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
+                        )
+                    }
+                }, actions = {
+                    Row {
+
+                        IconButton(onClick = {}) {
+                            Icon(
+                                Icons.Default.DateRange,
+                                contentDescription = stringResource(R.string.calendars_view),
+                                tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
+                            )
+                        }
+                    }
+                })
         }, floatingActionButton = {
             var expanded by remember { mutableStateOf(false) }
             val configuration = LocalConfiguration.current
@@ -230,41 +233,41 @@ fun TodayView(
                 ) {
                     DropdownMenuItem(
                         leadingIcon = {
-                        Icon(
-                            painter = painterResource(R.drawable.planner),
-                            contentDescription = stringResource(R.string.new_planner)
+                            Icon(
+                                painter = painterResource(R.drawable.planner),
+                                contentDescription = stringResource(R.string.new_planner)
+                            )
+                        }, text = { Text(stringResource(R.string.new_planner)) }, onClick = {
+                            onCreatePlannerClicked()
+                            expanded = false
+                        }, modifier = Modifier.background(
+                            color = Color(uiState.value.selectedPlanner!!.color).copy(alpha = 0.8F),
+                            shape = RoundedCornerShape(30.dp)
                         )
-                    }, text = { Text(stringResource(R.string.new_planner)) }, onClick = {
-                        onCreatePlannerClicked()
-                        expanded = false
-                    }, modifier = Modifier.background(
-                        color = Color(uiState.value.selectedPlanner!!.color).copy(alpha = 0.8F),
-                        shape = RoundedCornerShape(30.dp)
-                    )
                     )
                     Spacer(Modifier.padding(top = 8.dp))
                     DropdownMenuItem(
                         leadingIcon = {
-                        Icon(
-                            painter = painterResource(R.drawable.subject),
-                            contentDescription = stringResource(R.string.new_subject)
+                            Icon(
+                                painter = painterResource(R.drawable.subject),
+                                contentDescription = stringResource(R.string.new_subject)
+                            )
+                        }, text = { Text(stringResource(R.string.new_subject)) }, onClick = {
+                            onCreateSubjectClicked(planner.id)
+                            expanded = false
+                        }, modifier = Modifier.background(
+                            color = Color(uiState.value.selectedPlanner!!.color).copy(alpha = 0.8F),
+                            shape = RoundedCornerShape(30.dp)
                         )
-                    }, text = { Text(stringResource(R.string.new_subject)) }, onClick = {
-                        onCreateSubjectClicked(planner.id)
-                        expanded = false
-                    }, modifier = Modifier.background(
-                        color = Color(uiState.value.selectedPlanner!!.color).copy(alpha = 0.8F),
-                        shape = RoundedCornerShape(30.dp)
-                    )
                     )
                     Spacer(Modifier.padding(top = 8.dp))
                     DropdownMenuItem(
                         leadingIcon = {
-                        Icon(
-                            painter = painterResource(R.drawable.resource_class),
-                            contentDescription = stringResource(R.string.new_resource_class)
-                        )
-                    },
+                            Icon(
+                                painter = painterResource(R.drawable.resource_class),
+                                contentDescription = stringResource(R.string.new_resource_class)
+                            )
+                        },
                         text = { Text(stringResource(R.string.new_resource_class)) },
                         onClick = {
                             Log.i("TodayView", "id: ${planner.id} name: ${planner.name}")
@@ -279,17 +282,17 @@ fun TodayView(
                     Spacer(Modifier.padding(top = 8.dp))
                     DropdownMenuItem(
                         leadingIcon = {
-                        Icon(
-                            painter = painterResource(R.drawable.grade),
-                            contentDescription = stringResource(R.string.grade)
+                            Icon(
+                                painter = painterResource(R.drawable.grade),
+                                contentDescription = stringResource(R.string.grade)
+                            )
+                        }, text = { Text(stringResource(R.string.insert_grade)) }, onClick = {
+                            onCreateExamClicked(planner.id)
+                            expanded = false
+                        }, modifier = Modifier.background(
+                            color = Color(uiState.value.selectedPlanner!!.color).copy(alpha = 0.8F),
+                            shape = RoundedCornerShape(30.dp)
                         )
-                    }, text = { Text(stringResource(R.string.insert_grade)) }, onClick = {
-                        onCreateExamClicked()
-                        expanded = false
-                    }, modifier = Modifier.background(
-                        color = Color(uiState.value.selectedPlanner!!.color).copy(alpha = 0.8F),
-                        shape = RoundedCornerShape(30.dp)
-                    )
                     )
                 }
             }
@@ -303,7 +306,8 @@ fun TodayView(
                 CalendarView(
                     selectedColor = planner.color,
                     uiState = uiState.value,
-                    onStudentClassClicked = onStudentClassClicked
+                    onStudentClassClicked = onStudentClassClicked,
+                    onExamClicked = onExamClicked
                 )
             }
         }
@@ -312,7 +316,8 @@ fun TodayView(
 
 @Composable
 fun CalendarView(
-    selectedColor: Long, uiState: TodayUiState, onStudentClassClicked: (String, String) -> Unit
+    selectedColor: Long, uiState: TodayUiState, onStudentClassClicked: (String, String) -> Unit,
+    onExamClicked: (String, String, String) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -329,9 +334,15 @@ fun CalendarView(
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
             }
+            items(items = subject.exams) {
+                ExamCard(
+                    exam = it,
+                    subject = subject,
+                    gradeStyle = uiState.selectedPlanner.gradeDisplayStyle,
+                    onExamClicked = onExamClicked
+                )
+            }
         }
-
-
     }
 }
 
@@ -342,24 +353,33 @@ fun ClassCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
-            .height(100.dp),
+            .padding(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color(subjectColor).copy(0.8F),
         ),
         shape = RoundedCornerShape(15.dp),
         onClick = { onStudentClassClicked(studentClass.subjectId, studentClass.id) }) {
-        Column (
+        Column(
 
         ) {
-            Text(
-                text = studentClass.title,
-                color = Color(subjectColor.getContrastingColorForText()),
-                style = Typography.labelLarge,
-                modifier = Modifier.padding(start = 12.dp, top = 8.dp)
-            )
-            Row (
-                modifier = Modifier.fillMaxSize().background(Color(subjectColor)).padding(start = 12.dp, top = 8.dp)
+            Row {
+                Icon(
+                    painterResource(R.drawable.resource_class),
+                    contentDescription = stringResource(R.string.class_icon),
+
+                )
+                Text(
+                    text = studentClass.title,
+                    color = Color(subjectColor.getContrastingColorForText()),
+                    style = Typography.labelLarge,
+                    modifier = Modifier.padding(start = 12.dp, top = 8.dp)
+                )
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(subjectColor))
+                    .padding(start = 12.dp, top = 8.dp)
             ) {
                 Icon(
                     painterResource(R.drawable.calendar_start),
@@ -377,6 +397,80 @@ fun ClassCard(
 }
 
 @Composable
+fun ExamCard(
+    exam: Exam,
+    subject: Subject,
+    gradeStyle: GradeStyle,
+    onExamClicked: (String, String, String) -> Unit
+) {
+    val subjectColor = subject.color
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color(subjectColor).copy(0.8F),
+        ),
+        shape = RoundedCornerShape(15.dp),
+        onClick = { onExamClicked(subject.plannerId, exam.subjectId, exam.id) }) {
+        Column(
+
+        ) {
+            Row (
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painterResource(R.drawable.grade),
+                    contentDescription = stringResource(R.string.grade),
+                    tint = Color(subjectColor.getContrastingColorForText()),
+                    modifier = Modifier.padding(start = 12.dp)
+                )
+                Text(
+                    text = exam.name,
+                    color = Color(subjectColor.getContrastingColorForText()),
+                    style = Typography.labelLarge,
+                    modifier = Modifier.padding(start = 12.dp, top = 8.dp)
+                )
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(subjectColor))
+                    .padding(start = 12.dp, top = 8.dp)
+            ) {
+                Icon(
+                    painterResource(R.drawable.calendar_start),
+                    contentDescription = stringResource(R.string.date_icon),
+                    tint = Color(subjectColor.getContrastingColorForText())
+                )
+                Text(
+                    text = getFormattedDateTimeForExamCard(exam),
+                    color = Color(subjectColor.getContrastingColorForText()),
+                    style = Typography.labelMedium
+                )
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(subjectColor))
+                    .padding(start = 12.dp, top = 8.dp)
+            ) {
+                Icon(
+                    painterResource(R.drawable.outline_bar_chart),
+                    contentDescription = stringResource(R.string.chart),
+                    tint = Color(subjectColor.getContrastingColorForText())
+                )
+                Text(
+                    text = "${stringResource(R.string.grade_took)} → ${gradeStyle.getValueInDisplayStyle(exam.grade)}",
+                    color = Color(subjectColor.getContrastingColorForText()),
+                    style = Typography.labelMedium
+                )
+            }
+        }
+    }
+}
+
+@Composable
 fun getFormattedDateTimeForClassCard(studentClass: StudentClass): String {
     return " ${stringResource(R.string.class_period)} " + "${
         studentClass.start.format(
@@ -385,6 +479,19 @@ fun getFormattedDateTimeForClassCard(studentClass: StudentClass): String {
     } → ${
         studentClass.end.format(
             DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        )
+    }"
+}
+
+@Composable
+fun getFormattedDateTimeForExamCard(exam: Exam): String {
+    return " ${stringResource(R.string.when_date)} " + "${
+        exam.start.format(
+            DateTimeFormatter.ofPattern("dd MMM hh:mm")
+        )
+    } → ${
+        exam.end.format(
+            DateTimeFormatter.ofPattern("dd MMM hh:mm")
         )
     }"
 }

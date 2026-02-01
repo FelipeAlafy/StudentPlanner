@@ -243,7 +243,7 @@ public final class SubjectDao_Impl implements SubjectDao {
 
   @Override
   public Flow<List<SubjectTable>> getSubjectsOfAPlanner(final String plannerId) {
-    final String _sql = "SELECT * FROM subject WHERE ? ORDER BY name ASC";
+    final String _sql = "SELECT * FROM subject WHERE plannerId = ? ORDER BY name ASC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
     _statement.bindString(_argIndex, plannerId);

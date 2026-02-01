@@ -234,7 +234,7 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturn: () -> Uni
 }
 
 @Composable
-private fun DateTimeSelector(
+fun DateTimeSelector(
     onClick: () -> Unit,
     dateTime: String,
     selectedColor: Long

@@ -1,7 +1,6 @@
 package net.felipealafy.studentplanner.database;
 
 import android.database.Cursor;
-import android.os.CancellationSignal;
 import androidx.annotation.NonNull;
 import androidx.room.CoroutinesRoom;
 import androidx.room.EntityDeletionOrUpdateAdapter;
@@ -194,47 +193,40 @@ public final class PlannerDao_Impl implements PlannerDao {
   }
 
   @Override
-  public Object getPlanner(final String plannerId,
-      final Continuation<? super PlannerTable> $completion) {
+  public PlannerTable getPlanner(final String plannerId) {
     final String _sql = "SELECT * FROM planner WHERE id = ? ORDER BY name ASC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
     _statement.bindString(_argIndex, plannerId);
-    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
-    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<PlannerTable>() {
-      @Override
-      @NonNull
-      public PlannerTable call() throws Exception {
-        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
-        try {
-          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
-          final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
-          final int _cursorIndexOfColor = CursorUtil.getColumnIndexOrThrow(_cursor, "color");
-          final int _cursorIndexOfMinimumGradeToPass = CursorUtil.getColumnIndexOrThrow(_cursor, "minimumGradeToPass");
-          final int _cursorIndexOfGradeDisplayStyle = CursorUtil.getColumnIndexOrThrow(_cursor, "gradeDisplayStyle");
-          final PlannerTable _result;
-          if (_cursor.moveToFirst()) {
-            final String _tmpId;
-            _tmpId = _cursor.getString(_cursorIndexOfId);
-            final String _tmpName;
-            _tmpName = _cursor.getString(_cursorIndexOfName);
-            final long _tmpColor;
-            _tmpColor = _cursor.getLong(_cursorIndexOfColor);
-            final float _tmpMinimumGradeToPass;
-            _tmpMinimumGradeToPass = _cursor.getFloat(_cursorIndexOfMinimumGradeToPass);
-            final GradeStyle _tmpGradeDisplayStyle;
-            _tmpGradeDisplayStyle = __GradeStyle_stringToEnum(_cursor.getString(_cursorIndexOfGradeDisplayStyle));
-            _result = new PlannerTable(_tmpId,_tmpName,_tmpColor,_tmpMinimumGradeToPass,_tmpGradeDisplayStyle);
-          } else {
-            _result = null;
-          }
-          return _result;
-        } finally {
-          _cursor.close();
-          _statement.release();
-        }
+    __db.assertNotSuspendingTransaction();
+    final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+    try {
+      final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+      final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
+      final int _cursorIndexOfColor = CursorUtil.getColumnIndexOrThrow(_cursor, "color");
+      final int _cursorIndexOfMinimumGradeToPass = CursorUtil.getColumnIndexOrThrow(_cursor, "minimumGradeToPass");
+      final int _cursorIndexOfGradeDisplayStyle = CursorUtil.getColumnIndexOrThrow(_cursor, "gradeDisplayStyle");
+      final PlannerTable _result;
+      if (_cursor.moveToFirst()) {
+        final String _tmpId;
+        _tmpId = _cursor.getString(_cursorIndexOfId);
+        final String _tmpName;
+        _tmpName = _cursor.getString(_cursorIndexOfName);
+        final long _tmpColor;
+        _tmpColor = _cursor.getLong(_cursorIndexOfColor);
+        final float _tmpMinimumGradeToPass;
+        _tmpMinimumGradeToPass = _cursor.getFloat(_cursorIndexOfMinimumGradeToPass);
+        final GradeStyle _tmpGradeDisplayStyle;
+        _tmpGradeDisplayStyle = __GradeStyle_stringToEnum(_cursor.getString(_cursorIndexOfGradeDisplayStyle));
+        _result = new PlannerTable(_tmpId,_tmpName,_tmpColor,_tmpMinimumGradeToPass,_tmpGradeDisplayStyle);
+      } else {
+        _result = null;
       }
-    }, $completion);
+      return _result;
+    } finally {
+      _cursor.close();
+      _statement.release();
+    }
   }
 
   @NonNull

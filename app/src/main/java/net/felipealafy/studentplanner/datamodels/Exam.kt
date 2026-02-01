@@ -9,7 +9,7 @@ data class Exam(
     val subjectId: String,
     val name: String,
     val grade: Float,
-    val gradeWeight: Int,
+    val gradeWeight: Float,
     val start: LocalDateTime,
     val end: LocalDateTime,
 )

@@ -14,6 +14,7 @@ import net.felipealafy.studentplanner.datamodels.Planner
 import net.felipealafy.studentplanner.datamodels.StudentClass
 import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.repositories.ClassRepository
+import net.felipealafy.studentplanner.repositories.ExamRepository
 import net.felipealafy.studentplanner.repositories.PlannerRepository
 import net.felipealafy.studentplanner.repositories.SubjectRepository
 import net.felipealafy.studentplanner.ui.theme.colorPallet
@@ -29,7 +30,8 @@ data class TodayUiState(
 class TodayViewModel(
     plannerRepository: PlannerRepository,
     subjectRepository: SubjectRepository,
-    classRepository: ClassRepository
+    classRepository: ClassRepository,
+    examRepository: ExamRepository
 ) : ViewModel() {
     private val _selectedPlannerId = MutableStateFlow<String?>(null)
     private val todayDateTime = LocalDateTime.now()
@@ -40,12 +42,14 @@ class TodayViewModel(
         plannerRepository.getAllPlanners(),
         subjectRepository.getAllSubjects(),
         classRepository.getClassesByDateTime(todayStart, todayEnd),
+        examRepository.getExamsByDateTime(todayStart, todayEnd),
         _selectedPlannerId
-    ) { planners, subjects, classes, selectedId ->
+    ) { planners, subjects, classes, exams, selectedId ->
         var activePlanner: Planner? = null
 
         subjects.forEach {
             it.studentClasses = classes.filter { c -> c.subjectId == it.id }.toTypedArray()
+            it.exams = exams.filter { exams -> exams.subjectId == it.id }.toTypedArray()
         }
 
         planners.forEach {

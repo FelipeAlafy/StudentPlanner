@@ -48,10 +48,10 @@ fun Long.getContrastingColorForText(): Long {
 }
 
 fun GradeStyle.getValueInDisplayStyle(value: Float) = when (this) {
-    FROM_ZERO_TO_ONE_HUNDRED -> (value * 100).toString()
-    FROM_ZERO_TO_TEN -> (value * 10).toString()
+    FROM_ZERO_TO_ONE_HUNDRED -> value.toInt().toString()
+    FROM_ZERO_TO_TEN -> (value * 10).toInt().toString()
     // A: 90-100, B: 80-89, C: 70-79, D: 60-69, F: <60
-    FROM_A_TO_F -> when ((value * 100).toInt()) {
+    FROM_A_TO_F -> when (value.toInt()) {
         in 90..100 -> "A"
         in 80..89 -> "B"
         in 70..79 -> "C"
@@ -59,7 +59,7 @@ fun GradeStyle.getValueInDisplayStyle(value: Float) = when (this) {
         else -> "F"
     }
     // A: 90-100, B: 80-89, C: 70-79, D: 60-69, E: 50-59, F: <50
-    FROM_A_TO_F_WITH_E -> when ((value * 100).toInt()) {
+    FROM_A_TO_F_WITH_E -> when (value.toInt()) {
         in 90..100 -> "A"
         in 80..89 -> "B"
         in 70..79 -> "C"
@@ -70,7 +70,7 @@ fun GradeStyle.getValueInDisplayStyle(value: Float) = when (this) {
 }
 
 fun GradeStyle.getGradePhrase(value: Float) = when (this) {
-    FROM_ZERO_TO_ONE_HUNDRED -> when ((value * 100).toInt()) {
+    FROM_ZERO_TO_ONE_HUNDRED -> when (value.toInt()) {
         in 90..100 -> R.string.congratulations
         in 80..89 -> R.string.solid_work
         in 70..79 -> R.string.great
@@ -85,7 +85,7 @@ fun GradeStyle.getGradePhrase(value: Float) = when (this) {
         else -> R.string.you_must_work_on_this_subject
     }
     // A: 90-100, B: 80-89, C: 70-79, D: 60-69, F: <60
-    FROM_A_TO_F -> when ((value * 100).toInt()) {
+    FROM_A_TO_F -> when (value.toInt()) {
         in 90..100 -> R.string.congratulations
         in 80..89 -> R.string.solid_work
         in 70..79 -> R.string.great
@@ -93,7 +93,7 @@ fun GradeStyle.getGradePhrase(value: Float) = when (this) {
         else -> R.string.you_must_work_on_this_subject
     }
     // A: 90-100, B: 80-89, C: 70-79, D: 60-69, E: 50-59, F: <50
-    FROM_A_TO_F_WITH_E -> when ((value * 100).toInt()) {
+    FROM_A_TO_F_WITH_E -> when (value.toInt()) {
         in 90..100 -> R.string.congratulations
         in 80..89 -> R.string.solid_work
         in 70..79 -> R.string.great
@@ -146,6 +146,17 @@ fun Long.getContrastingButtonColor(): Long {
         this.darken(0.6f)
     } else {
         this.lighten(1.4f)
+    }
+}
+
+fun Long.getForBackgroundBasedOnTitleBarColor(): Long {
+    val color = Color(this)
+    val luminance = 0.2126 * color.red + 0.7152 * color.green + 0.0722 * color.blue
+
+    return if (luminance > 0.5) {
+        this.darken(0.8f)
+    } else {
+        this.lighten(1.2f)
     }
 }
 
