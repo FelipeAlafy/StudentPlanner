@@ -106,6 +106,7 @@ drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable outline_arrow_upward_alt_24
+drawable outline_bar_chart
 drawable outline_open_24
 drawable planner
 drawable resource_class
@@ -238,6 +239,7 @@ string call_notification_hang_up_action
 string call_notification_incoming_text
 string call_notification_ongoing_text
 string call_notification_screening_text
+string chart
 string check_color
 string check_icon
 string class_icon
@@ -411,6 +413,7 @@ string tooltip_description
 string tooltip_label
 string welcome
 string when_class_was_take
+string when_date
 string you_have_reached
 string you_must_work_on_this_subject
 string your_planners

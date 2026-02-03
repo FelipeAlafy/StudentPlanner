@@ -22,6 +22,7 @@
     <string msgid="6107532579223922871" name="call_notification_incoming_text">"Alguém está ligando"</string>
     <string msgid="8623827134497363134" name="call_notification_ongoing_text">"Chamada em andamento"</string>
     <string msgid="59049573811482460" name="call_notification_screening_text">"Filtrando uma ligação recebida"</string>
+    <string name="chart">Ícone de um gráfico de barras.</string>
     <string name="check_color">Essa é a cor atualmente selecionada</string>
     <string name="check_icon">Confirmar a ação.</string>
     <string name="class_icon">Ícone de uma página cheia de textos.</string>
@@ -33,7 +34,7 @@
     <string name="close_icon">Fechar a janela.</string>
     <string msgid="7573152094250666567" name="close_sheet">"Fechar planilha"</string>
     <string name="color_chooser_dialog">Selecione uma cor</string>
-    <string name="confirm">Confirmar[...]</string>
+    <string name="confirm">Confirmar</string>
     <string name="congratulations">Parabéns!</string>
     <string name="create_button">Criar</string>
     <string name="create_new_subject">Vamos criar uma nova matéria</string>
@@ -60,7 +61,7 @@
     <string name="from_a_to_f_with_e">Notas no formato A, B, C, D, E, F</string>
     <string name="from_zero_to_one_hundred">Notas de 0 a 100</string>
     <string name="from_zero_to_ten">Notas de 0,0 a 10,0</string>
-    <string name="get_better_grade_next_time">Sua mãe vai ficar brava com você.</string>
+    <string name="get_better_grade_next_time">Vamos deixar para a próxima oportunidade.</string>
     <string name="go_on_edit_mode_for_edit">Entrar no modo de edição</string>
     <string name="go_on_edit_mode_for_planner">Começar a editar esse organizador</string>
     <string name="go_on_edit_mode_for_subject">Clique aqui para começar a editar essa matéria</string>
@@ -174,7 +175,7 @@
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
     <string name="student_class_creation_view_title">Novas aulas</string>
     <string name="subject">matéria</string>
-    <string name="subject_color_selection">Selecione a cor da matéria</string>
+    <string name="subject_color_selection">Cor da sua matéria: </string>
     <string name="subject_creation_title">Nova matéria</string>
     <string name="subject_date_time_end">Qaundo termina o período dessa matéria</string>
     <string name="subject_date_time_start">Quando começa o período dessa matéria</string>
@@ -195,8 +196,9 @@
     <string msgid="3124740595719787496" name="tooltip_label">"mostrar dica"</string>
     <string name="welcome">Bem-vindo(a)!</string>
     <string name="when_class_was_take">"Essa aula foi tomada em "</string>
+    <string name="when_date">Em</string>
     <string name="you_have_reached">Você tirou</string>
-    <string name="you_must_work_on_this_subject">Vamos deixar para a próxima oportunidade.</string>
+    <string name="you_must_work_on_this_subject">Sua mãe vai ficar brava com você.</string>
     <string name="your_planners">Seus organizadores</string>
     <string name="your_subjects">Suas matérias</string>
 </resources>

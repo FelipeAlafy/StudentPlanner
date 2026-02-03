@@ -21,6 +21,7 @@
     <string name="back_to_past_view">Return to the previous screen.</string>
     <string name="browse_to_import">Import the file</string>
     <string name="calendars_view">click here to access calendars view</string>
+    <string name="chart">Bar chart icon</string>
     <string name="check_color">This is the current selected color</string>
     <string name="check_icon">Confirm the action.</string>
     <string name="class_icon">An icon that represents a document page full of text.</string>
@@ -115,6 +116,7 @@
     <string name="to">to</string>
     <string name="welcome">Welcome!</string>
     <string name="when_class_was_take">This class was held in</string>
+    <string name="when_date">When</string>
     <string name="you_have_reached">You have reached</string>
     <string name="you_must_work_on_this_subject">You have to work on this subject</string>
     <string name="your_planners">Your planners</string>

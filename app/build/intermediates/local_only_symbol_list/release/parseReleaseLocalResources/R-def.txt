@@ -18,6 +18,7 @@ drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable link
 drawable outline_arrow_upward_alt_24
+drawable outline_bar_chart
 drawable outline_open_24
 drawable planner
 drawable resource_class
@@ -40,6 +41,7 @@ string average_grade_for_subject
 string back_to_past_view
 string browse_to_import
 string calendars_view
+string chart
 string check_color
 string check_icon
 string class_icon
@@ -134,6 +136,7 @@ string title
 string to
 string welcome
 string when_class_was_take
+string when_date
 string you_have_reached
 string you_must_work_on_this_subject
 string your_planners
