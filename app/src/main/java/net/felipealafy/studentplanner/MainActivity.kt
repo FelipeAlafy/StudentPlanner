@@ -15,9 +15,11 @@ import androidx.navigation.navArgument
 import net.felipealafy.studentplanner.models.DetailedExamViewModel
 import net.felipealafy.studentplanner.models.DetailedPlannerViewModel
 import net.felipealafy.studentplanner.models.DetailedStudentClassViewModel
+import net.felipealafy.studentplanner.models.EditExamViewModel
+import net.felipealafy.studentplanner.models.EditStudentClassViewModel
 import net.felipealafy.studentplanner.models.MainViewModel
 import net.felipealafy.studentplanner.models.PlannerModel
-import net.felipealafy.studentplanner.models.StudentClassViewModel
+import net.felipealafy.studentplanner.models.StudentClassCreationViewModel
 import net.felipealafy.studentplanner.models.SubjectCreationViewModel
 import net.felipealafy.studentplanner.models.TodayViewModel
 import net.felipealafy.studentplanner.ui.AppViewModelProvider
@@ -32,6 +34,8 @@ import net.felipealafy.studentplanner.ui.views.TodayView
 import net.felipealafy.studentplanner.ui.views.WelcomeView
 import net.felipealafy.studentplanner.models.ExamCreationViewModel
 import net.felipealafy.studentplanner.ui.views.DetailedExamView
+import net.felipealafy.studentplanner.ui.views.EditExamView
+import net.felipealafy.studentplanner.ui.views.EditStudentClassView
 import net.felipealafy.studentplanner.ui.views.ExamCreationView
 
 class MainActivity : ComponentActivity() {
@@ -75,7 +79,10 @@ class MainActivity : ComponentActivity() {
                         TodayView(
                             viewModel = todayViewModel,
                             onStudentClassClicked = { subjectId, studentClassId ->
-                                Log.i("MainActitity -> TodayView", "id: $subjectId name: $studentClassId")
+                                Log.i(
+                                    "MainActitity -> TodayView",
+                                    "id: $subjectId name: $studentClassId"
+                                )
                                 navController.navigate("${StudentPlannerViews.DetailedClassView.name}/$subjectId/$studentClassId")
                             },
                             onExamClicked = { plannerId, subjectId, examId ->
@@ -112,10 +119,10 @@ class MainActivity : ComponentActivity() {
                         route = "${StudentPlannerViews.StudentClassCreationView.name}/{plannerId}",
                         arguments = listOf(navArgument("plannerId") { type = NavType.StringType })
                     ) {
-                        val viewModel: StudentClassViewModel =
+                        val viewModel: StudentClassCreationViewModel =
                             viewModel(factory = AppViewModelProvider.Factory)
                         StudentClassCreationView(
-                            studentClassViewModel = viewModel,
+                            studentClassCreationViewModel = viewModel,
                             onReturnAction = { navController.popBackStack() })
                     }
 
@@ -139,6 +146,9 @@ class MainActivity : ComponentActivity() {
                             viewModel(factory = AppViewModelProvider.Factory)
                         DetailedClassView(
                             viewModel,
+                            onEditMode = { plannerId, subjectId, classId ->
+                                navController.navigate("${StudentPlannerViews.EditStudentClassView.name}/$plannerId/$subjectId/$classId")
+                            },
                             onReturnAction = { navController.popBackStack() })
                     }
 
@@ -167,7 +177,53 @@ class MainActivity : ComponentActivity() {
                             viewModel(factory = AppViewModelProvider.Factory)
                         DetailedExamView(
                             viewModel = viewModel,
+                            onEditMode = { plannerId, subjectId, examId ->
+                                navController.navigate("${StudentPlannerViews.EditExamView.name}/$plannerId/$subjectId/$examId")
+                            },
                             onReturnAction = { navController.popBackStack() }
+                        )
+                    }
+                    composable(
+                        route = "${StudentPlannerViews.EditStudentClassView.name}/{plannerId}/{subjectId}/{classId}",
+                        arguments = listOf(
+                            navArgument("plannerId") { type = NavType.StringType },
+                            navArgument("subjectId") { type = NavType.StringType },
+                            navArgument("classId") { type = NavType.StringType }
+                        )
+                    ) {
+                        val viewModel: EditStudentClassViewModel =
+                            viewModel(factory = AppViewModelProvider.Factory)
+
+                        EditStudentClassView(
+                            viewModel = viewModel,
+                            onReturnAction = {
+                                navController.navigate(StudentPlannerViews.TodayView.name) {
+                                    popUpTo(StudentPlannerViews.TodayView.name) {
+                                        inclusive = true
+                                    }
+                                }
+                            },
+                        )
+                    }
+
+                    composable (
+                        route = "${StudentPlannerViews.EditExamView.name}/{plannerId}/{subjectId}/{examId}",
+                        arguments = listOf(
+                            navArgument("plannerId") { type = NavType.StringType },
+                            navArgument("subjectId") { type = NavType.StringType },
+                            navArgument("examId") { type = NavType.StringType }
+                        )
+                    ) {
+                        val viewModel: EditExamViewModel = viewModel(factory = AppViewModelProvider.Factory)
+                        EditExamView(
+                            viewModel = viewModel,
+                            onReturnAction = {
+                                navController.navigate(StudentPlannerViews.TodayView.name) {
+                                    popUpTo(StudentPlannerViews.TodayView.name) {
+                                        inclusive = true
+                                    }
+                                }
+                            }
                         )
                     }
                 }

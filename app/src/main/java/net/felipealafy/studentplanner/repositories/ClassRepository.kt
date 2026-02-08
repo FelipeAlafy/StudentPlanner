@@ -37,16 +37,13 @@ class ClassRepository(private val dao: ClassDao) {
         dao.insert(entity)
     }
 
-    suspend fun StudentClass.update(data: StudentClass) {
-        val updateStudentClassCommit = data.copy(
-            id = this.id
-        )
-        val entity: ClassTable = updateStudentClassCommit.toDatabaseEntity()
-        dao.update(entity)
-    }
-
     suspend fun delete(data: StudentClass) {
         val entity: ClassTable = data.toDatabaseEntity()
         dao.delete(entity)
+    }
+
+    suspend fun update(data: StudentClass) {
+        val entity: ClassTable = data.toDatabaseEntity()
+        dao.update(entity)
     }
 }

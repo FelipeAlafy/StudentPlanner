@@ -6,7 +6,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,10 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,7 +30,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -45,13 +40,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.datamodels.Planner
 import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.models.StudentClassUiState
-import net.felipealafy.studentplanner.models.StudentClassViewModel
+import net.felipealafy.studentplanner.models.StudentClassCreationViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
-import net.felipealafy.studentplanner.ui.theme.Black
 import net.felipealafy.studentplanner.ui.theme.DarkGray
 import net.felipealafy.studentplanner.ui.theme.LightGray
 import net.felipealafy.studentplanner.ui.theme.Red
@@ -63,10 +56,10 @@ import java.time.LocalDateTime
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StudentClassCreationView(
-    studentClassViewModel: StudentClassViewModel,
+    studentClassCreationViewModel: StudentClassCreationViewModel,
     onReturnAction: () -> Unit
 ) {
-    val uiState = studentClassViewModel.uiState.collectAsState()
+    val uiState = studentClassCreationViewModel.uiState.collectAsState()
     val planner = uiState.value.planner
     var showStartDateTimeSelectorDialog by rememberSaveable { mutableStateOf(false) }
     var showEndDateTimeSelectorDialog by rememberSaveable { mutableStateOf(false) }
@@ -158,7 +151,7 @@ fun StudentClassCreationView(
                     EditableTextEntry(
                         value = uiState.value.currentClassEntry.title,
                         onTextChanged = {
-                            studentClassViewModel.updateTitle(newTitle = it)
+                            studentClassCreationViewModel.updateTitle(newTitle = it)
                         },
                         labelText = R.string.title,
                         color = color
@@ -170,7 +163,7 @@ fun StudentClassCreationView(
                 item {
                     SelectSubjectCombobox(
                         onSubjectSelected = { id ->
-                            studentClassViewModel.updateAssociatedSubject(id)
+                            studentClassCreationViewModel.updateAssociatedSubject(id)
                         },
                         subjectId = uiState.value.currentClassEntry.subjectId,
                         subjects = planner.subjects.toList(),
@@ -213,7 +206,7 @@ fun StudentClassCreationView(
                                     showStartDateTimeSelectorDialog = false
                                 },
                                 onDateTimeSelected = { dateMillis, hour, minute ->
-                                    studentClassViewModel.updateStartDate(dateMillis, hour, minute)
+                                    studentClassCreationViewModel.updateStartDate(dateMillis, hour, minute)
                                 },
                                 backgroundColor = color
                             )
@@ -241,7 +234,7 @@ fun StudentClassCreationView(
                                     showEndDateTimeSelectorDialog = false
                                 },
                                 onDateTimeSelected = { dateMillis, hour, minute ->
-                                    studentClassViewModel.updateEndDate(dateMillis, hour, minute)
+                                    studentClassCreationViewModel.updateEndDate(dateMillis, hour, minute)
                                 },
                                 backgroundColor = color
                             )
@@ -254,7 +247,7 @@ fun StudentClassCreationView(
                                 showStartDateTimeSelectorDialog = false
                             },
                             onDateTimeSelected = { dateMillis, hour, minute ->
-                                studentClassViewModel.updateStartDate(dateMillis, hour, minute)
+                                studentClassCreationViewModel.updateStartDate(dateMillis, hour, minute)
                             },
                             backgroundColor = color
                         )
@@ -266,7 +259,7 @@ fun StudentClassCreationView(
                                 showEndDateTimeSelectorDialog = false
                             },
                             onDateTimeSelected = { dateMillis, hour, minute ->
-                                studentClassViewModel.updateEndDate(dateMillis, hour, minute)
+                                studentClassCreationViewModel.updateEndDate(dateMillis, hour, minute)
                             },
                             backgroundColor = color
                         )
@@ -277,7 +270,7 @@ fun StudentClassCreationView(
                     EditableTextEntry(
                         value = uiState.value.currentClassEntry.noteTakingLink,
                         onTextChanged = {
-                            studentClassViewModel.updateNoteTakingLink(it)
+                            studentClassCreationViewModel.updateNoteTakingLink(it)
                         },
                         labelText = R.string.notetaking_link,
                         color = color
@@ -287,7 +280,7 @@ fun StudentClassCreationView(
                     EditableTextEntry(
                         value = uiState.value.currentClassEntry.observation,
                         onTextChanged = {
-                            studentClassViewModel.updateObservation(it)
+                            studentClassCreationViewModel.updateObservation(it)
                         },
                         labelText = R.string.observation_field,
                         singleLine = false,
@@ -301,7 +294,7 @@ fun StudentClassCreationView(
                     ) {
                         ButtonWithBackgroundColor(
                             onClick = {
-                                studentClassViewModel.saveStudentClass()
+                                studentClassCreationViewModel.saveStudentClass()
                                 onReturnAction()
                             },
                             selectedColor = color.getContrastingButtonColor(),

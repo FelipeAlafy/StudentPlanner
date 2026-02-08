@@ -158,6 +158,8 @@
     <string name="default_popup_window_title" ns1:ignore="ExtraTranslation">"Pop-Up Window"</string>
     <string name="delete">click here to delete this item.</string>
     <string name="dropdown_menu">"Dropdown menu"</string>
+    <string name="edit_exam_view">Edit Exam</string>
+    <string name="edit_student_class_view">Editing the class</string>
     <string name="end_date_time">A calendar icon with letter V, representing checked.</string>
     <string name="exam_creation_view">Insert a Exam</string>
     <string name="exam_date_time_end">When your exam ends</string>
@@ -311,6 +313,7 @@
     <string name="to">to</string>
     <string name="tooltip_description">tooltip</string>
     <string name="tooltip_label">show tooltip</string>
+    <string name="update_button">Update</string>
     <string name="welcome">Welcome!</string>
     <string name="when_class_was_take">This class was held in</string>
     <string name="when_date">When</string>

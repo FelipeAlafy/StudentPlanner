@@ -49,6 +49,7 @@ import androidx.compose.runtime.collectAsState
 @Composable
 fun DetailedClassView(
     viewModel: DetailedStudentClassViewModel,
+    onEditMode: (String, String, String) -> Unit,
     onReturnAction: () -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState().value
@@ -115,7 +116,9 @@ fun DetailedClassView(
                     }
                 },
                 actions = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                        onEditMode(subject.plannerId, subject.id, studentClass.id)
+                    }) {
                         Icon(
                             imageVector = Icons.Filled.Edit,
                             contentDescription = stringResource(R.string.go_on_edit_mode_for_planner),

@@ -891,26 +891,3 @@ fun SelectSubjectCombobox(
         }
     }
 }
-
-
-//Revalidate if this function should exists.
-@Composable
-private fun getCurrentSubject(
-    uiState: State<StudentClassUiState>,
-): Subject {
-    return if (uiState.value.currentClassEntry.subjectId.isNotEmpty()) {
-        val subjects = uiState.value.availableSubjects.filter {
-            it.id == uiState.value.currentClassEntry.subjectId
-        }
-        subjects.first()
-    } else {
-        Subject(
-            name = stringResource(R.string.select_a_subject),
-            id = "",
-            plannerId = "",
-            color = bluePallet[0],
-            start = LocalDateTime.now(),
-            end = LocalDateTime.now(),
-        )
-    }
-}

@@ -56,6 +56,7 @@ import net.felipealafy.studentplanner.ui.theme.colorPallet
 @Composable
 fun DetailedExamView(
     viewModel: DetailedExamViewModel,
+    onEditMode: (String, String, String) -> Unit,
     onReturnAction: () -> Unit,
 ) {
     val uiState = viewModel.uiState.collectAsState().value
@@ -72,7 +73,9 @@ fun DetailedExamView(
                 CircularProgressIndicator()
             } else {
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
                 ) {
                     Text(
                         text = stringResource(R.string.subject_not_found),
@@ -106,7 +109,9 @@ fun DetailedExamView(
                 CircularProgressIndicator()
             } else {
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
                 ) {
                     Text(
                         text = stringResource(R.string.exam_not_founded),
@@ -159,7 +164,13 @@ fun DetailedExamView(
                 },
                 actions = {
                     IconButton(
-                        onClick = {}
+                        onClick = {
+                            onEditMode(
+                                uiState.planner!!.id,
+                                uiState.subject.id,
+                                uiState.exam.id
+                            )
+                        }
                     ) {
                         Icon(
                             imageVector = Icons.Default.Edit,
@@ -177,9 +188,15 @@ fun DetailedExamView(
                 .padding(innerPadding)
                 .background(Color(subject.color.getForBackgroundBasedOnTitleBarColor()))
         ) {
-            Column (modifier = Modifier.fillMaxSize().padding(16.dp)) {
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)) {
                 ExamName(exam = uiState.exam, color = subject.color)
-                GradeIndicatorWithLabel(subject = subject, exam = uiState.exam, gradeStyle = uiState.planner!!.gradeDisplayStyle)
+                GradeIndicatorWithLabel(
+                    subject = subject,
+                    exam = uiState.exam,
+                    gradeStyle = uiState.planner!!.gradeDisplayStyle
+                )
             }
         }
     }
@@ -197,23 +214,32 @@ fun ExamName(exam: Exam, color: Long) {
 @Composable
 fun GradeIndicatorWithLabel(subject: Subject, exam: Exam, gradeStyle: GradeStyle) {
     Card(
-        modifier = Modifier.fillMaxWidth().height(200.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color(subject.color).copy(alpha = 0.7F)
         ),
         shape = RoundedCornerShape(24.dp),
         elevation = CardDefaults.cardElevation(0.dp),
     ) {
-        Column (modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)) {
             Text(
                 text = stringResource(R.string.performance),
                 style = Typography.headlineMedium,
-                color = Color(subject.color.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText())
+                color = Color(
+                    subject.color.getForBackgroundBasedOnTitleBarColor()
+                        .getContrastingColorForText()
+                )
             )
             GradeIndicator(exam = exam)
 
             Column(
-                modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -221,12 +247,18 @@ fun GradeIndicatorWithLabel(subject: Subject, exam: Exam, gradeStyle: GradeStyle
                         exam.grade
                     ),
                     style = Typography.bodyLarge,
-                    color = Color(subject.color.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText())
+                    color = Color(
+                        subject.color.getForBackgroundBasedOnTitleBarColor()
+                            .getContrastingColorForText()
+                    )
                 )
                 Text(
                     text = stringResource(gradeStyle.getGradePhrase(exam.grade)),
                     style = Typography.labelLarge,
-                    color = Color(subject.color.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText())
+                    color = Color(
+                        subject.color.getForBackgroundBasedOnTitleBarColor()
+                            .getContrastingColorForText()
+                    )
                 )
             }
 
@@ -275,7 +307,7 @@ fun GradeIndicator(exam: Exam) {
             )
     ) {
         val offsetY = -(iconSizeDp - (barHeightDp / 4))
-        val verticalOffset = - (iconSizeDp / 2) + (barHeightDp / 2)
+        val verticalOffset = -(iconSizeDp / 2) + (barHeightDp / 2)
         val finalOffsetY = verticalOffset - (iconSizeDp * 0.4f) - offsetY
 
         Icon(

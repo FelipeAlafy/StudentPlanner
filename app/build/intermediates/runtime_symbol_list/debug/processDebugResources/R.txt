@@ -266,6 +266,8 @@ int string default_error_message 0x7f0a002a
 int string default_popup_window_title 0x7f0a002b
 int string delete 0x7f0a002c
 int string dropdown_menu 0x7f0a002d
+int string edit_exam_view 0x7f0a00ce
+int string edit_student_class_view 0x7f0a00cf
 int string end_date_time 0x7f0a002e
 int string exam_creation_view 0x7f0a002f
 int string exam_date_time_end 0x7f0a0030
@@ -415,6 +417,7 @@ int string title 0x7f0a00be
 int string to 0x7f0a00bf
 int string tooltip_description 0x7f0a00c0
 int string tooltip_label 0x7f0a00c1
+int string update_button 0x7f0a00d0
 int string welcome 0x7f0a00c2
 int string when_class_was_take 0x7f0a00c3
 int string when_date 0x7f0a00c8

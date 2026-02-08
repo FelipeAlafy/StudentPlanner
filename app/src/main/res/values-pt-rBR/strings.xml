@@ -114,4 +114,7 @@
     <string name="exam_not_founded">A prova não pode ser carregada, por favor crie uma matéria antes de acessar essa tela.</string>
     <string name="when_date">Em</string>
     <string name="chart">Ícone de um gráfico de barras.</string>
+    <string name="edit_student_class_view">Editing the class</string>
+    <string name="update_button">Update</string>
+    <string name="edit_exam_view">Edit Exam</string>
 </resources>
