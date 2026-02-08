@@ -15,5 +15,7 @@ enum class StudentPlannerViews {
     DetailedExamView, //OK
     SubjectCreationView, //OK
     StudentClassCreationView, //OK
-    ExamCreationView //OK
+    ExamCreationView, //OK
+    EditStudentClassView, //OK
+    EditExamView //OK
 }

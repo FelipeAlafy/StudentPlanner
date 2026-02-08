@@ -34,9 +34,4 @@ class SubjectRepository (private val dao: SubjectDao) {
             it.toDomainModel()
         }
     }
-
-    fun getSubjectByIdAsFlowList(subjectId: String): Flow<List<Subject>> =
-        dao.getSubjectById(subjectId = subjectId).map {
-            it.toDomainModel()
-        }
 }

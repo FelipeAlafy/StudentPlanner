@@ -267,6 +267,8 @@ string default_error_message
 string default_popup_window_title
 string delete
 string dropdown_menu
+string edit_exam_view
+string edit_student_class_view
 string end_date_time
 string exam_creation_view
 string exam_date_time_end
@@ -416,6 +418,7 @@ string title
 string to
 string tooltip_description
 string tooltip_label
+string update_button
 string welcome
 string when_class_was_take
 string when_date

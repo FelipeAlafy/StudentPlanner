@@ -63,6 +63,8 @@ string date_icon
 string date_mode
 string date_start
 string delete
+string edit_exam_view
+string edit_student_class_view
 string end_date_time
 string exam_creation_view
 string exam_date_time_end
@@ -138,6 +140,7 @@ string subjects_done
 string time_mode
 string title
 string to
+string update_button
 string welcome
 string when_class_was_take
 string when_date

@@ -31,7 +31,7 @@ data class StudentClassUiState(
     val isLoading: Boolean = true
 )
 
-class StudentClassViewModel(
+class StudentClassCreationViewModel(
     savedStateHandle: SavedStateHandle,
     private val classRepository: ClassRepository,
     private val plannerRepository: PlannerRepository,

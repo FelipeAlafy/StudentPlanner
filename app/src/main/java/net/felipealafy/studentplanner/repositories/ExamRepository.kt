@@ -18,9 +18,8 @@ class ExamRepository(private val dao : ExamDao) {
         dao.insert(examTable = exam.toDatabaseEntry())
     }
 
-    suspend fun Exam.update(newExam: Exam) {
-        val updatedExamCommit = newExam.copy(id = this.id)
-        dao.update(updatedExamCommit.toDatabaseEntry())
+    suspend fun update(data: Exam) {
+        dao.update(data.toDatabaseEntry())
     }
 
     suspend fun delete(exam: Exam) {
@@ -31,7 +30,7 @@ class ExamRepository(private val dao : ExamDao) {
         return dao.getExamsByDateTime(todayStart = todayStart, todayEnd = todayEnd).map { it.toDomainModel() }
     }
 
-    fun getExamById(id: String): Flow<Exam> {
-        return dao.getExamById(id = id).map { it.toDomainModel().first() }
+    fun getExamById(id: String): Flow<List<Exam>> {
+        return dao.getExamById(id = id).map { it.toDomainModel() }
     }
 }

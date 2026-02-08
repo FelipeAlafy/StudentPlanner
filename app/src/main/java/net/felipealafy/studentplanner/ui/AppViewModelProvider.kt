@@ -8,10 +8,12 @@ import net.felipealafy.studentplanner.StudentPlannerApplication
 import net.felipealafy.studentplanner.models.DetailedExamViewModel
 import net.felipealafy.studentplanner.models.DetailedPlannerViewModel
 import net.felipealafy.studentplanner.models.DetailedStudentClassViewModel
+import net.felipealafy.studentplanner.models.EditExamViewModel
+import net.felipealafy.studentplanner.models.EditStudentClassViewModel
 import net.felipealafy.studentplanner.models.ExamCreationViewModel
 import net.felipealafy.studentplanner.models.MainViewModel
 import net.felipealafy.studentplanner.models.PlannerModel
-import net.felipealafy.studentplanner.models.StudentClassViewModel
+import net.felipealafy.studentplanner.models.StudentClassCreationViewModel
 import net.felipealafy.studentplanner.models.SubjectCreationViewModel
 import net.felipealafy.studentplanner.models.TodayViewModel
 
@@ -49,7 +51,7 @@ object AppViewModelProvider {
 
         initializer {
             val app = (this[APPLICATION_KEY] as StudentPlannerApplication)
-            StudentClassViewModel(
+            StudentClassCreationViewModel(
                 savedStateHandle = this.createSavedStateHandle(),
                 classRepository = app.classRepository,
                 plannerRepository = app.plannerRepository,
@@ -89,6 +91,26 @@ object AppViewModelProvider {
             val app = (this[APPLICATION_KEY] as StudentPlannerApplication)
             DetailedExamViewModel(
                 savedStateHandler = this.createSavedStateHandle(),
+                plannerRepository = app.plannerRepository,
+                subjectRepository = app.subjectRepository,
+                examRepository = app.examRepository
+            )
+        }
+
+        initializer {
+            val app = (this[APPLICATION_KEY] as StudentPlannerApplication)
+            EditStudentClassViewModel(
+                savedStateHandle = this.createSavedStateHandle(),
+                classRepository = app.classRepository,
+                plannerRepository = app.plannerRepository,
+                subjectsRepository = app.subjectRepository
+            )
+        }
+
+        initializer {
+            val app = (this[APPLICATION_KEY] as StudentPlannerApplication)
+            EditExamViewModel(
+                savedStateHandle = this.createSavedStateHandle(),
                 plannerRepository = app.plannerRepository,
                 subjectRepository = app.subjectRepository,
                 examRepository = app.examRepository

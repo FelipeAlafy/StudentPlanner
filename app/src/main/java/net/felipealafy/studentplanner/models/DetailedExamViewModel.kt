@@ -18,6 +18,7 @@ import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.repositories.ExamRepository
 import net.felipealafy.studentplanner.repositories.PlannerRepository
 import net.felipealafy.studentplanner.repositories.SubjectRepository
+import java.time.LocalDateTime
 
 data class DetailedExamUiState(
     val planner: Planner? = null,
@@ -51,7 +52,16 @@ class DetailedExamViewModel(
         plannerFlow,
         subjectRepository.getSubjectById(subjectId),
         examRepository.getExamById(examId)
-    ) { planner, subject, exam->
+    ) { planner, subject, examRecovered ->
+
+        val exam = examRecovered.firstOrNull()?: Exam(
+            subjectId = "",
+            name = "Error while loading, reopen the app.",
+            grade = 0F,
+            gradeWeight = 0F,
+            start = LocalDateTime.now(),
+            end = LocalDateTime.now()
+        )
 
         DetailedExamUiState(
             planner = planner,
