@@ -243,6 +243,9 @@ int string chart 0x7f0a00c9
 int string check_color 0x7f0a0017
 int string check_icon 0x7f0a0018
 int string class_icon 0x7f0a0019
+int string class_is_able_ 0x7f0a00ca
+int string class_is_able_to_save 0x7f0a00cb
+int string class_is_not_able_to_save 0x7f0a00cc
 int string class_period 0x7f0a001a
 int string classes 0x7f0a001b
 int string classes_taken 0x7f0a001c
@@ -360,6 +363,7 @@ int string navigation_menu 0x7f0a008b
 int string new_planner 0x7f0a008c
 int string new_resource_class 0x7f0a008d
 int string new_subject 0x7f0a008e
+int string no_planners_available 0x7f0a00cd
 int string no_subjects_available_error_message 0x7f0a008f
 int string not_selected 0x7f0a0090
 int string notetaking_link 0x7f0a0091

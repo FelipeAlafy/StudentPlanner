@@ -33,7 +33,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,7 +52,6 @@ import net.felipealafy.studentplanner.datamodels.Planner
 import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.datamodels.getResourceLocation
 import net.felipealafy.studentplanner.models.StudentClassUiState
-import net.felipealafy.studentplanner.ui.theme.Black
 import net.felipealafy.studentplanner.ui.theme.DarkGray
 import net.felipealafy.studentplanner.ui.theme.LightGray
 import net.felipealafy.studentplanner.ui.theme.Red
@@ -85,13 +83,15 @@ fun ButtonOpenColorSelectionDialog(
 fun ButtonWithBackgroundColor(
     onClick: () -> Unit,
     selectedColor: Long,
-    @StringRes placeholderTextPath: Int
+    @StringRes placeholderTextPath: Int,
+    isButtonEnabled: Boolean = true
 ) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = Color(selectedColor).copy(alpha = 0.8F)
-        )
+        ),
+        enabled = isButtonEnabled,
     ) {
         Text(
             stringResource(placeholderTextPath),
@@ -338,10 +338,18 @@ fun GradeInputFromZeroToOneHundred(
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = LightGray,
             disabledContainerColor = LightGray,
-            unfocusedTextColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
-            focusedTextColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
-            errorTextColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
-            focusedLabelColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
+            unfocusedTextColor = Color(
+                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
+            ),
+            focusedTextColor = Color(
+                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
+            ),
+            errorTextColor = Color(
+                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
+            ),
+            focusedLabelColor = Color(
+                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
+            ),
             focusedBorderColor = Color(selectedColor),
             focusedPlaceholderColor = LightGray,
         ),
@@ -382,10 +390,18 @@ fun GradeInputFromZeroToTen(
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = LightGray,
             disabledContainerColor = LightGray,
-            unfocusedTextColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
-            focusedTextColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
-            errorTextColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
-            focusedLabelColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
+            unfocusedTextColor = Color(
+                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
+            ),
+            focusedTextColor = Color(
+                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
+            ),
+            errorTextColor = Color(
+                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
+            ),
+            focusedLabelColor = Color(
+                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
+            ),
             focusedBorderColor = Color(selectedColor),
             focusedPlaceholderColor = LightGray,
         ),
@@ -402,7 +418,13 @@ fun GradeInputFromZeroToTen(
 }
 
 @Composable
-fun GradeWeightInput(text: String, onValueChange: (String) -> Unit, onValidate: () -> Unit, invalidDigit: Boolean, selectedColor: Long) {
+fun GradeWeightInput(
+    text: String,
+    onValueChange: (String) -> Unit,
+    onValidate: () -> Unit,
+    invalidDigit: Boolean,
+    selectedColor: Long
+) {
     OutlinedTextField(
         onValueChange = onValueChange,
         value = text,
@@ -422,8 +444,12 @@ fun GradeWeightInput(text: String, onValueChange: (String) -> Unit, onValidate: 
             disabledContainerColor = LightGray,
             unfocusedTextColor = Color(selectedColor.getContrastingColorForText()),
             focusedTextColor = Color(selectedColor.getContrastingColorForText()),
-            errorTextColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
-            focusedLabelColor = Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()),
+            errorTextColor = Color(
+                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
+            ),
+            focusedLabelColor = Color(
+                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
+            ),
             focusedBorderColor = Color(selectedColor),
             focusedPlaceholderColor = LightGray,
         ),
@@ -795,7 +821,18 @@ fun SelectSubjectCombobox(
     onSubjectSelected: (id: String) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val subject = subjects.first { it.id == subjectId }
+    val selectASubjectText = stringResource(R.string.select_a_subject)
+    val subject = remember(subjectId, subjects) {
+        subjects.find { it.id == subjectId }
+            ?: Subject(
+                name = selectASubjectText,
+                id = "",
+                plannerId = "",
+                color = selectedColor,
+                start = LocalDateTime.now(),
+                end = LocalDateTime.now(),
+            )
+    }
 
     Box(
         modifier = Modifier

@@ -55,7 +55,7 @@ class DetailedExamViewModel(
 
         DetailedExamUiState(
             planner = planner,
-            subject = subject,
+            subject = subject.first { it.id == subjectId },
             exam = exam,
             isLoading = false
         )

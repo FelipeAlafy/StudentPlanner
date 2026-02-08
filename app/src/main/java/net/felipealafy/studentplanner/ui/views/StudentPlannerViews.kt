@@ -5,7 +5,6 @@ enum class StudentPlannerViews {
     ImportingView,
     SetupView, //Ok
     TodayView, //Ok
-    CalendarView,
     ConfigurationView,
     DetailedPlannerView, //Ok
     EditingPlannerView,
@@ -14,7 +13,7 @@ enum class StudentPlannerViews {
     DetailedClassView, //ok
     EditingClassView,
     DetailedExamView, //OK
-    SubjectCreationView,
+    SubjectCreationView, //OK
     StudentClassCreationView, //OK
-    ExamCreationView
+    ExamCreationView //OK
 }

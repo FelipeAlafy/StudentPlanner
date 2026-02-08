@@ -45,6 +45,9 @@ string chart
 string check_color
 string check_icon
 string class_icon
+string class_is_able_
+string class_is_able_to_save
+string class_is_not_able_to_save
 string class_period
 string classes
 string classes_taken
@@ -97,6 +100,7 @@ string minimum_grade_to_pass
 string new_planner
 string new_resource_class
 string new_subject
+string no_planners_available
 string no_subjects_available_error_message
 string notetaking_link
 string notetaking_text

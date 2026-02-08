@@ -1,6 +1,7 @@
 package net.felipealafy.studentplanner
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -74,6 +75,7 @@ class MainActivity : ComponentActivity() {
                         TodayView(
                             viewModel = todayViewModel,
                             onStudentClassClicked = { subjectId, studentClassId ->
+                                Log.i("MainActitity -> TodayView", "id: $subjectId name: $studentClassId")
                                 navController.navigate("${StudentPlannerViews.DetailedClassView.name}/$subjectId/$studentClassId")
                             },
                             onExamClicked = { plannerId, subjectId, examId ->

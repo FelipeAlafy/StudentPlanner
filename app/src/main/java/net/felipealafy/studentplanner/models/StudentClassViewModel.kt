@@ -20,10 +20,7 @@ import net.felipealafy.studentplanner.repositories.ClassRepository
 import net.felipealafy.studentplanner.repositories.PlannerRepository
 import net.felipealafy.studentplanner.repositories.SubjectRepository
 import net.felipealafy.studentplanner.ui.views.parseToDateTime
-import java.time.Instant
 import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.ZoneOffset
 import java.util.UUID
 
 data class StudentClassUiState(
@@ -94,9 +91,6 @@ class StudentClassViewModel(
 
     fun updateStartDate(dateMillis: Long?, hour: Int, minute: Int) {
         if (dateMillis == null) return
-        val date = Instant.ofEpochMilli(dateMillis).atZone(ZoneOffset.UTC).toLocalDate()
-        val time = LocalTime.of(hour, minute)
-
         _currentClassEntry.update {
             it.copy(start = parseToDateTime(dateMillis, hour, minute))
         }
@@ -104,12 +98,8 @@ class StudentClassViewModel(
 
     fun updateEndDate(dateMillis: Long?, hour: Int, minute: Int) {
         if (dateMillis == null) return
-        val date = Instant.ofEpochMilli(dateMillis).atZone(ZoneOffset.UTC).toLocalDate()
-        val time = LocalTime.of(hour, minute)
-        val dateTime = LocalDateTime.of(date, time)
-
         _currentClassEntry.update {
-            it.copy(end = dateTime)
+            it.copy(end = parseToDateTime(dateMillis, hour, minute))
         }
     }
 

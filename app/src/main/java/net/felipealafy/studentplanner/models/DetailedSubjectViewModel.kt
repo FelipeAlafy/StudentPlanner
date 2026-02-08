@@ -34,7 +34,7 @@ class DetailedSubjectViewModel(
         examRepository.getExams(subjectId = subjectId)
     ) { subject, classes, exams ->
         SubjectDetailsUiState(
-            subject = subject,
+            subject = subject.first { it.id == subjectId },
             studentClasses= classes,
             exams = exams
         )

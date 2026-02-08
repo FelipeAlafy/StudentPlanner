@@ -21,9 +21,9 @@ class ClassRepository(private val dao: ClassDao) {
         }
     }
 
-    fun getClassById(id: String): Flow<StudentClass> {
+    fun getClassById(id: String): Flow<List<StudentClass>> {
         return dao.getClassById(id).map {
-            it.toDomainModel().first()
+            it.toDomainModel()
         }
     }
 
