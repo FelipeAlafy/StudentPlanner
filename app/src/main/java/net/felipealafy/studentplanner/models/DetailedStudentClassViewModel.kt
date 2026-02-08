@@ -1,5 +1,6 @@
 package net.felipealafy.studentplanner.models
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -13,6 +14,8 @@ import net.felipealafy.studentplanner.repositories.SubjectRepository
 import java.time.LocalDateTime
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onEach
+import net.felipealafy.studentplanner.ui.theme.colorPallet
 
 data class DetailedStudentClassUiState(
     val classEntry: StudentClass? = null,
@@ -29,17 +32,17 @@ class DetailedStudentClassViewModel (
     val subjectId: String = checkNotNull(savedStateHandle["subjectId"])
     val studentClassId: String = checkNotNull(savedStateHandle["studentClassId"])
 
-    private var _studentClassEntry: Flow<StudentClass> = classRepository.getClassById(studentClassId)
-
-    val subjectFlow: Flow<Subject> = subjectRepository.getSubjectById(subjectId)
-
     val uiState: StateFlow<DetailedStudentClassUiState> = combine(
-        _studentClassEntry,
-        subjectFlow
-    ) { currentEntry, subject ->
+        classRepository.getClassById(studentClassId),
+        subjectRepository.getSubjectById(subjectId)
+    ) { classes, subject ->
+
+        var stClass = classes.first { it.id == studentClassId }
+        var subject = subject.first { it.id == subjectId }
+
 
         DetailedStudentClassUiState(
-            classEntry = currentEntry,
+            classEntry = stClass,
             subject = subject,
             isLoading = false
         )

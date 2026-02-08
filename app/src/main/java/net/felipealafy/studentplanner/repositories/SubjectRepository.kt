@@ -29,8 +29,14 @@ class SubjectRepository (private val dao: SubjectDao) {
         dao.delete(subjectTable = subject.toDatabaseEntry())
     }
 
-    fun getSubjectById(subjectId: String): Flow<Subject> =
+    fun getSubjectById(subjectId: String): Flow<List<Subject>> {
+        return dao.getSubjectById(subjectId).map {
+            it.toDomainModel()
+        }
+    }
+
+    fun getSubjectByIdAsFlowList(subjectId: String): Flow<List<Subject>> =
         dao.getSubjectById(subjectId = subjectId).map {
-            it.toDomainModel().first()
+            it.toDomainModel()
         }
 }

@@ -314,7 +314,7 @@ public final class SubjectDao_Impl implements SubjectDao {
 
   @Override
   public Flow<List<SubjectTable>> getSubjectById(final String subjectId) {
-    final String _sql = "SELECT * FROM subject WHERE ? LIMIT 1";
+    final String _sql = "SELECT * FROM subject WHERE id = ? LIMIT 1";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
     _statement.bindString(_argIndex, subjectId);

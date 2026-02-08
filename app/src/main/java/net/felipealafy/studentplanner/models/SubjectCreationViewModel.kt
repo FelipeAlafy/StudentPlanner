@@ -45,7 +45,7 @@ class SubjectCreationViewModel(
 
     private fun getNewSubject(): Subject {
         return Subject(
-            id = UUID.randomUUID().toString(),
+            id = "",
             plannerId = "",
             name = "",
             color = colorPallet[0][1],
@@ -117,6 +117,11 @@ class SubjectCreationViewModel(
         }
         if (_currentSubjectEntry.value.name.isEmpty()) {
             return
+        }
+        if (_currentSubjectEntry.value.id.isEmpty()) {
+            _currentSubjectEntry.update {
+                it.copy(id = UUID.randomUUID().toString())
+            }
         }
         if (!_uiState.value.isEntryValid) {
             return

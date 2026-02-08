@@ -3,13 +3,13 @@ package net.felipealafy.studentplanner.ui.views
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -36,6 +36,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -61,12 +62,13 @@ import net.felipealafy.studentplanner.datamodels.Exam
 import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.StudentClass
 import net.felipealafy.studentplanner.datamodels.Subject
-import net.felipealafy.studentplanner.models.TodayViewModel
 import net.felipealafy.studentplanner.models.TodayUiState
+import net.felipealafy.studentplanner.models.TodayViewModel
+import net.felipealafy.studentplanner.ui.date.time.picker.DatePickerDialog
 import net.felipealafy.studentplanner.ui.theme.Transparent
 import net.felipealafy.studentplanner.ui.theme.Typography
-import net.felipealafy.studentplanner.ui.theme.colorPallet
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 
@@ -104,13 +106,13 @@ fun TodayView(
 
     val state = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    val showDateSelection = remember { mutableStateOf(false) }
     ModalNavigationDrawer(
-        modifier = Modifier.background(color = Color(colorPallet[0][0]).copy(0.1F)),
         drawerContent = {
             val plannerColor = Color(planner.color)
             ModalDrawerSheet(
                 drawerContainerColor = DrawerDefaults.modalContainerColor.copy(
-                    alpha = .75F,
+                    alpha = 1F,
                     red = plannerColor.red,
                     green = plannerColor.green,
                     blue = plannerColor.blue
@@ -128,15 +130,31 @@ fun TodayView(
                     HorizontalDivider(modifier = Modifier.padding(bottom = 5.dp))
 
                     planners.forEach {
-                        NavigationDrawerItem(label = {
-                            Text(
-                                text = it.name,
-                                style = Typography.labelMedium,
-                                color = Color(planner.color.getContrastingColorForText())
+                        NavigationDrawerItem(
+                            label = {
+                                Text(
+                                    text = it.name,
+                                    style = Typography.labelMedium,
+                                )
+                            }, selected = uiState.value.selectedPlanner?.id == it.id, onClick = {
+                                viewModel.selectPlanner(it.id)
+                            },
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedTextColor = Color(
+                                    it.color.getContrastingButtonColor()
+                                        .getContrastingColorForText()
+                                ),
+                                selectedContainerColor = Color(it.color.getContrastingButtonColor()),
+                                unselectedContainerColor = Color(it.color.getForBackgroundBasedOnTitleBarColor()).copy(
+                                    alpha = 0.5F
+                                ),
+                                unselectedTextColor = Color(
+                                    it.color.getForBackgroundBasedOnTitleBarColor()
+                                        .getContrastingColorForText()
+                                )
                             )
-                        }, selected = uiState.value.selectedPlanner?.id == it.id, onClick = {
-                            viewModel.selectPlanner(it.id)
-                        })
+                        )
+                        Spacer(modifier = Modifier.padding(bottom = 8.dp))
                     }
                 }
             }
@@ -146,7 +164,7 @@ fun TodayView(
     ) {
 
         Scaffold(topBar = {
-            val today = DateTimeFormatter.ofPattern("EEEE").format(LocalDateTime.now())
+            val today = DateTimeFormatter.ofPattern("EEEE, dd/MM").format(uiState.value.currentDate)
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(uiState.value.selectedPlanner!!.color)
@@ -177,8 +195,9 @@ fun TodayView(
                     }
                 }, actions = {
                     Row {
-
-                        IconButton(onClick = {}) {
+                        IconButton(onClick = {
+                            showDateSelection.value = true
+                        }) {
                             Icon(
                                 Icons.Default.DateRange,
                                 contentDescription = stringResource(R.string.calendars_view),
@@ -196,19 +215,23 @@ fun TodayView(
                 if (screenWidth < 480.dp) {
                     FloatingActionButton(
                         onClick = { expanded = !expanded },
-                        containerColor = Color(uiState.value.selectedPlanner!!.color).copy(alpha = 0.8F),
-                        modifier = Modifier.background(color = Transparent)
+                        containerColor = Color(uiState.value.selectedPlanner!!.color),
                     ) {
                         Icon(
                             Icons.Default.Add,
                             contentDescription = stringResource(R.string.add_floating_action_button),
-                            tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
+                            tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText()),
                         )
                     }
                 } else {
                     ExtendedFloatingActionButton(
                         onClick = { expanded = !expanded },
-                        containerColor = Color(uiState.value.selectedPlanner!!.color).copy(alpha = 0.8F)
+                        containerColor = Color(uiState.value.selectedPlanner!!.color).copy(alpha = 0.8F),
+                        modifier = Modifier.border(
+                            width = 0.dp,
+                            color = Transparent,
+                            shape = RoundedCornerShape(8.dp)
+                        )
                     ) {
                         Row {
                             Icon(
@@ -224,6 +247,7 @@ fun TodayView(
                     }
                 }
 
+
                 DropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
@@ -235,13 +259,21 @@ fun TodayView(
                         leadingIcon = {
                             Icon(
                                 painter = painterResource(R.drawable.planner),
-                                contentDescription = stringResource(R.string.new_planner)
+                                contentDescription = stringResource(R.string.new_planner),
+                                tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
                             )
-                        }, text = { Text(stringResource(R.string.new_planner)) }, onClick = {
+                        },
+                        text = {
+                            Text(
+                                stringResource(R.string.new_planner),
+                                color = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
+                            )
+                        },
+                        onClick = {
                             onCreatePlannerClicked()
                             expanded = false
                         }, modifier = Modifier.background(
-                            color = Color(uiState.value.selectedPlanner!!.color).copy(alpha = 0.8F),
+                            color = Color(uiState.value.selectedPlanner!!.color),
                             shape = RoundedCornerShape(30.dp)
                         )
                     )
@@ -250,13 +282,21 @@ fun TodayView(
                         leadingIcon = {
                             Icon(
                                 painter = painterResource(R.drawable.subject),
-                                contentDescription = stringResource(R.string.new_subject)
+                                contentDescription = stringResource(R.string.new_subject),
+                                tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
                             )
-                        }, text = { Text(stringResource(R.string.new_subject)) }, onClick = {
+                        },
+                        text = {
+                            Text(
+                                stringResource(R.string.new_subject),
+                                color = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
+                            )
+                        },
+                        onClick = {
                             onCreateSubjectClicked(planner.id)
                             expanded = false
                         }, modifier = Modifier.background(
-                            color = Color(uiState.value.selectedPlanner!!.color).copy(alpha = 0.8F),
+                            color = Color(uiState.value.selectedPlanner!!.color),
                             shape = RoundedCornerShape(30.dp)
                         )
                     )
@@ -265,17 +305,23 @@ fun TodayView(
                         leadingIcon = {
                             Icon(
                                 painter = painterResource(R.drawable.resource_class),
-                                contentDescription = stringResource(R.string.new_resource_class)
+                                contentDescription = stringResource(R.string.new_resource_class),
+                                tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
                             )
                         },
-                        text = { Text(stringResource(R.string.new_resource_class)) },
+                        text = {
+                            Text(
+                                stringResource(R.string.new_resource_class),
+                                color = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
+                            )
+                        },
                         onClick = {
                             Log.i("TodayView", "id: ${planner.id} name: ${planner.name}")
                             onCreateClassClicked(planner.id)
                             expanded = false
                         },
                         modifier = Modifier.background(
-                            color = Color(uiState.value.selectedPlanner!!.color).copy(alpha = 0.8F),
+                            color = Color(uiState.value.selectedPlanner!!.color),
                             shape = RoundedCornerShape(30.dp)
                         )
                     )
@@ -284,13 +330,21 @@ fun TodayView(
                         leadingIcon = {
                             Icon(
                                 painter = painterResource(R.drawable.grade),
-                                contentDescription = stringResource(R.string.grade)
+                                contentDescription = stringResource(R.string.grade),
+                                tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
                             )
-                        }, text = { Text(stringResource(R.string.insert_grade)) }, onClick = {
+                        },
+                        text = {
+                            Text(
+                                stringResource(R.string.insert_grade),
+                                color = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
+                            )
+                        },
+                        onClick = {
                             onCreateExamClicked(planner.id)
                             expanded = false
                         }, modifier = Modifier.background(
-                            color = Color(uiState.value.selectedPlanner!!.color).copy(alpha = 0.8F),
+                            color = Color(uiState.value.selectedPlanner!!.color),
                             shape = RoundedCornerShape(30.dp)
                         )
                     )
@@ -303,6 +357,22 @@ fun TodayView(
                     .fillMaxSize()
                     .background(color = Color(planner.color).copy(0.1F))
             ) {
+                if (showDateSelection.value) {
+                    DatePickerDialog(
+                        initialDateTime = LocalDateTime.of(
+                            uiState.value.currentDate,
+                            LocalTime.now()
+                        ),
+                        onDismissRequest = {
+                            showDateSelection.value = false
+                        },
+                        onDateSelected = { dateMillis ->
+                            viewModel.updateTodaySelection(dateMillis)
+                        },
+                        backgroundColor = uiState.value.selectedPlanner!!.color
+                    )
+                }
+
                 CalendarView(
                     selectedColor = planner.color,
                     uiState = uiState.value,
@@ -328,6 +398,7 @@ fun CalendarView(
         uiState.selectedPlanner!!.subjects.forEach { subject ->
             items(items = subject.studentClasses) {
                 ClassCard(
+                    subject = subject,
                     studentClass = it,
                     subjectColor = subject.color,
                     onStudentClassClicked = onStudentClassClicked
@@ -348,7 +419,10 @@ fun CalendarView(
 
 @Composable
 fun ClassCard(
-    studentClass: StudentClass, subjectColor: Long, onStudentClassClicked: (String, String) -> Unit
+    subject: Subject,
+    studentClass: StudentClass,
+    subjectColor: Long,
+    onStudentClassClicked: (String, String) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -358,14 +432,20 @@ fun ClassCard(
             containerColor = Color(subjectColor).copy(0.8F),
         ),
         shape = RoundedCornerShape(15.dp),
-        onClick = { onStudentClassClicked(studentClass.subjectId, studentClass.id) }) {
+        onClick = {
+            Log.i("TodayView", "id: ${subject.id} name: ${subject.name}")
+            onStudentClassClicked(studentClass.subjectId, studentClass.id)
+        }) {
         Column(
-
+            modifier = Modifier.padding(bottom = 8.dp)
         ) {
-            Row {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Icon(
                     painterResource(R.drawable.resource_class),
                     contentDescription = stringResource(R.string.class_icon),
+                    modifier = Modifier.padding(start = 12.dp)
 
                 )
                 Text(
@@ -392,6 +472,23 @@ fun ClassCard(
                     style = Typography.labelMedium
                 )
             }
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(subjectColor))
+                    .padding(start = 12.dp, top = 8.dp)
+            ) {
+                Icon(
+                    painterResource(R.drawable.subject),
+                    contentDescription = stringResource(R.string.subject_icon),
+                    tint = Color(subjectColor.getContrastingColorForText())
+                )
+                Text(
+                    text = subject.name,
+                    color = Color(subjectColor.getContrastingColorForText()),
+                    style = Typography.labelMedium
+                )
+            }
         }
     }
 }
@@ -413,10 +510,8 @@ fun ExamCard(
         ),
         shape = RoundedCornerShape(15.dp),
         onClick = { onExamClicked(subject.plannerId, exam.subjectId, exam.id) }) {
-        Column(
-
-        ) {
-            Row (
+        Column {
+            Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
@@ -461,7 +556,11 @@ fun ExamCard(
                     tint = Color(subjectColor.getContrastingColorForText())
                 )
                 Text(
-                    text = "${stringResource(R.string.grade_took)} → ${gradeStyle.getValueInDisplayStyle(exam.grade)}",
+                    text = "${stringResource(R.string.grade_took)} → ${
+                        gradeStyle.getValueInDisplayStyle(
+                            exam.grade
+                        )
+                    }",
                     color = Color(subjectColor.getContrastingColorForText()),
                     style = Typography.labelMedium
                 )

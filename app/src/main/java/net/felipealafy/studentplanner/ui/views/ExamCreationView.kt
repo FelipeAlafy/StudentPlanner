@@ -200,7 +200,7 @@ fun ExamCreationView(
             )
 
             SelectSubjectCombobox(
-                subjectId = subject.id,
+                subjectId = uiState.entryExam.subjectId,
                 subjects = planner.subjects.toList(),
                 onSubjectSelected = { id ->
                     viewModel.updateSubject(id)

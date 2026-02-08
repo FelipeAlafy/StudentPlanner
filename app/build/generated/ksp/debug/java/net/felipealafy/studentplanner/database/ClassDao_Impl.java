@@ -246,7 +246,7 @@ public final class ClassDao_Impl implements ClassDao {
   @Override
   public Flow<List<ClassTable>> getClassesByDateTime(final LocalDateTime start,
       final LocalDateTime end) {
-    final String _sql = "SELECT * FROM class WHERE start < ? AND 'end' > ? ORDER BY start ASC";
+    final String _sql = "SELECT * FROM class WHERE start < ? AND \"end\" > ? ORDER BY start ASC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 2);
     int _argIndex = 1;
     final String _tmp = __converters.dateToTimestamp(end);

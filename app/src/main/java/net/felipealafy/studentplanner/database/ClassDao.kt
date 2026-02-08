@@ -14,7 +14,7 @@ interface ClassDao {
     @Query("SELECT * FROM class ORDER BY title ASC")
     fun getAllClasses(): Flow<List<ClassTable>>
 
-    @Query("SELECT * FROM class WHERE start < :end AND 'end' > :start ORDER BY start ASC")
+    @Query("SELECT * FROM class WHERE start < :end AND \"end\" > :start ORDER BY start ASC")
     fun getClassesByDateTime(start: LocalDateTime, end: LocalDateTime): Flow<List<ClassTable>>
 
     @Insert
