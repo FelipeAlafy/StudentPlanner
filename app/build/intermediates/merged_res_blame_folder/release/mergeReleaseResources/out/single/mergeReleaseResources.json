@@ -8,16 +8,24 @@
         "source": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-main-46:/drawable/calendar_start.xml"
     },
     {
+        "merged": "net.felipealafy.studentplanner.app-release-45:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "net.felipealafy.studentplanner.app-main-46:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
         "merged": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-release-45:/drawable_outline_open_24.xml.flat",
         "source": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-main-46:/drawable/outline_open_24.xml"
+    },
+    {
+        "merged": "net.felipealafy.studentplanner.app-release-45:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "net.felipealafy.studentplanner.app-main-46:/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
     {
         "merged": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-release-45:/font_mozilla_text.ttf.flat",
         "source": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-main-46:/font/mozilla_text.ttf"
     },
     {
-        "merged": "net.felipealafy.studentplanner.app-release-45:/drawable_outline_bar_chart.xml.flat",
-        "source": "net.felipealafy.studentplanner.app-main-46:/drawable/outline_bar_chart.xml"
+        "merged": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-release-45:/drawable_outline_bar_chart.xml.flat",
+        "source": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-main-46:/drawable/outline_bar_chart.xml"
     },
     {
         "merged": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-release-45:/drawable_clock_icon.xml.flat",
@@ -68,8 +76,24 @@
         "source": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-main-46:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
+        "merged": "net.felipealafy.studentplanner.app-release-45:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "net.felipealafy.studentplanner.app-main-46:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
         "merged": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-release-45:/xml_backup_rules.xml.flat",
         "source": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-main-46:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "net.felipealafy.studentplanner.app-release-45:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "net.felipealafy.studentplanner.app-main-46:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "net.felipealafy.studentplanner.app-release-45:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "net.felipealafy.studentplanner.app-main-46:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "net.felipealafy.studentplanner.app-release-45:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "net.felipealafy.studentplanner.app-main-46:/mipmap-hdpi/ic_launcher_round.webp"
     },
     {
         "merged": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-release-45:/drawable_ic_launcher_foreground.xml.flat",
@@ -82,6 +106,14 @@
     {
         "merged": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-release-45:/font_mozilla_headline.ttf.flat",
         "source": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-main-46:/font/mozilla_headline.ttf"
+    },
+    {
+        "merged": "net.felipealafy.studentplanner.app-release-45:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "net.felipealafy.studentplanner.app-main-46:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "net.felipealafy.studentplanner.app-release-45:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "net.felipealafy.studentplanner.app-main-46:/mipmap-xxhdpi/ic_launcher.webp"
     },
     {
         "merged": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-release-45:/drawable_calendar_end.xml.flat",
@@ -104,12 +136,32 @@
         "source": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-main-46:/mipmap-mdpi/ic_launcher_round.webp"
     },
     {
+        "merged": "net.felipealafy.studentplanner.app-release-45:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "net.felipealafy.studentplanner.app-main-46:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "net.felipealafy.studentplanner.app-release-45:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "net.felipealafy.studentplanner.app-main-46:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
         "merged": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-release-45:/drawable_check_icon.xml.flat",
         "source": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-main-46:/drawable/check_icon.xml"
     },
     {
         "merged": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-release-45:/drawable_calendar_icon.xml.flat",
         "source": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-main-46:/drawable/calendar_icon.xml"
+    },
+    {
+        "merged": "net.felipealafy.studentplanner.app-release-45:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "net.felipealafy.studentplanner.app-main-46:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "net.felipealafy.studentplanner.app-release-45:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "net.felipealafy.studentplanner.app-main-46:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "net.felipealafy.studentplanner.app-release-45:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "net.felipealafy.studentplanner.app-main-46:/mipmap-hdpi/ic_launcher.webp"
     },
     {
         "merged": "/home/viktor/.gradle/daemon/8.13/net.felipealafy.studentplanner.app-release-45:/drawable_link.xml.flat",

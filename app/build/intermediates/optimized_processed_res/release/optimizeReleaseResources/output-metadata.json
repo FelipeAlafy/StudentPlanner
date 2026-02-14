@@ -12,7 +12,7 @@
       "filters": [],
       "attributes": [],
       "versionCode": 1,
-      "versionName": "0.8-SNAPSHOT",
+      "versionName": "0.9-PREVIEW",
       "outputFile": "resources-release-optimize.ap_"
     }
   ],
