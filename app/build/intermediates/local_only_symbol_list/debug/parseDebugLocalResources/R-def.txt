@@ -14,6 +14,7 @@ drawable calendar_icon
 drawable calendar_start
 drawable check_icon
 drawable clock_icon
+drawable drill_down
 drawable grade
 drawable ic_launcher_background
 drawable ic_launcher_foreground
@@ -108,6 +109,7 @@ string no_subjects_available_error_message
 string notetaking_link
 string notetaking_text
 string observation_field
+string on_access_detailed_planner_view
 string on_going_planner_progress
 string on_this_exam
 string performance

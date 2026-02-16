@@ -82,6 +82,7 @@ int drawable calendar_icon 0x7f040002
 int drawable calendar_start 0x7f040003
 int drawable check_icon 0x7f040004
 int drawable clock_icon 0x7f040005
+int drawable drill_down 0x7f040023
 int drawable grade 0x7f040006
 int drawable ic_call_answer 0x7f040007
 int drawable ic_call_answer_low 0x7f040008
@@ -372,6 +373,7 @@ int string not_selected 0x7f0a0097
 int string notetaking_link 0x7f0a0098
 int string notetaking_text 0x7f0a0099
 int string observation_field 0x7f0a009a
+int string on_access_detailed_planner_view 0x7f0a00d1
 int string on_going_planner_progress 0x7f0a009b
 int string on_this_exam 0x7f0a009c
 int string performance 0x7f0a009d

@@ -99,6 +99,9 @@ class MainActivity : ComponentActivity() {
                             },
                             onCreateExamClicked = { plannerId ->
                                 navController.navigate("${StudentPlannerViews.ExamCreationView.name}/$plannerId")
+                            },
+                            onAccessDetailedPlannerView = { _ ->
+
                             }
                         )
                     }

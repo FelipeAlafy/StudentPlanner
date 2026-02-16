@@ -88,6 +88,7 @@
     <string name="notetaking_link">Link for your note taking</string>
     <string name="notetaking_text">"Access your note: "</string>
     <string name="observation_field">Type observations here.</string>
+    <string name="on_access_detailed_planner_view">Click in here to see details of this planner.</string>
     <string name="on_going_planner_progress">Your planner progress</string>
     <string name="on_this_exam">on this exame.</string>
     <string name="performance">Your performance</string>

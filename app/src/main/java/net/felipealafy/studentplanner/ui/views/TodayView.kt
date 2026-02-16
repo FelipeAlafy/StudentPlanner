@@ -82,7 +82,8 @@ fun TodayView(
     onCreatePlannerClicked: () -> Unit,
     onCreateSubjectClicked: (plannerId: String) -> Unit,
     onCreateClassClicked: (plannerId: String) -> Unit,
-    onCreateExamClicked: (plannerId: String) -> Unit
+    onCreateExamClicked: (plannerId: String) -> Unit,
+    onAccessDetailedPlannerView: (plannerId: String) -> Unit,
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val planner = uiState.value.selectedPlanner
@@ -103,13 +104,16 @@ fun TodayView(
         return
     }
 
+    val foregroundColor = planner.color
+    val backgroundColor = foregroundColor.getForBackgroundBasedOnTitleBarColor()
+    val textColor = backgroundColor.getContrastingColorForText()
 
     val state = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val showDateSelection = remember { mutableStateOf(false) }
     ModalNavigationDrawer(
         drawerContent = {
-            val plannerColor = Color(planner.color)
+            val plannerColor = Color(backgroundColor)
             ModalDrawerSheet(
                 drawerContainerColor = DrawerDefaults.modalContainerColor.copy(
                     alpha = 1F,
@@ -130,30 +134,55 @@ fun TodayView(
                     HorizontalDivider(modifier = Modifier.padding(bottom = 5.dp))
 
                     planners.forEach {
-                        NavigationDrawerItem(
-                            label = {
-                                Text(
-                                    text = it.name,
-                                    style = Typography.labelMedium,
-                                )
-                            }, selected = uiState.value.selectedPlanner?.id == it.id, onClick = {
-                                viewModel.selectPlanner(it.id)
-                            },
-                            colors = NavigationDrawerItemDefaults.colors(
-                                selectedTextColor = Color(
-                                    it.color.getContrastingButtonColor()
-                                        .getContrastingColorForText()
+                        Row() {
+                            NavigationDrawerItem(
+                                label = {
+                                    Text(
+                                        text = it.name,
+                                        style = Typography.labelMedium,
+                                        color = Color(textColor)
+                                    )
+                                },
+                                selected = uiState.value.selectedPlanner?.id == it.id,
+                                onClick = {
+                                    viewModel.selectPlanner(it.id)
+                                },
+                                colors = NavigationDrawerItemDefaults.colors(
+                                    selectedTextColor = Color(
+                                        it.color.getContrastingButtonColor()
+                                            .getContrastingColorForText()
+                                    ),
+                                    selectedContainerColor = Color(it.color.getContrastingButtonColor()),
+                                    unselectedContainerColor = Color(it.color.getForBackgroundBasedOnTitleBarColor()).copy(
+                                        alpha = 0.5F
+                                    ),
+                                    unselectedTextColor = Color(
+                                        it.color.getForBackgroundBasedOnTitleBarColor()
+                                            .getContrastingColorForText()
+                                    ),
+                                    selectedBadgeColor = Color(
+                                        it.color
+                                            .getContrastingColorForText()
+                                            .getContrastingButtonColor()
+                                    ),
+                                    unselectedBadgeColor = Color(it.color)
+
                                 ),
-                                selectedContainerColor = Color(it.color.getContrastingButtonColor()),
-                                unselectedContainerColor = Color(it.color.getForBackgroundBasedOnTitleBarColor()).copy(
-                                    alpha = 0.5F
-                                ),
-                                unselectedTextColor = Color(
-                                    it.color.getForBackgroundBasedOnTitleBarColor()
-                                        .getContrastingColorForText()
-                                )
+                                badge = {
+                                    IconButton(
+                                        onClick = {
+                                            onAccessDetailedPlannerView(it.id)
+                                        }
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(R.drawable.drill_down),
+                                            contentDescription = stringResource(R.string.on_access_detailed_planner_view),
+                                            tint = Color(it.color.getContrastingColorForText())
+                                        )
+                                    }
+                                }
                             )
-                        )
+                        }
                         Spacer(modifier = Modifier.padding(bottom = 8.dp))
                     }
                 }
@@ -163,199 +192,202 @@ fun TodayView(
         drawerState = state
     ) {
 
-        Scaffold(topBar = {
-            val today = DateTimeFormatter.ofPattern("EEEE, dd/MM").format(uiState.value.currentDate)
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(uiState.value.selectedPlanner!!.color)
-                ), navigationIcon = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            state.apply {
-                                if (isClosed) open() else close()
-                            }
-                        }
-                    }) {
-                        Icon(
-                            Icons.Default.Menu,
-                            contentDescription = stringResource(R.string.planners_menu),
-                            tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
-
-                        )
-                    }
-                }, title = {
-                    Box(
-                        modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = today,
-                            style = Typography.labelLarge,
-                            color = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
-                        )
-                    }
-                }, actions = {
-                    Row {
+        Scaffold(
+            topBar = {
+                val today =
+                    DateTimeFormatter.ofPattern("EEEE, dd/MM").format(uiState.value.currentDate)
+                TopAppBar(
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color(foregroundColor)
+                    ), navigationIcon = {
                         IconButton(onClick = {
-                            showDateSelection.value = true
+                            scope.launch {
+                                state.apply {
+                                    if (isClosed) open() else close()
+                                }
+                            }
                         }) {
                             Icon(
-                                Icons.Default.DateRange,
-                                contentDescription = stringResource(R.string.calendars_view),
-                                tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
+                                Icons.Default.Menu,
+                                contentDescription = stringResource(R.string.planners_menu),
+                                tint = Color(textColor)
+
                             )
                         }
-                    }
-                })
-        }, floatingActionButton = {
-            var expanded by remember { mutableStateOf(false) }
-            val configuration = LocalConfiguration.current
-            val screenWidth = configuration.screenWidthDp.dp
-
-            Box {
-                if (screenWidth < 480.dp) {
-                    FloatingActionButton(
-                        onClick = { expanded = !expanded },
-                        containerColor = Color(uiState.value.selectedPlanner!!.color),
-                    ) {
-                        Icon(
-                            Icons.Default.Add,
-                            contentDescription = stringResource(R.string.add_floating_action_button),
-                            tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText()),
-                        )
-                    }
-                } else {
-                    ExtendedFloatingActionButton(
-                        onClick = { expanded = !expanded },
-                        containerColor = Color(uiState.value.selectedPlanner!!.color).copy(alpha = 0.8F),
-                        modifier = Modifier.border(
-                            width = 0.dp,
-                            color = Transparent,
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                    ) {
+                    }, title = {
+                        Box(
+                            modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = today,
+                                style = Typography.labelLarge,
+                                color = Color(textColor)
+                            )
+                        }
+                    }, actions = {
                         Row {
+                            IconButton(onClick = {
+                                showDateSelection.value = true
+                            }) {
+                                Icon(
+                                    Icons.Default.DateRange,
+                                    contentDescription = stringResource(R.string.calendars_view),
+                                    tint = Color(textColor)
+                                )
+                            }
+                        }
+                    })
+            },
+            floatingActionButton = {
+                var expanded by remember { mutableStateOf(false) }
+                val configuration = LocalConfiguration.current
+                val screenWidth = configuration.screenWidthDp.dp
+
+                Box {
+                    if (screenWidth < 480.dp) {
+                        FloatingActionButton(
+                            onClick = { expanded = !expanded },
+                            containerColor = Color(foregroundColor),
+                        ) {
                             Icon(
                                 Icons.Default.Add,
                                 contentDescription = stringResource(R.string.add_floating_action_button),
-                                tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
-                            )
-                            Text(
-                                text = stringResource(R.string.add_expanded_floating_action_button),
-                                color = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
+                                tint = Color(textColor),
                             )
                         }
+                    } else {
+                        ExtendedFloatingActionButton(
+                            onClick = { expanded = !expanded },
+                            containerColor = Color(backgroundColor),
+                            modifier = Modifier.border(
+                                width = 0.dp,
+                                color = Transparent,
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                        ) {
+                            Row {
+                                Icon(
+                                    Icons.Default.Add,
+                                    contentDescription = stringResource(R.string.add_floating_action_button),
+                                    tint = Color(textColor)
+                                )
+                                Text(
+                                    text = stringResource(R.string.add_expanded_floating_action_button),
+                                    color = Color(textColor)
+                                )
+                            }
+                        }
+                    }
+
+
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false },
+                        containerColor = Transparent,
+                        tonalElevation = 0.dp,
+                        shadowElevation = 0.dp
+                    ) {
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(R.drawable.planner),
+                                    contentDescription = stringResource(R.string.new_planner),
+                                    tint = Color(textColor)
+                                )
+                            },
+                            text = {
+                                Text(
+                                    stringResource(R.string.new_planner),
+                                    color = Color(textColor)
+                                )
+                            },
+                            onClick = {
+                                onCreatePlannerClicked()
+                                expanded = false
+                            }, modifier = Modifier.background(
+                                color = Color(foregroundColor),
+                                shape = RoundedCornerShape(30.dp)
+                            )
+                        )
+                        Spacer(Modifier.padding(top = 8.dp))
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(R.drawable.subject),
+                                    contentDescription = stringResource(R.string.new_subject),
+                                    tint = Color(textColor)
+                                )
+                            },
+                            text = {
+                                Text(
+                                    stringResource(R.string.new_subject),
+                                    color = Color(textColor)
+                                )
+                            },
+                            onClick = {
+                                onCreateSubjectClicked(planner.id)
+                                expanded = false
+                            }, modifier = Modifier.background(
+                                color = Color(foregroundColor),
+                                shape = RoundedCornerShape(30.dp)
+                            )
+                        )
+                        Spacer(Modifier.padding(top = 8.dp))
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(R.drawable.resource_class),
+                                    contentDescription = stringResource(R.string.new_resource_class),
+                                    tint = Color(textColor)
+                                )
+                            },
+                            text = {
+                                Text(
+                                    stringResource(R.string.new_resource_class),
+                                    color = Color(textColor)
+                                )
+                            },
+                            onClick = {
+                                Log.i("TodayView", "id: ${planner.id} name: ${planner.name}")
+                                onCreateClassClicked(planner.id)
+                                expanded = false
+                            },
+                            modifier = Modifier.background(
+                                color = Color(foregroundColor),
+                                shape = RoundedCornerShape(30.dp)
+                            )
+                        )
+                        Spacer(Modifier.padding(top = 8.dp))
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(R.drawable.grade),
+                                    contentDescription = stringResource(R.string.grade),
+                                    tint = Color(textColor)
+                                )
+                            },
+                            text = {
+                                Text(
+                                    stringResource(R.string.insert_grade),
+                                    color = Color(textColor)
+                                )
+                            },
+                            onClick = {
+                                onCreateExamClicked(planner.id)
+                                expanded = false
+                            }, modifier = Modifier.background(
+                                color = Color(foregroundColor),
+                                shape = RoundedCornerShape(30.dp)
+                            )
+                        )
                     }
                 }
-
-
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false },
-                    containerColor = Transparent,
-                    tonalElevation = 0.dp,
-                    shadowElevation = 0.dp
-                ) {
-                    DropdownMenuItem(
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(R.drawable.planner),
-                                contentDescription = stringResource(R.string.new_planner),
-                                tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
-                            )
-                        },
-                        text = {
-                            Text(
-                                stringResource(R.string.new_planner),
-                                color = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
-                            )
-                        },
-                        onClick = {
-                            onCreatePlannerClicked()
-                            expanded = false
-                        }, modifier = Modifier.background(
-                            color = Color(uiState.value.selectedPlanner!!.color),
-                            shape = RoundedCornerShape(30.dp)
-                        )
-                    )
-                    Spacer(Modifier.padding(top = 8.dp))
-                    DropdownMenuItem(
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(R.drawable.subject),
-                                contentDescription = stringResource(R.string.new_subject),
-                                tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
-                            )
-                        },
-                        text = {
-                            Text(
-                                stringResource(R.string.new_subject),
-                                color = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
-                            )
-                        },
-                        onClick = {
-                            onCreateSubjectClicked(planner.id)
-                            expanded = false
-                        }, modifier = Modifier.background(
-                            color = Color(uiState.value.selectedPlanner!!.color),
-                            shape = RoundedCornerShape(30.dp)
-                        )
-                    )
-                    Spacer(Modifier.padding(top = 8.dp))
-                    DropdownMenuItem(
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(R.drawable.resource_class),
-                                contentDescription = stringResource(R.string.new_resource_class),
-                                tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
-                            )
-                        },
-                        text = {
-                            Text(
-                                stringResource(R.string.new_resource_class),
-                                color = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
-                            )
-                        },
-                        onClick = {
-                            Log.i("TodayView", "id: ${planner.id} name: ${planner.name}")
-                            onCreateClassClicked(planner.id)
-                            expanded = false
-                        },
-                        modifier = Modifier.background(
-                            color = Color(uiState.value.selectedPlanner!!.color),
-                            shape = RoundedCornerShape(30.dp)
-                        )
-                    )
-                    Spacer(Modifier.padding(top = 8.dp))
-                    DropdownMenuItem(
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(R.drawable.grade),
-                                contentDescription = stringResource(R.string.grade),
-                                tint = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
-                            )
-                        },
-                        text = {
-                            Text(
-                                stringResource(R.string.insert_grade),
-                                color = Color(uiState.value.selectedPlanner!!.color.getContrastingColorForText())
-                            )
-                        },
-                        onClick = {
-                            onCreateExamClicked(planner.id)
-                            expanded = false
-                        }, modifier = Modifier.background(
-                            color = Color(uiState.value.selectedPlanner!!.color),
-                            shape = RoundedCornerShape(30.dp)
-                        )
-                    )
-                }
-            }
-        }) { innerPadding ->
+            }) { innerPadding ->
             Column(
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
-                    .background(color = Color(planner.color).copy(0.1F))
+                    .background(color = Color(backgroundColor))
             ) {
                 if (showDateSelection.value) {
                     DatePickerDialog(
@@ -369,12 +401,12 @@ fun TodayView(
                         onDateSelected = { dateMillis ->
                             viewModel.updateTodaySelection(dateMillis)
                         },
-                        backgroundColor = uiState.value.selectedPlanner!!.color
+                        backgroundColor = foregroundColor
                     )
                 }
 
                 CalendarView(
-                    selectedColor = planner.color,
+                    selectedColor = foregroundColor,
                     uiState = uiState.value,
                     onStudentClassClicked = onStudentClassClicked,
                     onExamClicked = onExamClicked
