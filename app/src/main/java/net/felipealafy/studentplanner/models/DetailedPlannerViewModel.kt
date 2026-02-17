@@ -20,6 +20,7 @@ import net.felipealafy.studentplanner.ui.views.getExamsAverage
 data class UiStateDetailedPlanner(
     val planner: Planner? = null,
     val plannerProgress: Float = 0F,
+    val passedSubjectsCount: Int = 0,
     val isLoading: Boolean = false
 )
 
@@ -67,6 +68,7 @@ class DetailedPlannerViewModel(
         UiStateDetailedPlanner(
             planner = enrichedPlanner,
             plannerProgress = plannerProgress,
+            passedSubjectsCount = passedSubjectsCount,
             isLoading = false
         )
 

@@ -148,7 +148,7 @@ fun TopPlannerCard(planner: Planner, uiState: UiStateDetailedPlanner) {
             planner = planner
         )
         ProgressIndicator(percentage = uiState.plannerProgress, planner = planner)
-        SubjectsFinished(planner = planner)
+        SubjectsFinished(countOfFinishedSubjects = uiState.passedSubjectsCount, planner = planner)
         Spacer(modifier = Modifier.padding(bottom = 4.dp))
         AverageGradeForAllSubjects(
             average = 85F,
@@ -181,10 +181,10 @@ fun AverageGradeForAllSubjects(
 }
 
 @Composable
-private fun SubjectsFinished(planner: Planner) {
+private fun SubjectsFinished(countOfFinishedSubjects: Int, planner: Planner) {
     Text(
         text = stringResource(R.string.subjects_done) +
-                " ${5} ${stringResource(R.string.subjects)}.",
+                " ${countOfFinishedSubjects} ${stringResource(R.string.subjects)}.",
         style = Typography.labelLarge,
         color = Color(planner.color.getContrastingColorForText())
     )
