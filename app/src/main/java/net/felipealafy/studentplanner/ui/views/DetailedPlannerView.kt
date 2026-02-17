@@ -51,7 +51,8 @@ import net.felipealafy.studentplanner.ui.theme.colorPallet
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailedPlannerView(
-    viewModel: DetailedPlannerViewModel
+    viewModel: DetailedPlannerViewModel,
+    onReturnToPreviousView: () -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val planner = uiState.value.planner
@@ -91,7 +92,7 @@ fun DetailedPlannerView(
                     containerColor = Color(planner.color)
                 ),
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = { onReturnToPreviousView }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Default.ArrowBack,
                             contentDescription = stringResource(R.string.back_to_past_view),

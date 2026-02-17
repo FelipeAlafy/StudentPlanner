@@ -111,7 +111,10 @@ class MainActivity : ComponentActivity() {
                     ) {
                         val viewModel: DetailedPlannerViewModel =
                             viewModel(factory = AppViewModelProvider.Factory)
-                        DetailedPlannerView(viewModel)
+                        DetailedPlannerView(
+                            viewModel = viewModel,
+                            onReturnToPreviousView = { navController.popBackStack() }
+                        )
                     }
 
                     composable(
