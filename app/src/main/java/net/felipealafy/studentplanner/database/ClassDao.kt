@@ -14,6 +14,9 @@ interface ClassDao {
     @Query("SELECT * FROM class ORDER BY title ASC")
     fun getAllClasses(): Flow<List<ClassTable>>
 
+    @Query("SELECT * FROM class WHERE subjectId IN (SELECT id FROM subject WHERE plannerId = :plannerId)")
+    fun getAllClassesOfAPlanner(plannerId: String): Flow<List<ClassTable>>
+
     @Query("SELECT * FROM class WHERE start < :end AND \"end\" > :start ORDER BY start ASC")
     fun getClassesByDateTime(start: LocalDateTime, end: LocalDateTime): Flow<List<ClassTable>>
 

@@ -23,7 +23,7 @@ fun Float.getPercentageFromZeroToOne(): Float {
 }
 
 fun Float.getPercentageFromZeroToOneHundred(): Float {
-    if (this < 1) return this * 100
+    if (this <= 1) return this * 100
     return this
 }
 

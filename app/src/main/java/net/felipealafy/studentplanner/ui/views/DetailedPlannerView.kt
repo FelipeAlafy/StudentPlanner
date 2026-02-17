@@ -45,6 +45,7 @@ import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.Planner
 import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.models.DetailedPlannerViewModel
+import net.felipealafy.studentplanner.models.UiStateDetailedPlanner
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
 import java.time.LocalDateTime
@@ -72,6 +73,7 @@ fun DetailedPlannerView(
         }
         return
     }
+    val subjects = planner.subjects
 
 
     Scaffold(
@@ -112,37 +114,20 @@ fun DetailedPlannerView(
             )
         }
     ) { innerPadding ->
-        val subjects = listOf(
-            Subject(
-                plannerId = "0",
-                name = "Orientação a objetos",
-                color = colorPallet[2][3],
-                start = LocalDateTime.now(),
-                end = LocalDateTime.now()
-            ),
-            Subject(
-                plannerId = "0",
-                name = "Sistema Gerenciador de Banco de Dados",
-                color = colorPallet[1][2],
-                start = LocalDateTime.now(),
-                end = LocalDateTime.now(),
-            )
-        )
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color(planner.color).copy(0.3F))
                 .padding(innerPadding)
         ) {
-            TopPlannerCard(planner)
+            TopPlannerCard(planner, uiState.value)
             SubjectsColumn(subjects = subjects, planner = planner)
         }
     }
 }
 
 @Composable
-fun TopPlannerCard(planner: Planner) {
+fun TopPlannerCard(planner: Planner, uiState: UiStateDetailedPlanner) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -162,7 +147,7 @@ fun TopPlannerCard(planner: Planner) {
             title = stringResource(R.string.on_going_planner_progress),
             planner = planner
         )
-        ProgressIndicator(percentage = .75F, planner = planner)
+        ProgressIndicator(percentage = uiState.plannerProgress, planner = planner)
         SubjectsFinished(planner = planner)
         Spacer(modifier = Modifier.padding(bottom = 4.dp))
         AverageGradeForAllSubjects(
@@ -212,19 +197,15 @@ fun ProgressIndicator(percentage: Float, planner: Planner) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         ProgressIndicatorWithPercentage(percentage, planner = planner)
-
     }
 }
 
 @Composable
 private fun ProgressIndicatorWithPercentage(percentage: Float, planner: Planner) {
-
     Row {
         ProgressBar(percentage = percentage, planner = planner)
         PercentageText(percentage = percentage, planner = planner)
     }
-
-
 }
 
 @Composable
@@ -232,7 +213,7 @@ fun ProgressBar(percentage: Float, planner: Planner) {
     val contrastColor = Color(planner.color.getContrastingColorForProgressIndicator())
     LinearProgressIndicator(
         progress = {
-            percentage.getPercentageFromZeroToOne()
+            percentage
         },
         color = ProgressIndicatorDefaults.linearColor.copy(
             alpha = 1F,
@@ -258,7 +239,7 @@ fun PercentageText(percentage: Float, planner: Planner) {
 }
 
 @Composable
-fun SubjectsColumn(subjects: List<Subject>, planner: Planner) {
+fun SubjectsColumn(subjects: Array<Subject>, planner: Planner) {
     LazyColumn {
         items(subjects) { subject ->
             SubjectCard(subject = subject, planner = planner)
@@ -296,7 +277,7 @@ private fun SubjectCardComponents(subject: Subject, planner: Planner) {
         Spacer(modifier = Modifier.padding(top = 4.dp))
         AverageGrade(
             subject = subject,
-            displayStyle = GradeStyle.FROM_ZERO_TO_ONE_HUNDRED,
+            displayStyle = planner.gradeDisplayStyle,
             planner = planner
         )
         Spacer(modifier = Modifier.padding(top = 8.dp))

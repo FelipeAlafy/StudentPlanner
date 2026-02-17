@@ -244,6 +244,81 @@ public final class ClassDao_Impl implements ClassDao {
   }
 
   @Override
+  public Flow<List<ClassTable>> getAllClassesOfAPlanner(final String plannerId) {
+    final String _sql = "SELECT * FROM class WHERE subjectId IN (SELECT id FROM subject WHERE plannerId = ?)";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindString(_argIndex, plannerId);
+    return CoroutinesRoom.createFlow(__db, false, new String[] {"class",
+        "subject"}, new Callable<List<ClassTable>>() {
+      @Override
+      @NonNull
+      public List<ClassTable> call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfSubjectId = CursorUtil.getColumnIndexOrThrow(_cursor, "subjectId");
+          final int _cursorIndexOfTitle = CursorUtil.getColumnIndexOrThrow(_cursor, "title");
+          final int _cursorIndexOfStart = CursorUtil.getColumnIndexOrThrow(_cursor, "start");
+          final int _cursorIndexOfEnd = CursorUtil.getColumnIndexOrThrow(_cursor, "end");
+          final int _cursorIndexOfNoteTakingLink = CursorUtil.getColumnIndexOrThrow(_cursor, "noteTakingLink");
+          final int _cursorIndexOfObservation = CursorUtil.getColumnIndexOrThrow(_cursor, "observation");
+          final List<ClassTable> _result = new ArrayList<ClassTable>(_cursor.getCount());
+          while (_cursor.moveToNext()) {
+            final ClassTable _item;
+            final String _tmpId;
+            _tmpId = _cursor.getString(_cursorIndexOfId);
+            final String _tmpSubjectId;
+            _tmpSubjectId = _cursor.getString(_cursorIndexOfSubjectId);
+            final String _tmpTitle;
+            _tmpTitle = _cursor.getString(_cursorIndexOfTitle);
+            final LocalDateTime _tmpStart;
+            final String _tmp;
+            if (_cursor.isNull(_cursorIndexOfStart)) {
+              _tmp = null;
+            } else {
+              _tmp = _cursor.getString(_cursorIndexOfStart);
+            }
+            final LocalDateTime _tmp_1 = __converters.fromTimestamp(_tmp);
+            if (_tmp_1 == null) {
+              throw new IllegalStateException("Expected NON-NULL 'java.time.LocalDateTime', but it was NULL.");
+            } else {
+              _tmpStart = _tmp_1;
+            }
+            final LocalDateTime _tmpEnd;
+            final String _tmp_2;
+            if (_cursor.isNull(_cursorIndexOfEnd)) {
+              _tmp_2 = null;
+            } else {
+              _tmp_2 = _cursor.getString(_cursorIndexOfEnd);
+            }
+            final LocalDateTime _tmp_3 = __converters.fromTimestamp(_tmp_2);
+            if (_tmp_3 == null) {
+              throw new IllegalStateException("Expected NON-NULL 'java.time.LocalDateTime', but it was NULL.");
+            } else {
+              _tmpEnd = _tmp_3;
+            }
+            final String _tmpNoteTakingLink;
+            _tmpNoteTakingLink = _cursor.getString(_cursorIndexOfNoteTakingLink);
+            final String _tmpObservation;
+            _tmpObservation = _cursor.getString(_cursorIndexOfObservation);
+            _item = new ClassTable(_tmpId,_tmpSubjectId,_tmpTitle,_tmpStart,_tmpEnd,_tmpNoteTakingLink,_tmpObservation);
+            _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
   public Flow<List<ClassTable>> getClassesByDateTime(final LocalDateTime start,
       final LocalDateTime end) {
     final String _sql = "SELECT * FROM class WHERE start < ? AND \"end\" > ? ORDER BY start ASC";

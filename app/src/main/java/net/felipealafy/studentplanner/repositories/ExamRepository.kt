@@ -14,6 +14,18 @@ class ExamRepository(private val dao : ExamDao) {
         return dao.getExams(subjectId = subjectId).map { it.toDomainModel() }
     }
 
+    fun getExamsByDateTime(todayStart: LocalDateTime, todayEnd: LocalDateTime): Flow<List<Exam>> {
+        return dao.getExamsByDateTime(todayStart = todayStart, todayEnd = todayEnd).map { it.toDomainModel() }
+    }
+
+    fun getExamById(id: String): Flow<List<Exam>> {
+        return dao.getExamById(id = id).map { it.toDomainModel() }
+    }
+
+    fun getAllExamsOfAPlanner(plannerId: String): Flow<List<Exam>> {
+        return dao.getExamsByPlannerId(plannerId = plannerId).map { it.toDomainModel() }
+    }
+
     suspend fun insert(exam: Exam) {
         dao.insert(examTable = exam.toDatabaseEntry())
     }
@@ -24,13 +36,5 @@ class ExamRepository(private val dao : ExamDao) {
 
     suspend fun delete(exam: Exam) {
         dao.delete(examTable = exam.toDatabaseEntry())
-    }
-
-    fun getExamsByDateTime(todayStart: LocalDateTime, todayEnd: LocalDateTime): Flow<List<Exam>> {
-        return dao.getExamsByDateTime(todayStart = todayStart, todayEnd = todayEnd).map { it.toDomainModel() }
-    }
-
-    fun getExamById(id: String): Flow<List<Exam>> {
-        return dao.getExamById(id = id).map { it.toDomainModel() }
     }
 }

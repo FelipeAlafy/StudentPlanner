@@ -39,7 +39,9 @@ object AppViewModelProvider {
             DetailedPlannerViewModel(
                 savedStateHandle = this.createSavedStateHandle(),
                 plannerRepository = app.plannerRepository,
-                subjectRepository = app.subjectRepository
+                subjectRepository = app.subjectRepository,
+                classRepository = app.classRepository,
+                examRepository = app.examRepository
             )
         }
 
