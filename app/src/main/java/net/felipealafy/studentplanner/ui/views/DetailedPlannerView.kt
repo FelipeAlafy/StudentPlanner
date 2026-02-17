@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,6 +44,7 @@ import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.Planner
 import net.felipealafy.studentplanner.datamodels.Subject
+import net.felipealafy.studentplanner.models.DetailedPlannerViewModel
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
 import java.time.LocalDateTime
@@ -49,7 +52,28 @@ import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailedPlannerView(planner: Planner) {
+fun DetailedPlannerView(
+    viewModel: DetailedPlannerViewModel
+) {
+    val uiState = viewModel.uiState.collectAsState()
+    val planner = uiState.value.planner
+    if (planner == null) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White),
+            contentAlignment = Alignment.Center
+        ) {
+            if (uiState.value.isLoading) {
+                CircularProgressIndicator()
+            } else {
+                Text(text = "No planners available.")
+            }
+        }
+        return
+    }
+
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -369,17 +393,4 @@ fun SubjectTitle(title: String, subject: Subject) {
         maxLines = 2,
         overflow = TextOverflow.Ellipsis
     )
-}
-
-
-@Preview
-@Composable
-private fun DetailedPlannerViewPreview() {
-    val planner = Planner(
-        id = UUID.randomUUID().toString(),
-        name = "CC",
-        color = colorPallet[6][0],
-        minimumGradeToPass = 70F
-    )
-    DetailedPlannerView(planner)
 }
