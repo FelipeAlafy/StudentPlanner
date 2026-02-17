@@ -21,6 +21,7 @@ data class UiStateDetailedPlanner(
     val planner: Planner? = null,
     val plannerProgress: Float = 0F,
     val passedSubjectsCount: Int = 0,
+    val globalAverage: Float = 0F,
     val isLoading: Boolean = false
 )
 
@@ -63,12 +64,18 @@ class DetailedPlannerViewModel(
         }
         val plannerProgress = passedSubjectsCount.toFloat() / totalSubjects
 
-
+        val globalAverage = if (exams.isEmpty()) {
+            0F
+        } else {
+            val grade = exams.sumOf { it.grade.toDouble() }.toFloat()
+            grade / exams.size
+        }
 
         UiStateDetailedPlanner(
             planner = enrichedPlanner,
             plannerProgress = plannerProgress,
             passedSubjectsCount = passedSubjectsCount,
+            globalAverage = globalAverage,
             isLoading = false
         )
 

@@ -38,7 +38,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.datamodels.GradeStyle
@@ -48,8 +47,6 @@ import net.felipealafy.studentplanner.models.DetailedPlannerViewModel
 import net.felipealafy.studentplanner.models.UiStateDetailedPlanner
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
-import java.time.LocalDateTime
-import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -151,9 +148,9 @@ fun TopPlannerCard(planner: Planner, uiState: UiStateDetailedPlanner) {
         SubjectsFinished(countOfFinishedSubjects = uiState.passedSubjectsCount, planner = planner)
         Spacer(modifier = Modifier.padding(bottom = 4.dp))
         AverageGradeForAllSubjects(
-            average = 85F,
-            displayStyle = GradeStyle.FROM_A_TO_F_WITH_E,
-            percentage = 75F,
+            average = uiState.globalAverage,
+            displayStyle = planner.gradeDisplayStyle,
+            plannerProgress = uiState.plannerProgress,
             planner = planner
         )
         Spacer(modifier = Modifier.padding(bottom = 8.dp))
@@ -164,12 +161,12 @@ fun TopPlannerCard(planner: Planner, uiState: UiStateDetailedPlanner) {
 fun AverageGradeForAllSubjects(
     average: Float,
     displayStyle: GradeStyle = GradeStyle.FROM_ZERO_TO_ONE_HUNDRED,
-    percentage: Float,
+    plannerProgress: Float,
     planner: Planner
 ) {
     Text(
         text = "${
-            if (percentage.getPercentageFromZeroToOneHundred() == 100F) {
+            if (plannerProgress.getPercentageFromZeroToOneHundred() == 100F) {
                 stringResource(R.string.average_grade_for_all_subjects_done)
             } else {
                 stringResource(R.string.average_grade_for_all_subjects)
