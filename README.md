@@ -6,11 +6,8 @@ Diferente de agendas genéricas, este projeto foca em **estabilidade de dados**,
 
 ## **📸 Screenshots**
 
-| Dashboard (Hoje) | Detalhes da Matéria | Indicador de Notas |
-| :---- | :---- | :---- |
-| \<img src="docs/screenshots/home.png" width="250" /\> | \<img src="docs/screenshots/DetailedPlannerView.png" width="250" /\> | \<img src="docs/screenshots/grade\_indicator.png" width="250" /\> |
-
-*(Nota: Adicione as imagens na pasta docs/screenshots)*
+<img src="docs/screenshots/home.jpg"/>
+<img src="docs/screenshots/DetailedPlannerView.png" />
 
 ## **🛠 Tech Stack**
 
@@ -80,7 +77,9 @@ fun ClassTable.toDomainModel(): StudentClass {
 * \[ \] **Injeção de Dependência:** Finalizar migração para Dagger Hilt.  
 * \[ \] **Testes:** Implementar Testes Unitários para Repositories e UI Tests.  
 * \[ \] **Desktop:** Migração para Desktop visando suporte nativo a Linux (GTK).  
-* \[ \] **CI/CD:** Pipelines de build automatizado via GitHub Actions.
+* \[x\] **CI/CD:** Pipelines de build automatizado via GitHub Actions.
+* \[ \] **Publicar no F-Droid**
+* \[ \] **Publicar na Playstore**
 
 ## **🤝 Como Contribuir**
 
