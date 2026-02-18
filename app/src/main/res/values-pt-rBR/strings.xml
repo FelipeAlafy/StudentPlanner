@@ -38,14 +38,14 @@
     <string name="subject">matéria</string>
     <string name="subjects">matérias</string>
     <string name="go_on_edit_mode_for_planner">Começar a editar esse organizador</string>
-    <string name="average_grade_for_all_subjects">Sua média para suas matérias foi</string>
-    <string name="average_grade_for_all_subjects_done">Sua média para suas matérias foi</string>
+    <string name="average_grade_for_all_subjects">Sua média nas matérias é</string>
+    <string name="average_grade_for_all_subjects_done">Sua média nas matérias foi</string>
     <string name="date_icon">Ícone de calendário</string>
     <string name="subject_period">Período da matéria</string>
     <string name="from">De</string>
     <string name="to">até</string>
     <string name="average_grade_for_subject">Nota média</string>
-    <string name="classes_taken">Você tirou</string>
+    <string name="classes_taken">Você teve</string>
     <string name="classes">Aulas</string>
     <string name="class_icon">Ícone de uma página cheia de textos.</string>
     <string name="approved">Passou</string>

@@ -14,6 +14,9 @@ interface ExamDao {
     @Query("SELECT * FROM exam WHERE subjectId = :subjectId")
     fun getExams(subjectId: String): Flow<List<ExamTable>>
 
+    @Query("SELECT * FROM exam WHERE subjectId IN (SELECT id FROM subject WHERE plannerId = :plannerId)")
+    fun getExamsByPlannerId(plannerId: String): Flow<List<ExamTable>>
+
     @Insert
     suspend fun insert(examTable: ExamTable)
 

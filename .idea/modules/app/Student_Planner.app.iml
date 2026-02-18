@@ -17,4 +17,9 @@
       </configuration>
     </facet>
   </component>
+  <component name="ModuleClassLoaderOverlays">
+    <paths>
+      <option value="/tmp/overlay16725598998587757212" />
+    </paths>
+  </component>
 </module>

@@ -99,20 +99,22 @@ class MainActivity : ComponentActivity() {
                             },
                             onCreateExamClicked = { plannerId ->
                                 navController.navigate("${StudentPlannerViews.ExamCreationView.name}/$plannerId")
+                            },
+                            onAccessDetailedPlannerView = { plannerId ->
+                                navController.navigate("${StudentPlannerViews.DetailedPlannerView.name}/$plannerId")
                             }
                         )
                     }
-                    composable(
+                    composable (
                         route = "${StudentPlannerViews.DetailedPlannerView.name}/{plannerId}",
                         arguments = listOf(navArgument("plannerId") { type = NavType.StringType })
                     ) {
                         val viewModel: DetailedPlannerViewModel =
                             viewModel(factory = AppViewModelProvider.Factory)
-                        val plannerState = viewModel.uiState.collectAsState()
-
-                        plannerState.value?.let { planner ->
-                            DetailedPlannerView(planner = planner)
-                        }
+                        DetailedPlannerView(
+                            viewModel = viewModel,
+                            onReturnToPreviousView = { navController.popBackStack() }
+                        )
                     }
 
                     composable(

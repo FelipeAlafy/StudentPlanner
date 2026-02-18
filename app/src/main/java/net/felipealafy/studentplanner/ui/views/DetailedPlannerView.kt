@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,26 +31,49 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.Planner
 import net.felipealafy.studentplanner.datamodels.Subject
+import net.felipealafy.studentplanner.models.DetailedPlannerViewModel
+import net.felipealafy.studentplanner.models.UiStateDetailedPlanner
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
-import java.time.LocalDateTime
-import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailedPlannerView(planner: Planner) {
+fun DetailedPlannerView(
+    viewModel: DetailedPlannerViewModel,
+    onReturnToPreviousView: () -> Unit
+) {
+    val uiState = viewModel.uiState.collectAsState()
+    val planner = uiState.value.planner
+    if (planner == null) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White),
+            contentAlignment = Alignment.Center
+        ) {
+            if (uiState.value.isLoading) {
+                CircularProgressIndicator()
+            } else {
+                Text(text = "No planners available.")
+            }
+        }
+        return
+    }
+    val subjects = planner.subjects
+
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -68,7 +92,7 @@ fun DetailedPlannerView(planner: Planner) {
                     containerColor = Color(planner.color)
                 ),
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = { onReturnToPreviousView() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Default.ArrowBack,
                             contentDescription = stringResource(R.string.back_to_past_view),
@@ -88,37 +112,20 @@ fun DetailedPlannerView(planner: Planner) {
             )
         }
     ) { innerPadding ->
-        val subjects = listOf(
-            Subject(
-                plannerId = "0",
-                name = "Orientação a objetos",
-                color = colorPallet[2][3],
-                start = LocalDateTime.now(),
-                end = LocalDateTime.now()
-            ),
-            Subject(
-                plannerId = "0",
-                name = "Sistema Gerenciador de Banco de Dados",
-                color = colorPallet[1][2],
-                start = LocalDateTime.now(),
-                end = LocalDateTime.now(),
-            )
-        )
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color(planner.color).copy(0.3F))
                 .padding(innerPadding)
         ) {
-            TopPlannerCard(planner)
+            TopPlannerCard(planner, uiState.value)
             SubjectsColumn(subjects = subjects, planner = planner)
         }
     }
 }
 
 @Composable
-fun TopPlannerCard(planner: Planner) {
+fun TopPlannerCard(planner: Planner, uiState: UiStateDetailedPlanner) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -138,13 +145,13 @@ fun TopPlannerCard(planner: Planner) {
             title = stringResource(R.string.on_going_planner_progress),
             planner = planner
         )
-        ProgressIndicator(percentage = .75F, planner = planner)
-        SubjectsFinished(planner = planner)
+        ProgressIndicator(percentage = uiState.plannerProgress, planner = planner)
+        SubjectsFinished(countOfFinishedSubjects = uiState.passedSubjectsCount, planner = planner)
         Spacer(modifier = Modifier.padding(bottom = 4.dp))
         AverageGradeForAllSubjects(
-            average = 85F,
-            displayStyle = GradeStyle.FROM_A_TO_F_WITH_E,
-            percentage = 75F,
+            average = uiState.globalAverage,
+            displayStyle = planner.gradeDisplayStyle,
+            plannerProgress = uiState.plannerProgress,
             planner = planner
         )
         Spacer(modifier = Modifier.padding(bottom = 8.dp))
@@ -155,12 +162,12 @@ fun TopPlannerCard(planner: Planner) {
 fun AverageGradeForAllSubjects(
     average: Float,
     displayStyle: GradeStyle = GradeStyle.FROM_ZERO_TO_ONE_HUNDRED,
-    percentage: Float,
+    plannerProgress: Float,
     planner: Planner
 ) {
     Text(
         text = "${
-            if (percentage.getPercentageFromZeroToOneHundred() == 100F) {
+            if (plannerProgress.getPercentageFromZeroToOneHundred() == 100F) {
                 stringResource(R.string.average_grade_for_all_subjects_done)
             } else {
                 stringResource(R.string.average_grade_for_all_subjects)
@@ -172,10 +179,10 @@ fun AverageGradeForAllSubjects(
 }
 
 @Composable
-private fun SubjectsFinished(planner: Planner) {
+private fun SubjectsFinished(countOfFinishedSubjects: Int, planner: Planner) {
     Text(
         text = stringResource(R.string.subjects_done) +
-                " ${5} ${stringResource(R.string.subjects)}.",
+                " ${countOfFinishedSubjects} ${stringResource(R.string.subjects)}.",
         style = Typography.labelLarge,
         color = Color(planner.color.getContrastingColorForText())
     )
@@ -188,19 +195,15 @@ fun ProgressIndicator(percentage: Float, planner: Planner) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         ProgressIndicatorWithPercentage(percentage, planner = planner)
-
     }
 }
 
 @Composable
 private fun ProgressIndicatorWithPercentage(percentage: Float, planner: Planner) {
-
     Row {
         ProgressBar(percentage = percentage, planner = planner)
         PercentageText(percentage = percentage, planner = planner)
     }
-
-
 }
 
 @Composable
@@ -208,7 +211,7 @@ fun ProgressBar(percentage: Float, planner: Planner) {
     val contrastColor = Color(planner.color.getContrastingColorForProgressIndicator())
     LinearProgressIndicator(
         progress = {
-            percentage.getPercentageFromZeroToOne()
+            percentage
         },
         color = ProgressIndicatorDefaults.linearColor.copy(
             alpha = 1F,
@@ -234,7 +237,7 @@ fun PercentageText(percentage: Float, planner: Planner) {
 }
 
 @Composable
-fun SubjectsColumn(subjects: List<Subject>, planner: Planner) {
+fun SubjectsColumn(subjects: Array<Subject>, planner: Planner) {
     LazyColumn {
         items(subjects) { subject ->
             SubjectCard(subject = subject, planner = planner)
@@ -272,7 +275,7 @@ private fun SubjectCardComponents(subject: Subject, planner: Planner) {
         Spacer(modifier = Modifier.padding(top = 4.dp))
         AverageGrade(
             subject = subject,
-            displayStyle = GradeStyle.FROM_ZERO_TO_ONE_HUNDRED,
+            displayStyle = planner.gradeDisplayStyle,
             planner = planner
         )
         Spacer(modifier = Modifier.padding(top = 8.dp))
@@ -289,6 +292,7 @@ fun AverageGrade(subject: Subject, displayStyle: GradeStyle, planner: Planner) {
     } else {
         Color(colorPallet[4][0])
     }
+
     val isApproved = if (average >= planner.minimumGradeToPass) {
         stringResource(R.string.approved)
     } else {
@@ -369,17 +373,4 @@ fun SubjectTitle(title: String, subject: Subject) {
         maxLines = 2,
         overflow = TextOverflow.Ellipsis
     )
-}
-
-
-@Preview
-@Composable
-private fun DetailedPlannerViewPreview() {
-    val planner = Planner(
-        id = UUID.randomUUID().toString(),
-        name = "CC",
-        color = colorPallet[6][0],
-        minimumGradeToPass = 70F
-    )
-    DetailedPlannerView(planner)
 }

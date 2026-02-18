@@ -38,7 +38,10 @@ object AppViewModelProvider {
             val app = (this[APPLICATION_KEY] as StudentPlannerApplication)
             DetailedPlannerViewModel(
                 savedStateHandle = this.createSavedStateHandle(),
-                plannerRepository = app.plannerRepository
+                plannerRepository = app.plannerRepository,
+                subjectRepository = app.subjectRepository,
+                classRepository = app.classRepository,
+                examRepository = app.examRepository
             )
         }
 

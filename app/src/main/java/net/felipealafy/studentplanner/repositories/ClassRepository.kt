@@ -10,10 +10,11 @@ import net.felipealafy.studentplanner.tablemodels.ClassTable
 import java.time.LocalDateTime
 
 class ClassRepository(private val dao: ClassDao) {
-    fun getAllClasses() : Flow<List<StudentClass>> =
-        dao.getAllClasses().map { listTable ->
-            listTable.toDomainModel()
+    fun getAllClassesOfAPlanner(plannerId: String): Flow<List<StudentClass>> {
+        return dao.getAllClassesOfAPlanner(plannerId).map {
+            it.toDomainModel()
         }
+    }
 
     fun getClassesBySubjectId(subjectId: String): Flow<List<StudentClass>> {
         return dao.getClassesBySubjectId(subjectId = subjectId).map {
