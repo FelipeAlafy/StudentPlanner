@@ -103,8 +103,8 @@ fun GradeStyle.getGradePhrase(value: Float) = when (this) {
     }
 }
 fun GradeStyle.getValueInDisplayStyleForAverage(average: Float) = when (this) {
-    FROM_ZERO_TO_ONE_HUNDRED -> (average.getPercentageFromZeroToOneHundred()).toString()
-    FROM_ZERO_TO_TEN -> average.getPercentageFromZeroToOne().toString()
+    FROM_ZERO_TO_ONE_HUNDRED -> "%.0f".format(average.getPercentageFromZeroToOneHundred())
+    FROM_ZERO_TO_TEN -> "%.2f".format(average.getPercentageFromZeroToOneHundred())
     // A: 90-100, B: 80-89, C: 70-79, D: 60-69, F: <60
     FROM_A_TO_F -> when ((average.getPercentageFromZeroToOneHundred()).toInt()) {
         in 90..100 -> "A"

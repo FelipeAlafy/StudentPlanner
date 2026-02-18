@@ -292,6 +292,7 @@ fun AverageGrade(subject: Subject, displayStyle: GradeStyle, planner: Planner) {
     } else {
         Color(colorPallet[4][0])
     }
+
     val isApproved = if (average >= planner.minimumGradeToPass) {
         stringResource(R.string.approved)
     } else {
