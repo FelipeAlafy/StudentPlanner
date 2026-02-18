@@ -92,7 +92,7 @@ fun DetailedPlannerView(
                     containerColor = Color(planner.color)
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { onReturnToPreviousView }) {
+                    IconButton(onClick = { onReturnToPreviousView() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Default.ArrowBack,
                             contentDescription = stringResource(R.string.back_to_past_view),

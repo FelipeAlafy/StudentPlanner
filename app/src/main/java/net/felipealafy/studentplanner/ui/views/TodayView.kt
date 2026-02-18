@@ -134,7 +134,7 @@ fun TodayView(
                     HorizontalDivider(modifier = Modifier.padding(bottom = 5.dp))
 
                     planners.forEach {
-                        Row() {
+                        Row {
                             NavigationDrawerItem(
                                 label = {
                                     Text(
@@ -153,9 +153,7 @@ fun TodayView(
                                             .getContrastingColorForText()
                                     ),
                                     selectedContainerColor = Color(it.color.getContrastingButtonColor()),
-                                    unselectedContainerColor = Color(it.color.getForBackgroundBasedOnTitleBarColor()).copy(
-                                        alpha = 0.5F
-                                    ),
+                                    unselectedContainerColor = Color(it.color.getForBackgroundBasedOnTitleBarColor()),
                                     unselectedTextColor = Color(
                                         it.color.getForBackgroundBasedOnTitleBarColor()
                                             .getContrastingColorForText()
@@ -191,7 +189,6 @@ fun TodayView(
         gesturesEnabled = true,
         drawerState = state
     ) {
-
         Scaffold(
             topBar = {
                 val today =
@@ -278,7 +275,6 @@ fun TodayView(
                             }
                         }
                     }
-
 
                     DropdownMenu(
                         expanded = expanded,
@@ -605,11 +601,11 @@ fun ExamCard(
 fun getFormattedDateTimeForClassCard(studentClass: StudentClass): String {
     return " ${stringResource(R.string.class_period)} " + "${
         studentClass.start.format(
-            DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            DateTimeFormatter.ofPattern("dd MMM hh:mm")
         )
     } → ${
         studentClass.end.format(
-            DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            DateTimeFormatter.ofPattern("dd MMM hh:mm")
         )
     }"
 }
