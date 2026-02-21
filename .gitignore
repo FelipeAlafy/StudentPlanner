@@ -1,0 +1,32 @@
+# --- Android Studio & IntelliJ ---
+.idea/
+*.iml
+.gradle/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.keystore
+# Exceto a configuração de dicionário e estilo de código se quiser compartilhar
+!.idea/dictionaries
+!.idea/codeStyles
+
+# --- Gradle ---
+build/
+*/build/
+.stacktrace/
+
+# --- Kotlin ---
+/bin/
+/gen/
+
+# --- OS Specific (Linux/macOS) ---
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.out
+
+# --- Logs ---
+*.log
