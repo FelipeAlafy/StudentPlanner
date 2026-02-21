@@ -26,7 +26,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,8 +39,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.datamodels.Subject
-import net.felipealafy.studentplanner.models.StudentClassUiState
 import net.felipealafy.studentplanner.models.StudentClassCreationViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
@@ -49,9 +46,7 @@ import net.felipealafy.studentplanner.ui.theme.DarkGray
 import net.felipealafy.studentplanner.ui.theme.LightGray
 import net.felipealafy.studentplanner.ui.theme.Red
 import net.felipealafy.studentplanner.ui.theme.Typography
-import net.felipealafy.studentplanner.ui.theme.bluePallet
 import net.felipealafy.studentplanner.ui.theme.colorPallet
-import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -353,25 +348,4 @@ fun EditableTextEntry(
         },
         shape = RoundedCornerShape(25.dp),
     )
-}
-
-@Composable
-private fun getCurrentSubject(
-    uiState: State<StudentClassUiState>,
-): Subject {
-    return if (uiState.value.currentClassEntry.subjectId.isNotEmpty()) {
-        val subjects = uiState.value.availableSubjects.filter {
-            it.id == uiState.value.currentClassEntry.subjectId
-        }
-        subjects.first()
-    } else {
-        Subject(
-            name = stringResource(R.string.select_a_subject),
-            id = "",
-            plannerId = "",
-            color = bluePallet[0],
-            start = LocalDateTime.now(),
-            end = LocalDateTime.now(),
-        )
-    }
 }

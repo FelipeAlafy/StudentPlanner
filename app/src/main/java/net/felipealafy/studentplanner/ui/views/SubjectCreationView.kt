@@ -37,7 +37,6 @@ import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.models.SubjectCreationViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
-import net.felipealafy.studentplanner.ui.theme.DarkGray
 import net.felipealafy.studentplanner.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,7 +51,7 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturn: () -> Uni
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White), // Cor de fundo neutra
+                .background(Color.White),
             contentAlignment = Alignment.Center
         ) {
             if (uiState.collectAsState().value.isDataLoading) {
