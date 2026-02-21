@@ -52,7 +52,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -237,11 +238,12 @@ fun TodayView(
             },
             floatingActionButton = {
                 var expanded by remember { mutableStateOf(false) }
-                val configuration = LocalConfiguration.current
-                val screenWidth = configuration.screenWidthDp.dp
+                val density = LocalDensity.current
+                val screenWidth = with (density) { LocalWindowInfo.current.containerSize.width.toDp()}
+                val isExpanded = screenWidth < 600.dp
 
                 Box {
-                    if (screenWidth < 480.dp) {
+                    if (isExpanded) {
                         FloatingActionButton(
                             onClick = { expanded = !expanded },
                             containerColor = Color(foregroundColor),
