@@ -1,43 +1,43 @@
 package net.felipealafy.studentplanner
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import dagger.hilt.android.AndroidEntryPoint
 import net.felipealafy.studentplanner.models.DetailedExamViewModel
 import net.felipealafy.studentplanner.models.DetailedPlannerViewModel
 import net.felipealafy.studentplanner.models.DetailedStudentClassViewModel
 import net.felipealafy.studentplanner.models.EditExamViewModel
 import net.felipealafy.studentplanner.models.EditStudentClassViewModel
+import net.felipealafy.studentplanner.models.ExamCreationViewModel
 import net.felipealafy.studentplanner.models.MainViewModel
 import net.felipealafy.studentplanner.models.PlannerModel
 import net.felipealafy.studentplanner.models.StudentClassCreationViewModel
 import net.felipealafy.studentplanner.models.SubjectCreationViewModel
 import net.felipealafy.studentplanner.models.TodayViewModel
-import net.felipealafy.studentplanner.ui.AppViewModelProvider
 import net.felipealafy.studentplanner.ui.theme.StudentPlannerTheme
 import net.felipealafy.studentplanner.ui.views.DetailedClassView
+import net.felipealafy.studentplanner.ui.views.DetailedExamView
 import net.felipealafy.studentplanner.ui.views.DetailedPlannerView
+import net.felipealafy.studentplanner.ui.views.EditExamView
+import net.felipealafy.studentplanner.ui.views.EditStudentClassView
+import net.felipealafy.studentplanner.ui.views.ExamCreationView
 import net.felipealafy.studentplanner.ui.views.PlannerCreationView
 import net.felipealafy.studentplanner.ui.views.StudentClassCreationView
 import net.felipealafy.studentplanner.ui.views.StudentPlannerViews
 import net.felipealafy.studentplanner.ui.views.SubjectCreationView
 import net.felipealafy.studentplanner.ui.views.TodayView
 import net.felipealafy.studentplanner.ui.views.WelcomeView
-import net.felipealafy.studentplanner.models.ExamCreationViewModel
-import net.felipealafy.studentplanner.ui.views.DetailedExamView
-import net.felipealafy.studentplanner.ui.views.EditExamView
-import net.felipealafy.studentplanner.ui.views.EditStudentClassView
-import net.felipealafy.studentplanner.ui.views.ExamCreationView
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             StudentPlannerTheme {
                 val navController = rememberNavController()
-                val mainViewModel: MainViewModel = viewModel(factory = AppViewModelProvider.Factory)
+                val mainViewModel: MainViewModel = hiltViewModel()
 
                 NavHost(
                     navController = navController,
@@ -60,8 +60,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable(route = StudentPlannerViews.SetupView.name) {
-                        val viewModel: PlannerModel =
-                            viewModel(factory = AppViewModelProvider.Factory)
+                        val viewModel: PlannerModel = hiltViewModel()
                         PlannerCreationView(
                             viewModel = viewModel,
                             backOnClick = {
@@ -74,15 +73,10 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(route = StudentPlannerViews.TodayView.name) {
 
-                        val todayViewModel: TodayViewModel =
-                            viewModel(factory = AppViewModelProvider.Factory)
+                        val todayViewModel: TodayViewModel = hiltViewModel()
                         TodayView(
                             viewModel = todayViewModel,
                             onStudentClassClicked = { subjectId, studentClassId ->
-                                Log.i(
-                                    "MainActitity -> TodayView",
-                                    "id: $subjectId name: $studentClassId"
-                                )
                                 navController.navigate("${StudentPlannerViews.DetailedClassView.name}/$subjectId/$studentClassId")
                             },
                             onExamClicked = { plannerId, subjectId, examId ->
@@ -109,8 +103,7 @@ class MainActivity : ComponentActivity() {
                         route = "${StudentPlannerViews.DetailedPlannerView.name}/{plannerId}",
                         arguments = listOf(navArgument("plannerId") { type = NavType.StringType })
                     ) {
-                        val viewModel: DetailedPlannerViewModel =
-                            viewModel(factory = AppViewModelProvider.Factory)
+                        val viewModel: DetailedPlannerViewModel = hiltViewModel()
                         DetailedPlannerView(
                             viewModel = viewModel,
                             onReturnToPreviousView = { navController.popBackStack() }
@@ -121,8 +114,7 @@ class MainActivity : ComponentActivity() {
                         route = "${StudentPlannerViews.StudentClassCreationView.name}/{plannerId}",
                         arguments = listOf(navArgument("plannerId") { type = NavType.StringType })
                     ) {
-                        val viewModel: StudentClassCreationViewModel =
-                            viewModel(factory = AppViewModelProvider.Factory)
+                        val viewModel: StudentClassCreationViewModel = hiltViewModel()
                         StudentClassCreationView(
                             studentClassCreationViewModel = viewModel,
                             onReturnAction = { navController.popBackStack() })
@@ -132,8 +124,7 @@ class MainActivity : ComponentActivity() {
                         route = "${StudentPlannerViews.SubjectCreationView.name}/{plannerId}",
                         arguments = listOf(navArgument("plannerId") { type = NavType.StringType })
                     ) {
-                        val viewModel: SubjectCreationViewModel =
-                            viewModel(factory = AppViewModelProvider.Factory)
+                        val viewModel: SubjectCreationViewModel = hiltViewModel()
                         SubjectCreationView(viewModel, { navController.popBackStack() })
                     }
 
@@ -144,8 +135,7 @@ class MainActivity : ComponentActivity() {
                             navArgument("studentClassId") { type = NavType.StringType }
                         )
                     ) {
-                        val viewModel: DetailedStudentClassViewModel =
-                            viewModel(factory = AppViewModelProvider.Factory)
+                        val viewModel: DetailedStudentClassViewModel = hiltViewModel()
                         DetailedClassView(
                             viewModel,
                             onEditMode = { plannerId, subjectId, classId ->
@@ -160,8 +150,7 @@ class MainActivity : ComponentActivity() {
                             navArgument("plannerId") { type = NavType.StringType },
                         )
                     ) {
-                        val viewModel: ExamCreationViewModel =
-                            viewModel(factory = AppViewModelProvider.Factory)
+                        val viewModel: ExamCreationViewModel = hiltViewModel()
                         ExamCreationView(
                             viewModel = viewModel,
                             onReturnAction = { navController.popBackStack() })
@@ -175,8 +164,7 @@ class MainActivity : ComponentActivity() {
                             navArgument("examId") { type = NavType.StringType }
                         ),
                     ) {
-                        val viewModel: DetailedExamViewModel =
-                            viewModel(factory = AppViewModelProvider.Factory)
+                        val viewModel: DetailedExamViewModel = hiltViewModel()
                         DetailedExamView(
                             viewModel = viewModel,
                             onEditMode = { plannerId, subjectId, examId ->
@@ -193,8 +181,7 @@ class MainActivity : ComponentActivity() {
                             navArgument("classId") { type = NavType.StringType }
                         )
                     ) {
-                        val viewModel: EditStudentClassViewModel =
-                            viewModel(factory = AppViewModelProvider.Factory)
+                        val viewModel: EditStudentClassViewModel = hiltViewModel()
 
                         EditStudentClassView(
                             viewModel = viewModel,
@@ -216,7 +203,7 @@ class MainActivity : ComponentActivity() {
                             navArgument("examId") { type = NavType.StringType }
                         )
                     ) {
-                        val viewModel: EditExamViewModel = viewModel(factory = AppViewModelProvider.Factory)
+                        val viewModel: EditExamViewModel = hiltViewModel()
                         EditExamView(
                             viewModel = viewModel,
                             onReturnAction = {
