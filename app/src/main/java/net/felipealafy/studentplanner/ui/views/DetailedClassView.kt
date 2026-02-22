@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.datamodels.StudentClass
 import net.felipealafy.studentplanner.datamodels.Subject
-import net.felipealafy.studentplanner.models.DetailedStudentClassViewModel
+import net.felipealafy.studentplanner.viewmodels.DetailedStudentClassViewModel
 import net.felipealafy.studentplanner.ui.theme.Typography
 import androidx.compose.runtime.collectAsState
 

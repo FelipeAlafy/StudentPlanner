@@ -36,7 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -44,7 +43,7 @@ import kotlinx.coroutines.flow.collectLatest
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.Subject
-import net.felipealafy.studentplanner.models.ExamCreationViewModel
+import net.felipealafy.studentplanner.viewmodels.ExamCreationViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
 import net.felipealafy.studentplanner.ui.theme.Typography

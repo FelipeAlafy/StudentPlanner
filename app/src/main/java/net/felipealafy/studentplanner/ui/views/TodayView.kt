@@ -63,8 +63,8 @@ import net.felipealafy.studentplanner.datamodels.Exam
 import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.StudentClass
 import net.felipealafy.studentplanner.datamodels.Subject
-import net.felipealafy.studentplanner.models.TodayUiState
-import net.felipealafy.studentplanner.models.TodayViewModel
+import net.felipealafy.studentplanner.viewmodels.TodayUiState
+import net.felipealafy.studentplanner.viewmodels.TodayViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DatePickerDialog
 import net.felipealafy.studentplanner.ui.theme.Transparent
 import net.felipealafy.studentplanner.ui.theme.Typography

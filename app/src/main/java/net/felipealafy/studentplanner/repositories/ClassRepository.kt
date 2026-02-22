@@ -8,8 +8,11 @@ import net.felipealafy.studentplanner.mappers.toDatabaseEntity
 import net.felipealafy.studentplanner.mappers.toDomainModel
 import net.felipealafy.studentplanner.tablemodels.ClassTable
 import java.time.LocalDateTime
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ClassRepository(private val dao: ClassDao) {
+@Singleton
+class ClassRepository @Inject constructor(private val dao: ClassDao) {
     fun getAllClassesOfAPlanner(plannerId: String): Flow<List<StudentClass>> {
         return dao.getAllClassesOfAPlanner(plannerId).map {
             it.toDomainModel()

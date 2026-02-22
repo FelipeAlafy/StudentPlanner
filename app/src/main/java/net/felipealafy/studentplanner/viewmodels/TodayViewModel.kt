@@ -1,32 +1,27 @@
-package net.felipealafy.studentplanner.models
+package net.felipealafy.studentplanner.viewmodels
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.Planner
-import net.felipealafy.studentplanner.datamodels.StudentClass
 import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.repositories.ClassRepository
 import net.felipealafy.studentplanner.repositories.ExamRepository
 import net.felipealafy.studentplanner.repositories.PlannerRepository
 import net.felipealafy.studentplanner.repositories.SubjectRepository
-import net.felipealafy.studentplanner.ui.theme.colorPallet
 import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneOffset
+import javax.inject.Inject
 
 data class TodayUiState(
     val selectedPlanner: Planner? = null,
@@ -36,7 +31,8 @@ data class TodayUiState(
     val isLoading: Boolean = true
 )
 
-class TodayViewModel(
+@HiltViewModel
+class TodayViewModel @Inject constructor(
     plannerRepository: PlannerRepository,
     subjectRepository: SubjectRepository,
     classRepository: ClassRepository,

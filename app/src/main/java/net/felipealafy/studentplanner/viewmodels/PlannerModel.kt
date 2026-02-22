@@ -1,7 +1,8 @@
-package net.felipealafy.studentplanner.models
+package net.felipealafy.studentplanner.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -13,8 +14,10 @@ import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.Planner
 import net.felipealafy.studentplanner.repositories.PlannerRepository
 import net.felipealafy.studentplanner.ui.theme.colorPallet
+import javax.inject.Inject
 
-class PlannerModel(private val repository: PlannerRepository): ViewModel() {
+@HiltViewModel
+class PlannerModel @Inject constructor(private val repository: PlannerRepository): ViewModel() {
     private val _planner = MutableStateFlow(Planner(
         name = "",
         color = 0xFFA7C7E7,

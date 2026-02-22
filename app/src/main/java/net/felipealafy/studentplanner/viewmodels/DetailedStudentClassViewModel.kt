@@ -1,6 +1,5 @@
-package net.felipealafy.studentplanner.models
+package net.felipealafy.studentplanner.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -13,9 +12,8 @@ import net.felipealafy.studentplanner.repositories.ClassRepository
 import net.felipealafy.studentplanner.repositories.SubjectRepository
 import java.time.LocalDateTime
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.onEach
-import net.felipealafy.studentplanner.ui.theme.colorPallet
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 data class DetailedStudentClassUiState(
     val classEntry: StudentClass? = null,
@@ -23,7 +21,8 @@ data class DetailedStudentClassUiState(
     val isLoading: Boolean = true
 )
 
-class DetailedStudentClassViewModel (
+@HiltViewModel
+class DetailedStudentClassViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     classRepository: ClassRepository,
     subjectRepository: SubjectRepository

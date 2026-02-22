@@ -1,8 +1,9 @@
-package net.felipealafy.studentplanner.models
+package net.felipealafy.studentplanner.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -21,6 +22,7 @@ import net.felipealafy.studentplanner.ui.theme.colorPallet
 import net.felipealafy.studentplanner.ui.views.parseToDateTime
 import java.time.LocalDateTime
 import java.util.UUID
+import javax.inject.Inject
 
 data class SubjectCreationUiState(
     val currentSubjectEntry: Subject,
@@ -32,7 +34,8 @@ data class SubjectCreationUiState(
     var showingEndDateTimeSelectionDialog: Boolean = false
 )
 
-class SubjectCreationViewModel(
+@HiltViewModel
+class SubjectCreationViewModel @Inject constructor(
     val savedStateHandle: SavedStateHandle,
     private val subjectRepository: SubjectRepository,
     private val plannerRepository: PlannerRepository

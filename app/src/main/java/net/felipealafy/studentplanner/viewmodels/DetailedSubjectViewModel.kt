@@ -1,8 +1,9 @@
-package net.felipealafy.studentplanner.models
+package net.felipealafy.studentplanner.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -13,6 +14,7 @@ import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.repositories.ClassRepository
 import net.felipealafy.studentplanner.repositories.ExamRepository
 import net.felipealafy.studentplanner.repositories.SubjectRepository
+import javax.inject.Inject
 
 data class SubjectDetailsUiState(
     val subject: Subject? = null,
@@ -20,7 +22,8 @@ data class SubjectDetailsUiState(
     val exams: List<Exam> = emptyList()
 )
 
-class DetailedSubjectViewModel(
+@HiltViewModel
+class DetailedSubjectViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     subjectRepository: SubjectRepository,
     classRepository: ClassRepository,

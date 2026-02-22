@@ -43,8 +43,8 @@ import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.Planner
 import net.felipealafy.studentplanner.datamodels.Subject
-import net.felipealafy.studentplanner.models.DetailedPlannerViewModel
-import net.felipealafy.studentplanner.models.UiStateDetailedPlanner
+import net.felipealafy.studentplanner.viewmodels.DetailedPlannerViewModel
+import net.felipealafy.studentplanner.viewmodels.UiStateDetailedPlanner
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
 

@@ -1,8 +1,9 @@
-package net.felipealafy.studentplanner.models
+package net.felipealafy.studentplanner.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -15,7 +16,7 @@ import net.felipealafy.studentplanner.repositories.ClassRepository
 import net.felipealafy.studentplanner.repositories.ExamRepository
 import net.felipealafy.studentplanner.repositories.PlannerRepository
 import net.felipealafy.studentplanner.repositories.SubjectRepository
-import net.felipealafy.studentplanner.ui.views.getExamsAverage
+import javax.inject.Inject
 
 data class UiStateDetailedPlanner(
     val planner: Planner? = null,
@@ -25,8 +26,8 @@ data class UiStateDetailedPlanner(
     val isLoading: Boolean = false
 )
 
-
-class DetailedPlannerViewModel(
+@HiltViewModel
+class DetailedPlannerViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val plannerRepository: PlannerRepository,
     private val subjectRepository: SubjectRepository,

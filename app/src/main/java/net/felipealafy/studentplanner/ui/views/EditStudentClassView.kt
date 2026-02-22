@@ -36,7 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.models.EditStudentClassViewModel
+import net.felipealafy.studentplanner.viewmodels.EditStudentClassViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
 import net.felipealafy.studentplanner.ui.theme.Typography

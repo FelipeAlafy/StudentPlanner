@@ -5,17 +5,17 @@ import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import net.felipealafy.studentplanner.StudentPlannerApplication
-import net.felipealafy.studentplanner.models.DetailedExamViewModel
-import net.felipealafy.studentplanner.models.DetailedPlannerViewModel
-import net.felipealafy.studentplanner.models.DetailedStudentClassViewModel
-import net.felipealafy.studentplanner.models.EditExamViewModel
-import net.felipealafy.studentplanner.models.EditStudentClassViewModel
-import net.felipealafy.studentplanner.models.ExamCreationViewModel
-import net.felipealafy.studentplanner.models.MainViewModel
-import net.felipealafy.studentplanner.models.PlannerModel
-import net.felipealafy.studentplanner.models.StudentClassCreationViewModel
-import net.felipealafy.studentplanner.models.SubjectCreationViewModel
-import net.felipealafy.studentplanner.models.TodayViewModel
+import net.felipealafy.studentplanner.viewmodels.DetailedExamViewModel
+import net.felipealafy.studentplanner.viewmodels.DetailedPlannerViewModel
+import net.felipealafy.studentplanner.viewmodels.DetailedStudentClassViewModel
+import net.felipealafy.studentplanner.viewmodels.EditExamViewModel
+import net.felipealafy.studentplanner.viewmodels.EditStudentClassViewModel
+import net.felipealafy.studentplanner.viewmodels.ExamCreationViewModel
+import net.felipealafy.studentplanner.viewmodels.MainViewModel
+import net.felipealafy.studentplanner.viewmodels.PlannerModel
+import net.felipealafy.studentplanner.viewmodels.StudentClassCreationViewModel
+import net.felipealafy.studentplanner.viewmodels.SubjectCreationViewModel
+import net.felipealafy.studentplanner.viewmodels.TodayViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {

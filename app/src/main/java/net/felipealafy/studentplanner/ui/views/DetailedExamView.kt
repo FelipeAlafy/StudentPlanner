@@ -47,7 +47,7 @@ import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.datamodels.Exam
 import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.Subject
-import net.felipealafy.studentplanner.models.DetailedExamViewModel
+import net.felipealafy.studentplanner.viewmodels.DetailedExamViewModel
 import net.felipealafy.studentplanner.ui.theme.GradeIndicatorProgressGradient
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet

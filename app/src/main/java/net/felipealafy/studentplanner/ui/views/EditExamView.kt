@@ -43,7 +43,7 @@ import kotlinx.coroutines.flow.collectLatest
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.Subject
-import net.felipealafy.studentplanner.models.EditExamViewModel
+import net.felipealafy.studentplanner.viewmodels.EditExamViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
 import net.felipealafy.studentplanner.ui.theme.Typography

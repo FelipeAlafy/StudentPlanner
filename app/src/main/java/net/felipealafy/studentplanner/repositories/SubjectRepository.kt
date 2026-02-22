@@ -7,8 +7,11 @@ import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.mappers.toDatabaseEntry
 import net.felipealafy.studentplanner.mappers.toDomainModel
 import net.felipealafy.studentplanner.tablemodels.SubjectTable
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class SubjectRepository (private val dao: SubjectDao) {
+@Singleton
+class SubjectRepository @Inject constructor(private val dao: SubjectDao) {
 
     fun getAllSubjects(): Flow<List<Subject>> = dao.getAllSubjects().map { it.toDomainModel() }
     fun getAllSubjectsOfAPlanner(plannerId: String): Flow<List<Subject>> =

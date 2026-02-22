@@ -1,9 +1,10 @@
-package net.felipealafy.studentplanner.models
+package net.felipealafy.studentplanner.viewmodels
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,6 +20,7 @@ import net.felipealafy.studentplanner.repositories.ExamRepository
 import net.felipealafy.studentplanner.repositories.PlannerRepository
 import net.felipealafy.studentplanner.repositories.SubjectRepository
 import java.time.LocalDateTime
+import javax.inject.Inject
 
 data class DetailedExamUiState(
     val planner: Planner? = null,
@@ -27,7 +29,8 @@ data class DetailedExamUiState(
     var isLoading: Boolean = false
 )
 
-class DetailedExamViewModel(
+@HiltViewModel
+class DetailedExamViewModel @Inject constructor(
     savedStateHandler: SavedStateHandle,
     plannerRepository: PlannerRepository,
     subjectRepository: SubjectRepository,

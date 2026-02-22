@@ -29,7 +29,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,13 +50,11 @@ import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.Planner
 import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.datamodels.getResourceLocation
-import net.felipealafy.studentplanner.models.StudentClassUiState
 import net.felipealafy.studentplanner.ui.theme.DarkGray
 import net.felipealafy.studentplanner.ui.theme.LightGray
 import net.felipealafy.studentplanner.ui.theme.Red
 import net.felipealafy.studentplanner.ui.theme.Transparent
 import net.felipealafy.studentplanner.ui.theme.Typography
-import net.felipealafy.studentplanner.ui.theme.bluePallet
 import net.felipealafy.studentplanner.ui.theme.colorPallet
 import java.time.LocalDateTime
 

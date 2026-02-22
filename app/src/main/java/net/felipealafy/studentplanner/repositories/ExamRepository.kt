@@ -8,8 +8,11 @@ import net.felipealafy.studentplanner.datamodels.Exam
 import net.felipealafy.studentplanner.mappers.toDatabaseEntry
 import net.felipealafy.studentplanner.mappers.toDomainModel
 import java.time.LocalDateTime
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ExamRepository(private val dao : ExamDao) {
+@Singleton
+class ExamRepository @Inject constructor(private val dao : ExamDao) {
     fun getExams(subjectId: String): Flow<List<Exam>> {
         return dao.getExams(subjectId = subjectId).map { it.toDomainModel() }
     }
