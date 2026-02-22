@@ -70,11 +70,11 @@ fun ClassTable.toDomainModel(): StudentClass {
 * **Totalmente Offline:** Seus dados pertencem a você. Armazenamento local seguro.
 
 ## **🗺 Roadmap**
-* \[ \] **Detailed Planner View**
+* \[x\] **Detailed Planner View**
 * \[ \] **Detailed Subject View**
 * \[ \] **Planner Editing View**
 * \[ \] **Subject Editing View**
-* \[ \] **Injeção de Dependência:** Finalizar migração para Dagger Hilt.  
+* \[x\] **Injeção de Dependência:** Finalizar migração para Dagger Hilt.  
 * \[ \] **Testes:** Implementar Testes Unitários para Repositories e UI Tests.  
 * \[ \] **Desktop:** Migração para Desktop visando suporte nativo a Linux (GTK).  
 * \[x\] **CI/CD:** Pipelines de build automatizado via GitHub Actions.
