@@ -2,6 +2,7 @@ package net.felipealafy.studentplanner.tablemodels
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.time.LocalDateTime
 import java.util.UUID
@@ -14,7 +15,8 @@ import java.util.UUID
             childColumns = ["subjectId"],
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
+    indices = [Index(value = ["subjectId"])]
 )
 data class ExamTable(
     @PrimaryKey
