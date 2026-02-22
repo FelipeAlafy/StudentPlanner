@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "net.felipealafy.studentplanner.app-mergeDebugResources-42:/values-v30/values-v30.xml",
+            "outputFile": "net.felipealafy.studentplanner.app-mergeDebugResources-47:/values-v30/values-v30.xml",
             "map": [
                 {
-                    "source": "/home/viktor/.gradle/caches/8.13/transforms/28a0b7dbf7735e6dc2790a655a296eaf/transformed/material3-release/res/values-v30/values-v30.xml",
+                    "source": "/home/viktor/.gradle/caches/8.13/transforms/6a9459db9739a3094fd2afd23334fd75/transformed/material3-release/res/values-v30/values-v30.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
