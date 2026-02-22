@@ -42,15 +42,16 @@ public final class StudentPlannerDatabase_Impl extends StudentPlannerDatabase {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS `planner` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `color` INTEGER NOT NULL, `minimumGradeToPass` REAL NOT NULL, `gradeDisplayStyle` TEXT NOT NULL, PRIMARY KEY(`id`))");
-        db.execSQL("CREATE INDEX IF NOT EXISTS `index_planner_id` ON `planner` (`id`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `subject` (`id` TEXT NOT NULL, `plannerId` TEXT NOT NULL, `name` TEXT NOT NULL, `color` INTEGER NOT NULL, `start` TEXT NOT NULL, `end` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`plannerId`) REFERENCES `planner`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_subject_plannerId` ON `subject` (`plannerId`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `class` (`id` TEXT NOT NULL, `subjectId` TEXT NOT NULL, `title` TEXT NOT NULL, `start` TEXT NOT NULL, `end` TEXT NOT NULL, `noteTakingLink` TEXT NOT NULL, `observation` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`subjectId`) REFERENCES `subject`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_class_subjectId` ON `class` (`subjectId`)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS `index_class_start_end` ON `class` (`start`, `end`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `exam` (`id` TEXT NOT NULL, `subjectId` TEXT NOT NULL, `name` TEXT NOT NULL, `grade` REAL NOT NULL, `gradeWeight` REAL NOT NULL, `start` TEXT NOT NULL, `end` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`subjectId`) REFERENCES `subject`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_exam_subjectId` ON `exam` (`subjectId`)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS `index_exam_start_end` ON `exam` (`start`, `end`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a89768817b265f51b5052ee5810fd4e8')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7cf1ee8d7d90dfbf19b5befddba86125')");
       }
 
       @Override
@@ -110,8 +111,7 @@ public final class StudentPlannerDatabase_Impl extends StudentPlannerDatabase {
         _columnsPlanner.put("minimumGradeToPass", new TableInfo.Column("minimumGradeToPass", "REAL", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsPlanner.put("gradeDisplayStyle", new TableInfo.Column("gradeDisplayStyle", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysPlanner = new HashSet<TableInfo.ForeignKey>(0);
-        final HashSet<TableInfo.Index> _indicesPlanner = new HashSet<TableInfo.Index>(1);
-        _indicesPlanner.add(new TableInfo.Index("index_planner_id", false, Arrays.asList("id"), Arrays.asList("ASC")));
+        final HashSet<TableInfo.Index> _indicesPlanner = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoPlanner = new TableInfo("planner", _columnsPlanner, _foreignKeysPlanner, _indicesPlanner);
         final TableInfo _existingPlanner = TableInfo.read(db, "planner");
         if (!_infoPlanner.equals(_existingPlanner)) {
@@ -147,8 +147,9 @@ public final class StudentPlannerDatabase_Impl extends StudentPlannerDatabase {
         _columnsClass.put("observation", new TableInfo.Column("observation", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysClass = new HashSet<TableInfo.ForeignKey>(1);
         _foreignKeysClass.add(new TableInfo.ForeignKey("subject", "CASCADE", "NO ACTION", Arrays.asList("subjectId"), Arrays.asList("id")));
-        final HashSet<TableInfo.Index> _indicesClass = new HashSet<TableInfo.Index>(1);
+        final HashSet<TableInfo.Index> _indicesClass = new HashSet<TableInfo.Index>(2);
         _indicesClass.add(new TableInfo.Index("index_class_subjectId", false, Arrays.asList("subjectId"), Arrays.asList("ASC")));
+        _indicesClass.add(new TableInfo.Index("index_class_start_end", false, Arrays.asList("start", "end"), Arrays.asList("ASC", "ASC")));
         final TableInfo _infoClass = new TableInfo("class", _columnsClass, _foreignKeysClass, _indicesClass);
         final TableInfo _existingClass = TableInfo.read(db, "class");
         if (!_infoClass.equals(_existingClass)) {
@@ -166,8 +167,9 @@ public final class StudentPlannerDatabase_Impl extends StudentPlannerDatabase {
         _columnsExam.put("end", new TableInfo.Column("end", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysExam = new HashSet<TableInfo.ForeignKey>(1);
         _foreignKeysExam.add(new TableInfo.ForeignKey("subject", "CASCADE", "NO ACTION", Arrays.asList("subjectId"), Arrays.asList("id")));
-        final HashSet<TableInfo.Index> _indicesExam = new HashSet<TableInfo.Index>(1);
+        final HashSet<TableInfo.Index> _indicesExam = new HashSet<TableInfo.Index>(2);
         _indicesExam.add(new TableInfo.Index("index_exam_subjectId", false, Arrays.asList("subjectId"), Arrays.asList("ASC")));
+        _indicesExam.add(new TableInfo.Index("index_exam_start_end", false, Arrays.asList("start", "end"), Arrays.asList("ASC", "ASC")));
         final TableInfo _infoExam = new TableInfo("exam", _columnsExam, _foreignKeysExam, _indicesExam);
         final TableInfo _existingExam = TableInfo.read(db, "exam");
         if (!_infoExam.equals(_existingExam)) {
@@ -177,7 +179,7 @@ public final class StudentPlannerDatabase_Impl extends StudentPlannerDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "a89768817b265f51b5052ee5810fd4e8", "2518fa2f227e88122b26f36d2cf190ce");
+    }, "7cf1ee8d7d90dfbf19b5befddba86125", "f7608616cbeaae90c37261a3b0c350ed");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
