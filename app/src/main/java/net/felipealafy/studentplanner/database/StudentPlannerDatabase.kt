@@ -11,7 +11,7 @@ import net.felipealafy.studentplanner.tablemodels.PlannerTable
 import net.felipealafy.studentplanner.tablemodels.SubjectTable
 
 @Database(
-    version = 1,
+    version = 2,
     exportSchema = true,
     entities =
         [
