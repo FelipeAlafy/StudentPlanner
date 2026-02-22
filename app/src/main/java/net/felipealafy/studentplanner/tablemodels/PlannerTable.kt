@@ -9,7 +9,6 @@ import java.util.UUID
 
 @Entity(
     tableName = "planner",
-    indices = [Index(value = ["id"])]
 )
 data class PlannerTable(
     @PrimaryKey
