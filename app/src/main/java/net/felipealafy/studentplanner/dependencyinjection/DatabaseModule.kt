@@ -2,6 +2,7 @@ package net.felipealafy.studentplanner.dependencyinjection
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,12 +20,15 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase(
         @ApplicationContext context: Context
-    ) : StudentPlannerDatabase {
+    ): StudentPlannerDatabase {
         return Room.databaseBuilder(
             context,
             StudentPlannerDatabase::class.java,
             "student_planner_db"
-        ).fallbackToDestructiveMigration().build()
+        )
+        .setJournalMode(RoomDatabase.JournalMode.WRITE_AHEAD_LOGGING)
+        .fallbackToDestructiveMigration()
+        .build()
     }
 
     @Provides

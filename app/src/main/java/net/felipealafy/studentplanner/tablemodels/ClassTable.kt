@@ -17,7 +17,10 @@ import java.util.UUID
             onDelete = CASCADE
         )
     ],
-    indices = [Index(value = ["subjectId"])]
+    indices = [
+        Index(value = ["subjectId"]),
+        Index(value = ["start", "end"])
+    ]
 )
 data class ClassTable(
     @PrimaryKey

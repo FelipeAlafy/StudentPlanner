@@ -16,7 +16,10 @@ import java.util.UUID
             onDelete = ForeignKey.CASCADE
         )
     ],
-    indices = [Index(value = ["subjectId"])]
+    indices = [
+        Index(value = ["subjectId"]),
+        Index(value = ["start", "end"])
+    ]
 )
 data class ExamTable(
     @PrimaryKey
