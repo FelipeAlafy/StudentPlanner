@@ -59,45 +59,6 @@ import net.felipealafy.studentplanner.ui.theme.colorPallet
 import java.time.LocalDateTime
 
 @Composable
-fun ClassesTaken(subject: Subject) {
-    Row {
-        Icon(
-            painter = painterResource(R.drawable.resource_class),
-            contentDescription = stringResource(R.string.class_icon)
-        )
-        Text(
-            text = "${stringResource(R.string.classes_taken)} ${subject.studentClasses.count()} ${
-                stringResource(
-                    R.string.classes
-                )
-            }.",
-            style = Typography.labelLarge,
-            color = Color(subject.color.getContrastingColorForText())
-        )
-    }
-}
-
-@Composable
-fun AverageGrade(
-    displayStyle: GradeStyle = GradeStyle.FROM_ZERO_TO_ONE_HUNDRED,
-    subject: Subject,
-    @StringRes text: Int = R.string.average_grade_for_all_subjects
-) {
-    Row {
-        Icon(
-            painter = painterResource(R.drawable.grade),
-            contentDescription = stringResource(R.string.grade)
-        )
-        Text(
-            text = stringResource(text) +
-                    " ${displayStyle.getValueInDisplayStyleForAverage(average = subject.exams.getExamsAverage())}",
-            style = Typography.labelLarge,
-            color = Color(subject.color.getContrastingColorForText())
-        )
-    }
-}
-
-@Composable
 fun SelectSubjectCombobox(
     subjectId: String,
     subjects: List<Subject>,
