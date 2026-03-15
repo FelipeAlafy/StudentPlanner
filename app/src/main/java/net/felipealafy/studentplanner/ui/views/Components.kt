@@ -58,43 +58,6 @@ import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
 import java.time.LocalDateTime
 
-
-
-
-
-
-@Composable
-fun MinimumGradeToPassInput(text: String, onValueChange: (String) -> Unit, selectedColor: Long) {
-    OutlinedTextField(
-        onValueChange = onValueChange,
-        value = text,
-        textStyle = Typography.bodyMedium,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 10.dp, end = 10.dp),
-        singleLine = true,
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedContainerColor = LightGray,
-            disabledContainerColor = LightGray,
-            errorContainerColor = Red,
-            unfocusedTextColor = Color(selectedColor.getContrastingColorForText()),
-            focusedTextColor = Color(selectedColor.getContrastingColorForText()),
-            errorTextColor = Red,
-            focusedLabelColor = DarkGray,
-            focusedBorderColor = Color(selectedColor),
-            focusedPlaceholderColor = LightGray,
-        ),
-        label = {
-            Text(
-                text = stringResource(R.string.minimum_grade_to_pass),
-                style = Typography.labelSmall,
-                color = Color(selectedColor.getContrastingColorForText())
-            )
-        },
-        shape = RoundedCornerShape(25.dp),
-    )
-}
-
 @Composable
 fun GradeInputFromZeroToOneHundred(
     text: String,
