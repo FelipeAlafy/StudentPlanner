@@ -37,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
+import net.felipealafy.studentplanner.ui.components.combobox.SelectSubjectComboBox
 import net.felipealafy.studentplanner.viewmodels.EditStudentClassViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
@@ -151,7 +152,7 @@ fun EditStudentClassView(
                     Spacer(modifier = Modifier.padding(top = 16.dp))
                 }
                 item {
-                    SelectSubjectCombobox(
+                    SelectSubjectComboBox(
                         onSubjectSelected = { id ->
                             viewModel.updateAssociatedSubject(id)
                         },
