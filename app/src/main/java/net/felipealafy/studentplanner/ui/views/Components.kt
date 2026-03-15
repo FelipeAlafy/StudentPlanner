@@ -58,57 +58,7 @@ import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
 import java.time.LocalDateTime
 
-@Composable
-fun GradeInputFromZeroToOneHundred(
-    text: String,
-    onValueChange: (String) -> Unit,
-    onValidate: () -> Unit,
-    invalidDigit: Boolean,
-    selectedColor: Long
-) {
-    OutlinedTextField(
-        onValueChange = onValueChange,
-        value = text,
-        textStyle = Typography.bodyMedium,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 10.dp, end = 10.dp)
-            .onFocusChanged {
-                if (!it.isFocused) {
-                    onValidate()
-                }
-            },
-        isError = invalidDigit,
-        singleLine = true,
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedContainerColor = LightGray,
-            disabledContainerColor = LightGray,
-            unfocusedTextColor = Color(
-                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
-            ),
-            focusedTextColor = Color(
-                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
-            ),
-            errorTextColor = Color(
-                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
-            ),
-            focusedLabelColor = Color(
-                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
-            ),
-            focusedBorderColor = Color(selectedColor),
-            focusedPlaceholderColor = LightGray,
-        ),
-        label = {
-            Text(
-                text = stringResource(R.string.insert_grade_value),
-                style = Typography.labelSmall,
-                color = Color(selectedColor.getContrastingColorForText())
-            )
-        },
-        shape = RoundedCornerShape(25.dp),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-    )
-}
+
 
 @Composable
 fun GradeInputFromZeroToTen(
