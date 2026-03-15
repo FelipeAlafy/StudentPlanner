@@ -58,52 +58,7 @@ import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
 import java.time.LocalDateTime
 
-@Composable
-fun GradeWeightInput(
-    text: String,
-    onValueChange: (String) -> Unit,
-    onValidate: () -> Unit,
-    invalidDigit: Boolean,
-    selectedColor: Long
-) {
-    OutlinedTextField(
-        onValueChange = onValueChange,
-        value = text,
-        textStyle = Typography.bodyMedium,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 10.dp, end = 10.dp)
-            .onFocusChanged {
-                if (!it.isFocused) {
-                    onValidate()
-                }
-            },
-        singleLine = true,
-        isError = invalidDigit,
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedContainerColor = LightGray,
-            disabledContainerColor = LightGray,
-            unfocusedTextColor = Color(selectedColor.getContrastingColorForText()),
-            focusedTextColor = Color(selectedColor.getContrastingColorForText()),
-            errorTextColor = Color(
-                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
-            ),
-            focusedLabelColor = Color(
-                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
-            ),
-            focusedBorderColor = Color(selectedColor),
-            focusedPlaceholderColor = LightGray,
-        ),
-        label = {
-            Text(
-                text = stringResource(R.string.insert_grade_weight),
-                style = Typography.labelSmall,
-                color = Color(selectedColor.getContrastingColorForText())
-            )
-        },
-        shape = RoundedCornerShape(25.dp),
-    )
-}
+
 
 @Composable
 fun GradeInputFromAToF(selectedColor: Long, onSelectItem: (GradeAToF) -> Unit) {

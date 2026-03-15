@@ -46,6 +46,7 @@ import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
 import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromZeroToOneHundred
 import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromZeroToTen
+import net.felipealafy.studentplanner.ui.components.grade.GradeWeightInput
 import net.felipealafy.studentplanner.viewmodels.ExamCreationViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
