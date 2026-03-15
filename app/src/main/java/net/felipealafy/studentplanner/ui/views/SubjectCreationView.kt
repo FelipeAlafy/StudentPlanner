@@ -35,6 +35,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonOpenColorSelectionDialog
+import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
+import net.felipealafy.studentplanner.ui.components.color.chooser.ColorSelectionDialog
 import net.felipealafy.studentplanner.viewmodels.SubjectCreationViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime

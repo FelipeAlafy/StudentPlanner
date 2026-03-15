@@ -34,6 +34,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonOpenColorSelectionDialog
+import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
+import net.felipealafy.studentplanner.ui.components.color.chooser.ColorSelectionDialog
+import net.felipealafy.studentplanner.ui.components.grade.GradeStyleCombobox
 import net.felipealafy.studentplanner.viewmodels.PlannerModel
 import net.felipealafy.studentplanner.ui.theme.Typography
 
