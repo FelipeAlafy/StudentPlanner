@@ -24,6 +24,7 @@ import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBack
 import net.felipealafy.studentplanner.ui.components.color.chooser.ColorSelectionDialog
 import net.felipealafy.studentplanner.ui.components.grade.GradeStyleCombobox
 import net.felipealafy.studentplanner.ui.components.grade.MinimumGradeToPassInput
+import net.felipealafy.studentplanner.ui.components.text.Input.TextInputWithColor
 import net.felipealafy.studentplanner.viewmodels.PlannerModel
 import net.felipealafy.studentplanner.ui.theme.Typography
 

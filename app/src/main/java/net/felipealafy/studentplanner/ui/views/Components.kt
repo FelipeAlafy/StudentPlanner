@@ -59,42 +59,7 @@ import net.felipealafy.studentplanner.ui.theme.colorPallet
 import java.time.LocalDateTime
 
 
-@Composable
-fun TextInputWithColor(
-    text: String,
-    onValueChange: (String) -> Unit,
-    selectedColor: Long,
-    hint: Int
-) {
-    OutlinedTextField(
-        onValueChange = onValueChange,
-        value = text,
-        textStyle = Typography.bodyMedium,
-        singleLine = true,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 10.dp, end = 10.dp),
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedContainerColor = LightGray,
-            disabledContainerColor = LightGray,
-            errorContainerColor = Red,
-            unfocusedTextColor = DarkGray,
-            focusedTextColor = DarkGray,
-            errorTextColor = Red,
-            focusedLabelColor = DarkGray,
-            focusedBorderColor = Color(selectedColor),
-            focusedPlaceholderColor = LightGray,
-        ),
-        label = {
-            Text(
-                text = stringResource(id = hint),
-                color = Color(selectedColor.getContrastingColorForText()),
-                style = Typography.labelSmall
-            )
-        },
-        shape = RoundedCornerShape(25.dp),
-    )
-}
+
 
 @Composable
 fun PlannerTitleForAnyCard(title: String, planner: Planner) {
