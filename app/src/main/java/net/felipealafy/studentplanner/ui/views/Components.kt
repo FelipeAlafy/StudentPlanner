@@ -58,20 +58,6 @@ import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
 import java.time.LocalDateTime
 
-
-
-
-
-
-@Composable
-fun SubjectTitleForAnyCard(title: String, subject: Subject) {
-    Text(
-        text = title,
-        style = Typography.bodyLarge,
-        color = Color(subject.color.getContrastingColorForText())
-    )
-}
-
 @Composable
 fun ClassesTaken(subject: Subject) {
     Row {

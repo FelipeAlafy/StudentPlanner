@@ -43,6 +43,7 @@ import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.Planner
 import net.felipealafy.studentplanner.datamodels.Subject
+import net.felipealafy.studentplanner.ui.components.text.label.PlannerTitleForAnyCard
 import net.felipealafy.studentplanner.viewmodels.DetailedPlannerViewModel
 import net.felipealafy.studentplanner.viewmodels.UiStateDetailedPlanner
 import net.felipealafy.studentplanner.ui.theme.Typography

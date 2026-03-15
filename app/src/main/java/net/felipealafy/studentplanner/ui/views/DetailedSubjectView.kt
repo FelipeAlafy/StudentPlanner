@@ -46,6 +46,7 @@ import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.datamodels.StudentClass
 import net.felipealafy.studentplanner.datamodels.Exam
+import net.felipealafy.studentplanner.ui.components.text.label.SubjectTitleForAnyCard
 import net.felipealafy.studentplanner.viewmodels.DetailedSubjectViewModel
 import net.felipealafy.studentplanner.ui.theme.Typography
 
