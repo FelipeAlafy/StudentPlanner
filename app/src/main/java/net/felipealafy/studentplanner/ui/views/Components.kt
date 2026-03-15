@@ -60,23 +60,6 @@ import java.time.LocalDateTime
 
 
 @Composable
-fun ButtonOpenColorSelectionDialog(
-    modifier: Modifier = Modifier,
-    selectedColor: Long,
-    onClick: () -> Unit
-) {
-    Button(
-        onClick = onClick,
-        modifier = modifier
-            .size(35.dp)
-            .border(width = 2.dp, color = DarkGray, shape = RoundedCornerShape(40.dp)),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color(selectedColor)
-        )
-    ) {}
-}
-
-@Composable
 fun ButtonWithBackgroundColor(
     onClick: () -> Unit,
     selectedColor: Long,
