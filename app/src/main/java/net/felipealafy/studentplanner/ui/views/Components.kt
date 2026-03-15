@@ -59,10 +59,6 @@ import net.felipealafy.studentplanner.ui.theme.colorPallet
 import java.time.LocalDateTime
 
 
-
-@Composable
-
-
 @Composable
 fun GradeInputFromAToFWithE(selectedColor: Long, onSelectItem: (GradeAToFWithE) -> Unit) {
     val textColor =
