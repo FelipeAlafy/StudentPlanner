@@ -8,8 +8,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.ui.theme.DarkGray
+import net.felipealafy.studentplanner.ui.theme.colorPallet
 
 @Composable
 fun ButtonOpenColorSelectionDialog(
@@ -25,4 +27,12 @@ fun ButtonOpenColorSelectionDialog(
             containerColor = Color(selectedColor)
         )
     ) {}
+}
+
+@Preview
+@Composable
+private fun ButtonCOpenColorSelectionDialogPreview() {
+    ButtonOpenColorSelectionDialog(
+        selectedColor = colorPallet[0][1]
+    ) { }
 }
