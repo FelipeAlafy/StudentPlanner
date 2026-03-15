@@ -61,14 +61,7 @@ import java.time.LocalDateTime
 
 
 
-@Composable
-fun PlannerTitleForAnyCard(title: String, planner: Planner) {
-    Text(
-        text = title,
-        style = Typography.bodyLarge,
-        color = Color(planner.color.getContrastingColorForText())
-    )
-}
+
 
 @Composable
 fun SubjectTitleForAnyCard(title: String, subject: Subject) {
