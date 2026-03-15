@@ -45,6 +45,7 @@ import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
 import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromAToF
+import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromAToFWithE
 import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromZeroToOneHundred
 import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromZeroToTen
 import net.felipealafy.studentplanner.ui.components.grade.GradeWeightInput
