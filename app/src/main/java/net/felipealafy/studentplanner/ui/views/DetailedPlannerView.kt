@@ -45,7 +45,7 @@ import net.felipealafy.studentplanner.datamodels.Planner
 import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.ui.components.text.label.ClassesTaken
 import net.felipealafy.studentplanner.ui.components.text.label.PlannerTitleForAnyCard
-import net.felipealafy.studentplanner.ui.components.text.label.TopAppTitle
+import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
 import net.felipealafy.studentplanner.viewmodels.DetailedPlannerViewModel
 import net.felipealafy.studentplanner.viewmodels.UiStateDetailedPlanner
 import net.felipealafy.studentplanner.ui.theme.Typography
@@ -85,7 +85,7 @@ fun DetailedPlannerView(
                         modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.Center
                     ) {
-                        TopAppTitle(
+                        TopAppBarTitle(
                             text = planner.name,
                             selectedColor = planner.color
                         )

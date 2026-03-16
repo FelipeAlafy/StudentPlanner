@@ -9,15 +9,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
 import net.felipealafy.studentplanner.ui.views.getContrastingColorForText
-import net.felipealafy.studentplanner.ui.views.getForBackgroundBasedOnTitleBarColor
 
 @Composable
-fun TopAppTitle(
+fun TopAppBarTitle(
     text: String,
     selectedColor: Long,
     modifier: Modifier = Modifier,
@@ -41,8 +39,8 @@ fun TopAppTitle(
 
 @Preview(showBackground = true)
 @Composable
-private fun TopAppBarTitlePreview() {
-    TopAppTitle(
+private fun TopAppBarBarTitlePreview() {
+    TopAppBarTitle(
         text = "Example",
         selectedColor = colorPallet[0][1]
     )

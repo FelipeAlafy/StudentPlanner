@@ -49,7 +49,7 @@ import net.felipealafy.studentplanner.datamodels.Exam
 import net.felipealafy.studentplanner.ui.components.text.label.AverageGrade
 import net.felipealafy.studentplanner.ui.components.text.label.ClassesTaken
 import net.felipealafy.studentplanner.ui.components.text.label.SubjectTitleForAnyCard
-import net.felipealafy.studentplanner.ui.components.text.label.TopAppTitle
+import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
 import net.felipealafy.studentplanner.viewmodels.DetailedSubjectViewModel
 import net.felipealafy.studentplanner.ui.theme.Typography
 
@@ -69,7 +69,7 @@ fun DetailedSubjectView(detailedSubjectViewModel: DetailedSubjectViewModel, id: 
                         modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.Center
                     ) {
-                        TopAppTitle(
+                        TopAppBarTitle(
                             text = subject.name,
                             selectedColor = subject.color
                         )

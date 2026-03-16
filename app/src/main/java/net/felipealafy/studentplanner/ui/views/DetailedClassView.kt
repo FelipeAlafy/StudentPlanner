@@ -44,7 +44,7 @@ import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.viewmodels.DetailedStudentClassViewModel
 import net.felipealafy.studentplanner.ui.theme.Typography
 import androidx.compose.runtime.collectAsState
-import net.felipealafy.studentplanner.ui.components.text.label.TopAppTitle
+import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -101,7 +101,7 @@ fun DetailedClassView(
                         modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.Center
                     ) {
-                        TopAppTitle(
+                        TopAppBarTitle(
                             text = subject.name,
                             selectedColor = subject.color
                         )
