@@ -1,0 +1,16 @@
+package net.felipealafy.studentplanner.ui.theme.colorutils
+
+import androidx.compose.ui.graphics.Color
+import net.felipealafy.studentplanner.ui.views.darken
+import net.felipealafy.studentplanner.ui.views.lighten
+
+fun Long.getForBackgroundBasedOnTitleBarColor(): Long {
+    val color = Color(this)
+    val luminance = 0.2126 * color.red + 0.7152 * color.green + 0.0722 * color.blue
+
+    return if (luminance > 0.5) {
+        this.darken(0.8f)
+    } else {
+        this.lighten(1.2f)
+    }
+}

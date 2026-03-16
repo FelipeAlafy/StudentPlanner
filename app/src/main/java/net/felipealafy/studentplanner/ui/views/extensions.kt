@@ -27,26 +27,6 @@ fun Float.getPercentageFromZeroToOneHundred(): Float {
     return this
 }
 
-fun Long.getContrastingColorForProgressIndicator(): Long {
-    val color = Color(this)
-    val luminance = (0.2126 * color.red + 0.7152 * color.green + 0.0722 * color.blue)
-    return if (luminance > 0.5) {
-        bluePallet[0]
-    } else {
-        greenPallet[4]
-    }
-}
-
-fun Long.getContrastingColorForText(): Long {
-    val color = Color(this)
-    val luminance = (0.2126 * color.red + 0.7152 * color.green + 0.0722 * color.blue)
-    return if (luminance > 0.5) {
-        0xFF373737
-    } else {
-        0xFFFFFFFF
-    }
-}
-
 fun GradeStyle.getValueInDisplayStyle(value: Float) = when (this) {
     FROM_ZERO_TO_ONE_HUNDRED -> value.toInt().toString()
     FROM_ZERO_TO_TEN -> (value * 10).toInt().toString()
@@ -136,55 +116,6 @@ fun Array<Exam>.getExamsAverage(): Float {
         average += (it.grade * it.gradeWeight)
     }
     return average
-}
-
-fun Long.getContrastingButtonColor(): Long {
-    val color = Color(this)
-    val luminance = 0.2126 * color.red + 0.7152 * color.green + 0.0722 * color.blue
-
-    return if (luminance > 0.5) {
-        this.darken(0.6f)
-    } else {
-        this.lighten(1.4f)
-    }
-}
-
-fun Long.getForBackgroundBasedOnTitleBarColor(): Long {
-    val color = Color(this)
-    val luminance = 0.2126 * color.red + 0.7152 * color.green + 0.0722 * color.blue
-
-    return if (luminance > 0.5) {
-        this.darken(0.8f)
-    } else {
-        this.lighten(1.2f)
-    }
-}
-
-fun Long.darken(factor: Float = 0.8f): Long {
-    val a = (this shr 24) and 0xFF
-    val r = (this shr 16) and 0xFF
-    val g = (this shr 8) and 0xFF
-    val b = this and 0xFF
-
-    val newR = (r * factor).toInt().coerceIn(0, 255).toLong()
-    val newG = (g * factor).toInt().coerceIn(0, 255).toLong()
-    val newB = (b * factor).toInt().coerceIn(0, 255).toLong()
-
-    return (a shl 24) or (newR shl 16) or (newG shl 8) or newB
-}
-
-fun Long.lighten(factor: Float = 1.2f): Long {
-    val a = (this shr 24) and 0xFF
-    val r = (this shr 16) and 0xFF
-    val g = (this shr 8) and 0xFF
-    val b = this and 0xFF
-
-    val newR = (r * factor).toInt().coerceIn(0, 255).toLong()
-    val newG = (g * factor).toInt().coerceIn(0, 255).toLong()
-    val newB = (b * factor).toInt().coerceIn(0, 255).toLong()
-
-    // Reconstrói o Long: AARRGGBB
-    return (a shl 24) or (newR shl 16) or (newG shl 8) or newB
 }
 
 fun parseToDateTime(

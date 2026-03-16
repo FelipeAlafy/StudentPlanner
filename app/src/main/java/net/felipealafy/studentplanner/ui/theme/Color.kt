@@ -17,6 +17,12 @@ val Transparent = Color(0x00000000)
 
 val Green = Color(0xFF4CAF50)
 
+val DarkBackground = Color(0xFF121212)
+
+val LightBackground = Color(0xFFF8F9FA)
+
+val SpaceGray = Color(0xFF202124)
+
 val GradeIndicatorProgressGradient = listOf(
     Color(0xFFE53935),
     Color(0xFFFB8C00),
