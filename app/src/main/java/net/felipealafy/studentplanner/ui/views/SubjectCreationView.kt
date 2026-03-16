@@ -37,7 +37,7 @@ import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonOpenColorSelectionDialog
 import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
 import net.felipealafy.studentplanner.ui.components.color.chooser.ColorSelectionDialog
-import net.felipealafy.studentplanner.ui.components.text.Input.TextInputWithColor
+import net.felipealafy.studentplanner.ui.components.text.input.TextInputWithColor
 import net.felipealafy.studentplanner.viewmodels.SubjectCreationViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime

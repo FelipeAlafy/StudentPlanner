@@ -63,6 +63,7 @@ import net.felipealafy.studentplanner.datamodels.Exam
 import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.StudentClass
 import net.felipealafy.studentplanner.datamodels.Subject
+import net.felipealafy.studentplanner.ui.components.text.label.TopAppTitle
 import net.felipealafy.studentplanner.viewmodels.TodayUiState
 import net.felipealafy.studentplanner.viewmodels.TodayViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DatePickerDialog
@@ -216,10 +217,9 @@ fun TodayView(
                         Box(
                             modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
                         ) {
-                            Text(
+                            TopAppTitle(
                                 text = today,
-                                style = Typography.labelLarge,
-                                color = Color(textColor)
+                                selectedColor = textColor
                             )
                         }
                     }, actions = {

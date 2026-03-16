@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
 import net.felipealafy.studentplanner.ui.components.combobox.SelectSubjectComboBox
+import net.felipealafy.studentplanner.ui.components.text.label.TopAppTitle
 import net.felipealafy.studentplanner.viewmodels.StudentClassCreationViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
@@ -99,10 +100,9 @@ fun StudentClassCreationView(
                         modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
+                        TopAppTitle(
                             text = stringResource(R.string.student_class_creation_view_title),
-                            style = Typography.bodyMedium,
-                            color = Color(textColor)
+                            selectedColor = textColor
                         )
                     }
                 },

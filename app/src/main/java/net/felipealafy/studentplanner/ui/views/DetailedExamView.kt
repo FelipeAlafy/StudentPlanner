@@ -47,6 +47,7 @@ import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.datamodels.Exam
 import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.Subject
+import net.felipealafy.studentplanner.ui.components.text.label.TopAppTitle
 import net.felipealafy.studentplanner.viewmodels.DetailedExamViewModel
 import net.felipealafy.studentplanner.ui.theme.GradeIndicatorProgressGradient
 import net.felipealafy.studentplanner.ui.theme.Typography
@@ -145,9 +146,9 @@ fun DetailedExamView(
                         modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
+                        TopAppTitle(
                             text = stringResource(R.string.exam_view),
-                            color = Color(subject.color.getContrastingColorForText())
+                            selectedColor = subject.color
                         )
                     }
                 },

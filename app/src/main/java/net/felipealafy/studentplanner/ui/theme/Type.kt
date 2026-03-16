@@ -32,6 +32,13 @@ val Typography = Typography(
         lineHeight = 48.sp,
         letterSpacing = 0.5.sp
     ),
+    headlineMedium = TextStyle(
+        fontFamily = mozillaFontFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 20.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.5.sp
+    ),
     bodyLarge = TextStyle(
         fontFamily = mozillaFontFamily,
         fontWeight = FontWeight.Normal,

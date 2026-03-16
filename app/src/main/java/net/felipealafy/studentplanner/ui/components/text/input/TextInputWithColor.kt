@@ -1,4 +1,4 @@
-package net.felipealafy.studentplanner.ui.components.text.Input
+package net.felipealafy.studentplanner.ui.components.text.input
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

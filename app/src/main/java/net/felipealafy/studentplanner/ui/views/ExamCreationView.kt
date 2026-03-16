@@ -50,6 +50,7 @@ import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromAToFWith
 import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromZeroToOneHundred
 import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromZeroToTen
 import net.felipealafy.studentplanner.ui.components.grade.GradeWeightInput
+import net.felipealafy.studentplanner.ui.components.text.label.TopAppTitle
 import net.felipealafy.studentplanner.viewmodels.ExamCreationViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
@@ -163,10 +164,9 @@ fun ExamCreationView(
                         modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
+                        TopAppTitle(
                             text = stringResource(R.string.exam_creation_view),
-                            color = Color(subject.color.getContrastingColorForText()),
-                            style = Typography.headlineMedium
+                            selectedColor = subject.color
                         )
                     }
                 },
