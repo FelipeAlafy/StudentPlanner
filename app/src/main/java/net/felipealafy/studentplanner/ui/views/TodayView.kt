@@ -62,13 +62,16 @@ import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.datamodels.Exam
 import net.felipealafy.studentplanner.datamodels.GradeStyle
 import net.felipealafy.studentplanner.datamodels.StudentClass
-import net.felipealafy.studentplanner.datamodels.Subject
+import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
 import net.felipealafy.studentplanner.viewmodels.TodayUiState
 import net.felipealafy.studentplanner.viewmodels.TodayViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DatePickerDialog
 import net.felipealafy.studentplanner.ui.theme.Transparent
 import net.felipealafy.studentplanner.ui.theme.Typography
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingButtonColor
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
+import net.felipealafy.studentplanner.ui.theme.colorutils.getForBackgroundBasedOnTitleBarColor
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -218,8 +221,7 @@ fun TodayView(
                             modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
                         ) {
                             TopAppBarTitle(
-                                text = today,
-                                selectedColor = textColor
+                                text = today
                             )
                         }
                     }, actions = {

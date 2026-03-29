@@ -39,6 +39,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
+import net.felipealafy.studentplanner.feature_subject.presentation.views.DateTimeSelector
 import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
 import net.felipealafy.studentplanner.ui.components.combobox.SelectSubjectComboBox
 import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
@@ -50,6 +51,9 @@ import net.felipealafy.studentplanner.ui.theme.LightGray
 import net.felipealafy.studentplanner.ui.theme.Red
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingButtonColor
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
+import net.felipealafy.studentplanner.ui.theme.colorutils.getForBackgroundBasedOnTitleBarColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -101,8 +105,7 @@ fun StudentClassCreationView(
                         contentAlignment = Alignment.Center
                     ) {
                         TopAppBarTitle(
-                            text = stringResource(R.string.student_class_creation_view_title),
-                            selectedColor = textColor
+                            text = stringResource(R.string.student_class_creation_view_title)
                         )
                     }
                 },

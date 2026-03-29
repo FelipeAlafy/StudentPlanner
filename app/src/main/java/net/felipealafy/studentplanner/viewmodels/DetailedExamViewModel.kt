@@ -14,11 +14,11 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import net.felipealafy.studentplanner.datamodels.Exam
-import net.felipealafy.studentplanner.datamodels.Planner
-import net.felipealafy.studentplanner.datamodels.Subject
+import net.felipealafy.studentplanner.feature_planner.domain.model.Planner
+import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 import net.felipealafy.studentplanner.repositories.ExamRepository
-import net.felipealafy.studentplanner.repositories.PlannerRepository
-import net.felipealafy.studentplanner.repositories.SubjectRepository
+import net.felipealafy.studentplanner.feature_planner.data.repository.PlannerRepositoryImpl
+import net.felipealafy.studentplanner.feature_subject.data.repository.SubjectRepositoryImpl
 import java.time.LocalDateTime
 import javax.inject.Inject
 
@@ -32,8 +32,8 @@ data class DetailedExamUiState(
 @HiltViewModel
 class DetailedExamViewModel @Inject constructor(
     savedStateHandler: SavedStateHandle,
-    plannerRepository: PlannerRepository,
-    subjectRepository: SubjectRepository,
+    plannerRepositoryImpl: PlannerRepositoryImpl,
+    subjectRepositoryImpl: SubjectRepositoryImpl,
     examRepository: ExamRepository,
 ) : ViewModel() {
     private val plannerId: String = checkNotNull(savedStateHandler["plannerId"])
@@ -47,13 +47,13 @@ class DetailedExamViewModel @Inject constructor(
     )
 
     private val plannerFlow: Flow<Planner?> = flow {
-        emit(plannerRepository.getPlannerById(plannerId))
+        emit(plannerRepositoryImpl.getPlannerById(plannerId))
     }.flowOn(Dispatchers.IO)
 
 
     val uiState: StateFlow<DetailedExamUiState> = combine(
         plannerFlow,
-        subjectRepository.getSubjectById(subjectId),
+        subjectRepositoryImpl.getSubjectById(subjectId),
         examRepository.getExamById(examId)
     ) { planner, subject, examRecovered ->
 

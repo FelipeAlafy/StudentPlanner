@@ -15,13 +15,14 @@ import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.ui.theme.DarkGray
 import net.felipealafy.studentplanner.ui.theme.LightGray
+import net.felipealafy.studentplanner.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.ui.theme.Red
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
-import net.felipealafy.studentplanner.ui.views.getContrastingColorForText
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
 
 @Composable
-fun MinimumGradeToPassInput(text: String, onValueChange: (String) -> Unit, selectedColor: Long) {
+fun MinimumGradeToPassInput(text: String, onValueChange: (String) -> Unit) {
     OutlinedTextField(
         onValueChange = onValueChange,
         value = text,
@@ -34,18 +35,18 @@ fun MinimumGradeToPassInput(text: String, onValueChange: (String) -> Unit, selec
             focusedContainerColor = LightGray,
             disabledContainerColor = LightGray,
             errorContainerColor = Red,
-            unfocusedTextColor = Color(selectedColor.getContrastingColorForText()),
-            focusedTextColor = Color(selectedColor.getContrastingColorForText()),
+            unfocusedTextColor = PlannerTheme.colors.onSurface,
+            focusedTextColor = PlannerTheme.colors.onSurface,
             errorTextColor = Red,
             focusedLabelColor = DarkGray,
-            focusedBorderColor = Color(selectedColor),
+            focusedBorderColor = PlannerTheme.colors.container,
             focusedPlaceholderColor = LightGray,
         ),
         label = {
             Text(
                 text = stringResource(R.string.minimum_grade_to_pass),
                 style = Typography.labelSmall,
-                color = Color(selectedColor.getContrastingColorForText())
+                color = PlannerTheme.colors.onSurface
             )
         },
         shape = RoundedCornerShape(25.dp),
@@ -57,7 +58,6 @@ fun MinimumGradeToPassInput(text: String, onValueChange: (String) -> Unit, selec
 private fun MinimumGradeToPassInputPreview() {
     MinimumGradeToPassInput(
         text = "Example",
-        onValueChange = { println(it) },
-        selectedColor = colorPallet[0][1]
+        onValueChange = { println(it) }
     )
 }

@@ -22,14 +22,14 @@ import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonOpenColorSelectionDialog
 import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
 import net.felipealafy.studentplanner.ui.components.color.chooser.ColorSelectionDialog
-import net.felipealafy.studentplanner.ui.components.grade.GradeStyleCombobox
+import net.felipealafy.studentplanner.ui.components.grade.GradeStyleComboBox
 import net.felipealafy.studentplanner.ui.components.grade.MinimumGradeToPassInput
 import net.felipealafy.studentplanner.ui.components.text.input.TextInputWithColor
-import net.felipealafy.studentplanner.viewmodels.PlannerModel
+import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.PlannerCreationViewModel
 import net.felipealafy.studentplanner.ui.theme.Typography
 
 @Composable
-fun SetupView(plannerViewModel: PlannerModel) {
+fun SetupView(plannerViewModel: PlannerCreationViewModel) {
     val uiState = plannerViewModel.planner.collectAsState()
     Column(
         modifier = Modifier
@@ -69,7 +69,7 @@ fun SetupView(plannerViewModel: PlannerModel) {
             ButtonOpenColorSelectionDialog(selectedColor = uiState.value.color, onClick = {
                 plannerViewModel.showColorDialog()
             })
-            GradeStyleCombobox(selectedColor = uiState.value.color, onSelectItem = {
+            GradeStyleComboBox(selectedColor = uiState.value.color, onSelectItem = {
                 plannerViewModel.onSelectGradeStyle(value = it)
             })
         }

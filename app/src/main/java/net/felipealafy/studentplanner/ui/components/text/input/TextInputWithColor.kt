@@ -15,16 +15,16 @@ import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.ui.theme.DarkGray
 import net.felipealafy.studentplanner.ui.theme.LightGray
+import net.felipealafy.studentplanner.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.ui.theme.Red
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
-import net.felipealafy.studentplanner.ui.views.getContrastingColorForText
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
 
 @Composable
 fun TextInputWithColor(
     text: String,
     onValueChange: (String) -> Unit,
-    selectedColor: Long,
     hint: Int
 ) {
     OutlinedTextField(
@@ -43,13 +43,13 @@ fun TextInputWithColor(
             focusedTextColor = DarkGray,
             errorTextColor = Red,
             focusedLabelColor = DarkGray,
-            focusedBorderColor = Color(selectedColor),
+            focusedBorderColor = PlannerTheme.colors.container,
             focusedPlaceholderColor = LightGray,
         ),
         label = {
             Text(
                 text = stringResource(id = hint),
-                color = Color(selectedColor.getContrastingColorForText()),
+                color = PlannerTheme.colors.onSurface,
                 style = Typography.labelSmall
             )
         },
@@ -63,7 +63,6 @@ private fun TextInputWithColorPreview() {
     TextInputWithColor(
         text = "",
         onValueChange = {},
-        selectedColor = colorPallet[0][1],
         hint = R.string.planner_name_input
     )
 }

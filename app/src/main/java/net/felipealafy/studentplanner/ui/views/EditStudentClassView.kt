@@ -36,6 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
+import net.felipealafy.studentplanner.feature_subject.presentation.views.DateTimeSelector
 import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
 import net.felipealafy.studentplanner.ui.components.combobox.SelectSubjectComboBox
 import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
@@ -44,6 +45,9 @@ import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingButtonColor
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
+import net.felipealafy.studentplanner.ui.theme.colorutils.getForBackgroundBasedOnTitleBarColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,8 +99,7 @@ fun EditStudentClassView(
                         contentAlignment = Alignment.Center
                     ) {
                         TopAppBarTitle(
-                            text = stringResource(R.string.edit_student_class_view),
-                            selectedColor = planner.color
+                            text = stringResource(R.string.edit_student_class_view)
                         )
                     }
                 },

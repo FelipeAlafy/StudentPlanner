@@ -39,12 +39,13 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.datamodels.StudentClass
-import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.viewmodels.DetailedStudentClassViewModel
 import net.felipealafy.studentplanner.ui.theme.Typography
 import androidx.compose.runtime.collectAsState
 import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
+import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
+import net.felipealafy.studentplanner.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.ui.theme.PlannerThemeProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -89,99 +90,100 @@ fun DetailedClassView(
         return
     }
 
-    Scaffold(
-        modifier = Modifier.background(Color(subject.color)),
-        topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(subject.color)
-                ),
-                title = {
-                    Box (
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        TopAppBarTitle(
-                            text = subject.name,
-                            selectedColor = subject.color
-                        )
+    PlannerThemeProvider(baseColor = subject.color) {
+        Scaffold(
+            containerColor = PlannerTheme.colors.container,
+            topBar = {
+                TopAppBar(
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = PlannerTheme.colors.primary
+                    ),
+                    title = {
+                        Box (
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            TopAppBarTitle(
+                                text = subject.name,
+                            )
+                        }
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = onReturnAction) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                contentDescription = stringResource(R.string.back_to_past_view),
+                                tint = PlannerTheme.colors.onPrimary
+                            )
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = {
+                            onEditMode(subject.plannerId, subject.id, studentClass.id)
+                        }) {
+                            Icon(
+                                imageVector = Icons.Filled.Edit,
+                                contentDescription = stringResource(R.string.go_on_edit_mode_for_planner),
+                                tint = PlannerTheme.colors.onPrimary
+                            )
+                        }
                     }
-                },
-                navigationIcon = {
-                    IconButton(onClick = onReturnAction) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = stringResource(R.string.back_to_past_view),
-                            tint = Color(subject.color.getContrastingColorForText())
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = {
-                        onEditMode(subject.plannerId, subject.id, studentClass.id)
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.Edit,
-                            contentDescription = stringResource(R.string.go_on_edit_mode_for_planner),
-                            tint = Color(subject.color.getContrastingColorForText())
-                        )
-                    }
-                }
-            )
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .background(Color(subject.color).copy(0.3F))
-        ) {
+                )
+            }
+        ) { innerPadding ->
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
             ) {
-                ClassDate(subject = subject, studentClass)
-                Spacer(modifier = Modifier.padding(top = 10.dp))
-                InnerClassLink(subject = subject, studentClass)
-                Spacer(modifier = Modifier.padding(top = 10.dp))
-                Observation(subject = subject, studentClass)
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    ClassDate(start = studentClass.start.getFormattedDateTime(), end = studentClass.end.getFormattedDateTime())
+                    Spacer(modifier = Modifier.padding(top = 10.dp))
+                    InnerClassLink(notetakingLink = studentClass.noteTakingLink, classTitle = studentClass.title)
+                    Spacer(modifier = Modifier.padding(top = 10.dp))
+                    Observation(observation = studentClass.noteTakingLink)
+                }
             }
         }
     }
+
 }
 
 @Composable
-fun ClassDate(subject: Subject, studentClass: StudentClass) {
+fun ClassDate(start: String, end: String) {
     Column {
         Text(
             text = "${stringResource(R.string.when_class_was_take)}:",
             style = Typography.bodyLarge,
-            color = Color(subject.color.getContrastingColorForText())
+            color = PlannerTheme.colors.onSurface
         )
         Spacer(modifier = Modifier.padding(start = 16.dp))
         Text(
-            text = "${stringResource(R.string.from)} ${subject.start.formattedValue()} → ${
+            text = "${stringResource(R.string.from)} $start → ${
                 stringResource(
                     R.string.to
                 )
-            } ${studentClass.end.formattedValue()}",
+            } $end",
             style = Typography.labelLarge,
-            color = Color(subject.color.getContrastingColorForText())
+            color = PlannerTheme.colors.onSurface
         )
     }
 }
 
 @Composable
-fun InnerClassLink(subject: Subject, studentClass: StudentClass) {
+fun InnerClassLink(notetakingLink: String, classTitle: String) {
     val annotatedLink = buildAnnotatedString {
         withLink(
             LinkAnnotation.Url(
-                url = studentClass.noteTakingLink,
+                url = notetakingLink,
                 styles = TextLinkStyles(
                     style = SpanStyle(color = Color.Blue, textDecoration = TextDecoration.Underline)
                 )
             )
         ) {
-            append("${stringResource(R.string.notetaking_text)} ${studentClass.title} ")
+            append("${stringResource(R.string.notetaking_text)} $classTitle ")
         }
     }
     Row (
@@ -191,7 +193,7 @@ fun InnerClassLink(subject: Subject, studentClass: StudentClass) {
         Icon(
             painter = painterResource(R.drawable.link),
             contentDescription = stringResource(R.string.notetaking_link),
-            tint = Color(subject.color.getContrastingColorForText())
+            tint = PlannerTheme.colors.onSurface
         )
         Text(
             text = annotatedLink,
@@ -202,21 +204,20 @@ fun InnerClassLink(subject: Subject, studentClass: StudentClass) {
 }
 
 @Composable
-fun Observation(subject: Subject, studentClass: StudentClass) {
-
+fun Observation(observation: String) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = Color(subject.color)
+            containerColor = PlannerTheme.colors.surface
         ),
         border = BorderStroke(
             width = 2.dp,
-            color = Color(subject.color.getContrastingColorForText()),
+            color = PlannerTheme.colors.onSurface,
         ),
         shape = RoundedCornerShape(25.dp),
         modifier = Modifier.fillMaxWidth().fillMaxHeight(0.75F)
     ) {
         Text(
-            text = studentClass.observation,
+            text = observation,
             style = Typography.bodyMedium,
             modifier = Modifier.padding(12.dp)
         )

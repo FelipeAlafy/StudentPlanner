@@ -25,10 +25,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.datamodels.Subject
+import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 import net.felipealafy.studentplanner.ui.theme.DarkGray
 import net.felipealafy.studentplanner.ui.theme.Typography
-import net.felipealafy.studentplanner.ui.views.getContrastingColorForText
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
 import java.time.LocalDateTime
 import kotlin.collections.forEach
 

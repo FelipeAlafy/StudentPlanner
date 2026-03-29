@@ -1,12 +1,11 @@
 package net.felipealafy.studentplanner.repositories
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import net.felipealafy.studentplanner.database.ExamDao
 import net.felipealafy.studentplanner.datamodels.Exam
-import net.felipealafy.studentplanner.mappers.toDatabaseEntry
-import net.felipealafy.studentplanner.mappers.toDomainModel
+import net.felipealafy.studentplanner.feature_subject.data.mapper.toDatabaseEntry
+import net.felipealafy.studentplanner.feature_subject.data.mapper.toDomainModel
 import java.time.LocalDateTime
 import javax.inject.Inject
 import javax.inject.Singleton

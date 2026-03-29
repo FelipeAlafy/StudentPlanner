@@ -13,27 +13,27 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
 import net.felipealafy.studentplanner.viewmodels.DetailedExamViewModel
-import net.felipealafy.studentplanner.viewmodels.DetailedPlannerViewModel
+import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.DetailedPlannerViewModel
 import net.felipealafy.studentplanner.viewmodels.DetailedStudentClassViewModel
 import net.felipealafy.studentplanner.viewmodels.EditExamViewModel
 import net.felipealafy.studentplanner.viewmodels.EditStudentClassViewModel
 import net.felipealafy.studentplanner.viewmodels.ExamCreationViewModel
 import net.felipealafy.studentplanner.viewmodels.MainViewModel
-import net.felipealafy.studentplanner.viewmodels.PlannerModel
+import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.PlannerCreationViewModel
 import net.felipealafy.studentplanner.viewmodels.StudentClassCreationViewModel
-import net.felipealafy.studentplanner.viewmodels.SubjectCreationViewModel
+import net.felipealafy.studentplanner.feature_subject.presentation.viewmodels.SubjectCreationViewModel
 import net.felipealafy.studentplanner.viewmodels.TodayViewModel
 import net.felipealafy.studentplanner.ui.theme.StudentPlannerTheme
 import net.felipealafy.studentplanner.ui.views.DetailedClassView
 import net.felipealafy.studentplanner.ui.views.DetailedExamView
-import net.felipealafy.studentplanner.ui.views.DetailedPlannerView
+import net.felipealafy.studentplanner.feature_planner.presentation.views.DetailedPlannerView
 import net.felipealafy.studentplanner.ui.views.EditExamView
 import net.felipealafy.studentplanner.ui.views.EditStudentClassView
 import net.felipealafy.studentplanner.ui.views.ExamCreationView
-import net.felipealafy.studentplanner.ui.views.PlannerCreationView
+import net.felipealafy.studentplanner.feature_planner.presentation.views.PlannerCreationView
 import net.felipealafy.studentplanner.ui.views.StudentClassCreationView
 import net.felipealafy.studentplanner.ui.views.StudentPlannerViews
-import net.felipealafy.studentplanner.ui.views.SubjectCreationView
+import net.felipealafy.studentplanner.feature_subject.presentation.views.SubjectCreationView
 import net.felipealafy.studentplanner.ui.views.TodayView
 import net.felipealafy.studentplanner.ui.views.WelcomeView
 
@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable(route = StudentPlannerViews.SetupView.name) {
-                        val viewModel: PlannerModel = hiltViewModel()
+                        val viewModel: PlannerCreationViewModel = hiltViewModel()
                         PlannerCreationView(
                             viewModel = viewModel,
                             backOnClick = {

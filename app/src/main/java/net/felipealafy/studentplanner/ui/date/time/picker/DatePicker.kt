@@ -25,7 +25,7 @@ import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.ui.theme.Green
 import net.felipealafy.studentplanner.ui.theme.Red
 import net.felipealafy.studentplanner.ui.theme.colorPallet
-import net.felipealafy.studentplanner.ui.views.getContrastingButtonColor
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingButtonColor
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 

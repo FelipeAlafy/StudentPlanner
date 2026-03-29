@@ -7,27 +7,27 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import net.felipealafy.studentplanner.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.ui.theme.Typography
-import net.felipealafy.studentplanner.ui.views.getContrastingColorForText
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
 
 @Composable
 fun ButtonWithBackgroundColor(
     onClick: () -> Unit,
-    selectedColor: Long,
     @StringRes placeholderTextPath: Int,
     isButtonEnabled: Boolean = true
 ) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(selectedColor).copy(alpha = 0.8F)
+            containerColor = PlannerTheme.colors.container,
         ),
         enabled = isButtonEnabled,
     ) {
         Text(
             stringResource(placeholderTextPath),
             style = Typography.labelSmall,
-            color = Color(selectedColor.getContrastingColorForText())
+            color = PlannerTheme.colors.onContainer
         )
     }
 }

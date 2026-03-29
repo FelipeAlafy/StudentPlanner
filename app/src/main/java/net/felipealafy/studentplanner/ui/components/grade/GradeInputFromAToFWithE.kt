@@ -30,8 +30,8 @@ import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.datamodels.GradeAToFWithE
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
-import net.felipealafy.studentplanner.ui.views.getContrastingColorForText
-import net.felipealafy.studentplanner.ui.views.getForBackgroundBasedOnTitleBarColor
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
+import net.felipealafy.studentplanner.ui.theme.colorutils.getForBackgroundBasedOnTitleBarColor
 
 @Composable
 fun GradeInputFromAToFWithE(selectedColor: Long, onSelectItem: (GradeAToFWithE) -> Unit) {

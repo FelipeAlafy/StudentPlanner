@@ -42,7 +42,8 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.collectLatest
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.datamodels.GradeStyle
-import net.felipealafy.studentplanner.datamodels.Subject
+import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
+import net.felipealafy.studentplanner.feature_subject.presentation.views.DateTimeSelector
 import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
 import net.felipealafy.studentplanner.ui.components.combobox.SelectSubjectComboBox
 import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromAToF
@@ -56,6 +57,8 @@ import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
+import net.felipealafy.studentplanner.ui.theme.colorutils.getForBackgroundBasedOnTitleBarColor
 import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -166,7 +169,6 @@ fun EditExamView(
                     ) {
                         TopAppBarTitle(
                             text = stringResource(R.string.edit_exam_view),
-                            selectedColor = subject.color
                         )
                     }
                 },

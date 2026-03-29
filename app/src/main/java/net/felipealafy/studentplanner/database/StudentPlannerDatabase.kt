@@ -5,10 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import net.felipealafy.studentplanner.feature_planner.data.local.PlannerDao
+import net.felipealafy.studentplanner.feature_subject.data.local.SubjectDao
 import net.felipealafy.studentplanner.tablemodels.ClassTable
 import net.felipealafy.studentplanner.tablemodels.ExamTable
-import net.felipealafy.studentplanner.tablemodels.PlannerTable
-import net.felipealafy.studentplanner.tablemodels.SubjectTable
+import net.felipealafy.studentplanner.feature_planner.data.local.PlannerTable
+import net.felipealafy.studentplanner.feature_subject.data.local.SubjectTable
 
 @Database(
     version = 2,

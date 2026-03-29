@@ -46,12 +46,14 @@ import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.datamodels.Exam
 import net.felipealafy.studentplanner.datamodels.GradeStyle
-import net.felipealafy.studentplanner.datamodels.Subject
 import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
 import net.felipealafy.studentplanner.viewmodels.DetailedExamViewModel
 import net.felipealafy.studentplanner.ui.theme.GradeIndicatorProgressGradient
+import net.felipealafy.studentplanner.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.ui.theme.PlannerThemeProvider
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -135,91 +137,90 @@ fun DetailedExamView(
         return
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(subject.color.toInt())
-                ),
-                title = {
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        TopAppBarTitle(
-                            text = stringResource(R.string.exam_view),
-                            selectedColor = subject.color
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(
-                        onClick = { onReturnAction() }
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = stringResource(R.string.back_to_past_view),
-                            tint = Color(subject.color.getContrastingColorForText())
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(
-                        onClick = {
-                            onEditMode(
-                                uiState.planner!!.id,
-                                uiState.subject.id,
-                                uiState.exam.id
+    PlannerThemeProvider(uiState.subject.color) {
+        Scaffold(
+            containerColor = PlannerTheme.colors.container,
+            topBar = {
+                TopAppBar(
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = PlannerTheme.colors.primary
+                    ),
+                    title = {
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            TopAppBarTitle(
+                                text = stringResource(R.string.exam_view),
                             )
                         }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Edit,
-                            contentDescription = stringResource(R.string.go_on_edit_mode_for_edit),
-                            tint = Color(subject.color.getContrastingColorForText())
-                        )
+                    },
+                    navigationIcon = {
+                        IconButton(
+                            onClick = { onReturnAction() }
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                contentDescription = stringResource(R.string.back_to_past_view),
+                                tint = PlannerTheme.colors.onPrimary
+                            )
+                        }
+                    },
+                    actions = {
+                        IconButton(
+                            onClick = {
+                                onEditMode(
+                                    uiState.planner!!.id,
+                                    uiState.subject.id,
+                                    uiState.exam.id
+                                )
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Edit,
+                                contentDescription = stringResource(R.string.go_on_edit_mode_for_edit),
+                                tint = PlannerTheme.colors.onPrimary
+                            )
+                        }
                     }
-                }
-            )
-        },
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .background(Color(subject.color.getForBackgroundBasedOnTitleBarColor()))
-        ) {
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)) {
-                ExamName(exam = uiState.exam, color = subject.color)
-                GradeIndicatorWithLabel(
-                    subject = subject,
-                    exam = uiState.exam,
-                    gradeStyle = uiState.planner!!.gradeDisplayStyle
                 )
+            },
+        ) { innerPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                ) {
+                    ExamName(exam = uiState.exam)
+                    GradeIndicatorWithLabel(exam = uiState.exam, gradeStyle = uiState.planner!!.gradeDisplayStyle)
+                }
             }
         }
     }
 }
 
 @Composable
-fun ExamName(exam: Exam, color: Long) {
+fun ExamName(exam: Exam) {
     Text(
         text = exam.name,
         style = Typography.headlineLarge,
-        color = Color(color.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText())
+        color = PlannerTheme.colors.onContainer
     )
 }
 
 @Composable
-fun GradeIndicatorWithLabel(subject: Subject, exam: Exam, gradeStyle: GradeStyle) {
+fun GradeIndicatorWithLabel(exam: Exam, gradeStyle: GradeStyle) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(subject.color).copy(alpha = 0.7F)
+            containerColor = PlannerTheme.colors.surface
         ),
         shape = RoundedCornerShape(24.dp),
         elevation = CardDefaults.cardElevation(0.dp),
@@ -230,10 +231,7 @@ fun GradeIndicatorWithLabel(subject: Subject, exam: Exam, gradeStyle: GradeStyle
             Text(
                 text = stringResource(R.string.performance),
                 style = Typography.headlineMedium,
-                color = Color(
-                    subject.color.getForBackgroundBasedOnTitleBarColor()
-                        .getContrastingColorForText()
-                )
+                color = PlannerTheme.colors.onSurface
             )
             GradeIndicator(exam = exam)
 
@@ -248,21 +246,14 @@ fun GradeIndicatorWithLabel(subject: Subject, exam: Exam, gradeStyle: GradeStyle
                         exam.grade
                     ),
                     style = Typography.bodyLarge,
-                    color = Color(
-                        subject.color.getForBackgroundBasedOnTitleBarColor()
-                            .getContrastingColorForText()
-                    )
+                    color = PlannerTheme.colors.onSurface
                 )
                 Text(
                     text = stringResource(gradeStyle.getGradePhrase(exam.grade)),
                     style = Typography.labelLarge,
-                    color = Color(
-                        subject.color.getForBackgroundBasedOnTitleBarColor()
-                            .getContrastingColorForText()
-                    )
+                    color = PlannerTheme.colors.onSurface
                 )
             }
-
         }
     }
 }
@@ -317,7 +308,7 @@ fun GradeIndicator(exam: Exam) {
             modifier = Modifier
                 .size(iconSizeDp)
                 .offset(x = animatedOffsetX, y = finalOffsetY),
-            tint = Color.Black
+            tint = PlannerTheme.colors.onSurface
         )
     }
 }

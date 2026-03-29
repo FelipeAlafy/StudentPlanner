@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.ui.theme.LightGray
 import net.felipealafy.studentplanner.ui.theme.Typography
-import net.felipealafy.studentplanner.ui.views.getContrastingColorForText
-import net.felipealafy.studentplanner.ui.views.getForBackgroundBasedOnTitleBarColor
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
+import net.felipealafy.studentplanner.ui.theme.colorutils.getForBackgroundBasedOnTitleBarColor
 
 @Composable
 fun GradeInputFromZeroToOneHundred(

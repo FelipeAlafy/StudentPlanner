@@ -1,8 +1,6 @@
 package net.felipealafy.studentplanner.ui.theme.colorutils
 
 import androidx.compose.ui.graphics.Color
-import net.felipealafy.studentplanner.ui.views.darken
-import net.felipealafy.studentplanner.ui.views.lighten
 
 fun Long.getForBackgroundBasedOnTitleBarColor(): Long {
     val color = Color(this)

@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import net.felipealafy.studentplanner.feature_subject.data.local.SubjectTable
 import java.time.LocalDateTime
 import java.util.UUID
 

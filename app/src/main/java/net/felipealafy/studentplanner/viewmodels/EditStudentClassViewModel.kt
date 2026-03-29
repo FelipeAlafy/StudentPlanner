@@ -14,12 +14,12 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import net.felipealafy.studentplanner.datamodels.Planner
+import net.felipealafy.studentplanner.feature_planner.domain.model.Planner
 import net.felipealafy.studentplanner.datamodels.StudentClass
-import net.felipealafy.studentplanner.datamodels.Subject
+import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 import net.felipealafy.studentplanner.repositories.ClassRepository
-import net.felipealafy.studentplanner.repositories.PlannerRepository
-import net.felipealafy.studentplanner.repositories.SubjectRepository
+import net.felipealafy.studentplanner.feature_planner.data.repository.PlannerRepositoryImpl
+import net.felipealafy.studentplanner.feature_subject.data.repository.SubjectRepositoryImpl
 import net.felipealafy.studentplanner.ui.views.parseToDateTime
 import java.time.LocalDateTime
 import java.util.UUID
@@ -37,8 +37,8 @@ data class EditStudentClassUiState(
 class EditStudentClassViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val classRepository: ClassRepository,
-    private val plannerRepository: PlannerRepository,
-    subjectsRepository: SubjectRepository
+    private val plannerRepositoryImpl: PlannerRepositoryImpl,
+    subjectsRepository: SubjectRepositoryImpl
 ): ViewModel() {
     private val plannerId: String = checkNotNull(savedStateHandle["plannerId"])
     private val classId: String = checkNotNull(savedStateHandle["classId"])
@@ -48,7 +48,7 @@ class EditStudentClassViewModel @Inject constructor(
     private var isDataLoaded = false
 
     private val plannerFlow = flow {
-        emit(plannerRepository.getPlannerById(plannerId))
+        emit(plannerRepositoryImpl.getPlannerById(plannerId))
     }.flowOn(Dispatchers.IO)
 
     init {

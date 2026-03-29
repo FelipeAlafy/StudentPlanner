@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import net.felipealafy.studentplanner.datamodels.StudentClass
-import net.felipealafy.studentplanner.datamodels.Subject
+import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 import net.felipealafy.studentplanner.repositories.ClassRepository
-import net.felipealafy.studentplanner.repositories.SubjectRepository
+import net.felipealafy.studentplanner.feature_subject.data.repository.SubjectRepositoryImpl
 import java.time.LocalDateTime
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +25,7 @@ data class DetailedStudentClassUiState(
 class DetailedStudentClassViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     classRepository: ClassRepository,
-    subjectRepository: SubjectRepository
+    subjectRepositoryImpl: SubjectRepositoryImpl
 
 ): ViewModel() {
     val subjectId: String = checkNotNull(savedStateHandle["subjectId"])
@@ -33,7 +33,7 @@ class DetailedStudentClassViewModel @Inject constructor(
 
     val uiState: StateFlow<DetailedStudentClassUiState> = combine(
         classRepository.getClassById(studentClassId),
-        subjectRepository.getSubjectById(subjectId)
+        subjectRepositoryImpl.getSubjectById(subjectId)
     ) { classes, subject ->
 
         var stClass = classes.first { it.id == studentClassId }

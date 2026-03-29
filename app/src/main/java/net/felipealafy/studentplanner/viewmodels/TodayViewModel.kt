@@ -11,12 +11,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import net.felipealafy.studentplanner.datamodels.Planner
-import net.felipealafy.studentplanner.datamodels.Subject
+import net.felipealafy.studentplanner.feature_planner.domain.model.Planner
+import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 import net.felipealafy.studentplanner.repositories.ClassRepository
 import net.felipealafy.studentplanner.repositories.ExamRepository
-import net.felipealafy.studentplanner.repositories.PlannerRepository
-import net.felipealafy.studentplanner.repositories.SubjectRepository
+import net.felipealafy.studentplanner.feature_planner.data.repository.PlannerRepositoryImpl
+import net.felipealafy.studentplanner.feature_subject.data.repository.SubjectRepositoryImpl
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
@@ -33,8 +33,8 @@ data class TodayUiState(
 
 @HiltViewModel
 class TodayViewModel @Inject constructor(
-    plannerRepository: PlannerRepository,
-    subjectRepository: SubjectRepository,
+    plannerRepositoryImpl: PlannerRepositoryImpl,
+    subjectRepositoryImpl: SubjectRepositoryImpl,
     classRepository: ClassRepository,
     examRepository: ExamRepository
 ) : ViewModel() {
@@ -55,8 +55,8 @@ class TodayViewModel @Inject constructor(
     }
 
     val uiState: StateFlow<TodayUiState> = combine(
-        plannerRepository.getAllPlanners(),
-        subjectRepository.getAllSubjects(),
+        plannerRepositoryImpl.getAllPlanners(),
+        subjectRepositoryImpl.getAllSubjects(),
         _classesAndExamsFlow,
         _selectedPlannerId,
         _selectedDate

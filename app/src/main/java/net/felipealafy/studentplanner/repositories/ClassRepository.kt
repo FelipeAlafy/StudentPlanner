@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.map
 import net.felipealafy.studentplanner.database.ClassDao
 import net.felipealafy.studentplanner.datamodels.StudentClass
 import net.felipealafy.studentplanner.mappers.toDatabaseEntity
-import net.felipealafy.studentplanner.mappers.toDomainModel
+import net.felipealafy.studentplanner.feature_subject.data.mapper.toDomainModel
 import net.felipealafy.studentplanner.tablemodels.ClassTable
 import java.time.LocalDateTime
 import javax.inject.Inject

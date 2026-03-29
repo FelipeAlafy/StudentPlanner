@@ -28,7 +28,7 @@ import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.ui.theme.Transparent
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
-import net.felipealafy.studentplanner.ui.views.getContrastingColorForText
+import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
 
 @Composable
 fun ColorSelectionDialog(

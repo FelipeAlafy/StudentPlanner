@@ -121,4 +121,6 @@
     <string name="update_button">Update</string>
     <string name="edit_exam_view">Edit Exam</string>
     <string name="on_access_detailed_planner_view">Click in here to see details of this planner.</string>
+    <string name="empty_name_error">An invalid name was provided.</string>
+    <string name="planner_not_found">There is no planners available, please create a planner First.</string>
 </resources>

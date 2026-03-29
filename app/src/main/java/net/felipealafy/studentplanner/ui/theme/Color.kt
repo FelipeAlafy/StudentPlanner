@@ -17,6 +17,10 @@ val Transparent = Color(0x00000000)
 
 val Green = Color(0xFF4CAF50)
 
+val ErrorRed = Color(0xFFB3261E)
+
+val SuccessGreen = Color(0xFF1E8E3E)
+
 val DarkBackground = Color(0xFF121212)
 
 val LightBackground = Color(0xFFF8F9FA)

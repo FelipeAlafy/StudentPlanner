@@ -23,10 +23,10 @@ import net.felipealafy.studentplanner.datamodels.Exam
 import net.felipealafy.studentplanner.datamodels.GradeAToF
 import net.felipealafy.studentplanner.datamodels.GradeAToFWithE
 import net.felipealafy.studentplanner.datamodels.GradeStyle
-import net.felipealafy.studentplanner.datamodels.Planner
+import net.felipealafy.studentplanner.feature_planner.domain.model.Planner
 import net.felipealafy.studentplanner.repositories.ExamRepository
-import net.felipealafy.studentplanner.repositories.PlannerRepository
-import net.felipealafy.studentplanner.repositories.SubjectRepository
+import net.felipealafy.studentplanner.feature_planner.data.repository.PlannerRepositoryImpl
+import net.felipealafy.studentplanner.feature_subject.data.repository.SubjectRepositoryImpl
 import net.felipealafy.studentplanner.ui.forms.ExamForm
 import net.felipealafy.studentplanner.ui.views.parseToDateTime
 import javax.inject.Inject
@@ -41,14 +41,14 @@ data class ExamCreationUiState(
 @HiltViewModel
 class ExamCreationViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val plannerRepository: PlannerRepository,
-    subjectRepository: SubjectRepository,
+    private val plannerRepositoryImpl: PlannerRepositoryImpl,
+    subjectRepositoryImpl: SubjectRepositoryImpl,
     private val examRepository: ExamRepository
 ) : ViewModel() {
     private val plannerId: String = checkNotNull(savedStateHandle["plannerId"])
 
     private val plannerFlow: Flow<Planner?> = flow {
-        emit(plannerRepository.getPlannerById(plannerId))
+        emit(plannerRepositoryImpl.getPlannerById(plannerId))
     }.flowOn(Dispatchers.IO)
 
     private val _currentForm = MutableStateFlow(ExamForm())
@@ -67,7 +67,7 @@ class ExamCreationViewModel @Inject constructor(
 
     val uiState: StateFlow<ExamCreationUiState> = combine(
         plannerFlow,
-        subjectRepository.getAllSubjectsOfAPlanner(plannerId),
+        subjectRepositoryImpl.getAllSubjectsOfAPlanner(plannerId),
         _currentForm
     ) { planner, subjects, currentForm ->
 
