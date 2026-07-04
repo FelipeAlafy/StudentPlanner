@@ -1,13 +1,12 @@
 package net.felipealafy.studentplanner.feature_exams.domain.use_case
 
 import net.felipealafy.studentplanner.feature_exams.data.local.Exam
-import net.felipealafy.studentplanner.feature_exams.data.repository.ExamRepository
+import net.felipealafy.studentplanner.feature_exams.data.repository.ExamRepositoryImpl
 import net.felipealafy.studentplanner.feature_exams.domain.exception.InvalidExamExceptions
 import net.felipealafy.studentplanner.feature_exams.domain.model.ExamParams
-import java.time.LocalDateTime
 import javax.inject.Inject
 
-class UpdateExamUseCase @Inject constructor(private val repository: ExamRepository) {
+class UpdateExamUseCase @Inject constructor(private val repository: ExamRepositoryImpl) {
     suspend operator fun invoke(params: ExamParams) {
         if (params.name.isBlank()) throw InvalidExamExceptions.EmptyName()
         if (params.subjectId.isBlank()) throw InvalidExamExceptions.SubjectNotSelected()

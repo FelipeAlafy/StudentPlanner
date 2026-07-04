@@ -3,8 +3,10 @@ package net.felipealafy.studentplanner.feature_exams.presentation.views
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -40,22 +42,21 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.feature_exams.data.local.Exam
 import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
-import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
+import net.felipealafy.studentplanner.feature_exams.presentation.viewmodels.DetailedExamUiState
 import net.felipealafy.studentplanner.feature_exams.presentation.viewmodels.DetailedExamViewModel
-import net.felipealafy.studentplanner.ui.theme.GradeIndicatorProgressGradient
-import net.felipealafy.studentplanner.ui.theme.PlannerTheme
-import net.felipealafy.studentplanner.ui.theme.PlannerThemeProvider
-import net.felipealafy.studentplanner.ui.theme.Typography
-import net.felipealafy.studentplanner.ui.theme.colorPallet
-import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
-import net.felipealafy.studentplanner.ui.views.getGradePhrase
-import net.felipealafy.studentplanner.ui.views.getValueInDisplayStyle
+import net.felipealafy.studentplanner.core.ui.components.text.label.TopAppBarTitle
+import net.felipealafy.studentplanner.core.ui.theme.GradeIndicatorProgressGradient
+import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
+import net.felipealafy.studentplanner.core.ui.theme.Typography
+import net.felipealafy.studentplanner.core.ui.theme.colorPallet
+import net.felipealafy.studentplanner.core.ui.views.getGradePhrase
+import net.felipealafy.studentplanner.core.ui.views.getValueInDisplayStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -64,142 +65,101 @@ fun DetailedExamView(
     onEditMode: (String, String, String) -> Unit,
     onReturnAction: () -> Unit,
 ) {
-    val uiState = viewModel.uiState.collectAsState().value
-    val subject = uiState.subject
+    val uiState by viewModel.uiState.collectAsState()
 
-    if (subject == null) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(colorPallet[0][1])),
-            contentAlignment = Alignment.Center
-        ) {
-            if (uiState.isLoading) {
-                CircularProgressIndicator()
-            } else {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.subject_not_found),
-                        style = Typography.bodyMedium,
-                        color = Color(colorPallet[0][1].getContrastingColorForText()),
-                        textAlign = TextAlign.Center
-                    )
-                    IconButton(
-                        onClick = onReturnAction
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = stringResource(R.string.back_to_past_view),
-                            tint = Color(colorPallet[0][1].getContrastingColorForText())
-                        )
-                    }
-                }
-            }
-        }
-        return
-    }
-
-    if (uiState.exam == null) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(colorPallet[0][1])),
-            contentAlignment = Alignment.Center
-        ) {
-            if (uiState.isLoading) {
-                CircularProgressIndicator()
-            } else {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.exam_not_founded),
-                        style = Typography.bodyMedium,
-                        color = Color(colorPallet[0][1].getContrastingColorForText()),
-                        textAlign = TextAlign.Center
-                    )
-                    IconButton(
-                        onClick = onReturnAction
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = stringResource(R.string.back_to_past_view),
-                            tint = Color(colorPallet[0][1].getContrastingColorForText())
-                        )
-                    }
-                }
-            }
-        }
-        return
-    }
-
-    PlannerThemeProvider(uiState.subject.color) {
-        Scaffold(
-            containerColor = PlannerTheme.colors.container,
-            topBar = {
-                TopAppBar(
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = PlannerTheme.colors.primary
-                    ),
-                    title = {
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            TopAppBarTitle(
-                                text = stringResource(R.string.exam_view),
-                            )
-                        }
-                    },
-                    navigationIcon = {
-                        IconButton(
-                            onClick = { onReturnAction() }
-                        ) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                contentDescription = stringResource(R.string.back_to_past_view),
-                                tint = PlannerTheme.colors.onPrimary
-                            )
-                        }
-                    },
-                    actions = {
-                        IconButton(
-                            onClick = {
-                                onEditMode(
-                                    uiState.planner!!.id,
-                                    uiState.subject.id,
-                                    uiState.exam.id
-                                )
-                            }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Edit,
-                                contentDescription = stringResource(R.string.go_on_edit_mode_for_edit),
-                                tint = PlannerTheme.colors.onPrimary
-                            )
-                        }
-                    }
-                )
-            },
-        ) { innerPadding ->
+    when (val state = uiState) {
+        is DetailedExamUiState.Error -> {
             Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = stringResource(state.messageResId))
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                IconButton(onClick = onReturnAction) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                        contentDescription = stringResource(R.string.back_to_past_view)
+                    )
+                }
+            }
+        }
+        is DetailedExamUiState.Loading -> {
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding)
+                    .background(Color(colorPallet[0][1])),
+                contentAlignment = Alignment.Center
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    ExamName(exam = uiState.exam)
-                    GradeIndicatorWithLabel(exam = uiState.exam, gradeStyle = uiState.planner!!.gradeDisplayStyle)
+                CircularProgressIndicator()
+            }
+        }
+        is DetailedExamUiState.Success -> {
+            PlannerThemeProvider(state.subject.color) {
+                Scaffold(
+                    containerColor = PlannerTheme.colors.container,
+                    topBar = {
+                        TopAppBar(
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = PlannerTheme.colors.primary
+                            ),
+                            title = {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    TopAppBarTitle(
+                                        text = stringResource(R.string.exam_view),
+                                    )
+                                }
+                            },
+                            navigationIcon = {
+                                IconButton(
+                                    onClick = { onReturnAction() }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                        contentDescription = stringResource(R.string.back_to_past_view),
+                                        tint = PlannerTheme.colors.onPrimary
+                                    )
+                                }
+                            },
+                            actions = {
+                                IconButton(
+                                    onClick = {
+                                        onEditMode(
+                                            state.planner.id,
+                                            state.subject.id,
+                                            state.exam.id
+                                        )
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Edit,
+                                        contentDescription = stringResource(R.string.go_on_edit_mode_for_edit),
+                                        tint = PlannerTheme.colors.onPrimary
+                                    )
+                                }
+                            }
+                        )
+                    },
+                ) { innerPadding ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp)
+                        ) {
+                            ExamName(exam = state.exam)
+                            GradeIndicatorWithLabel(exam = state.exam, gradeStyle = state.planner.gradeDisplayStyle)
+                        }
+                    }
                 }
             }
         }

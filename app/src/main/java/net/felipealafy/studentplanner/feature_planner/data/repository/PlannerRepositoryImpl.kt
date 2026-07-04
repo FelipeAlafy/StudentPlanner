@@ -16,7 +16,7 @@ class PlannerRepositoryImpl @Inject constructor(private val dao: PlannerDao) {
         return dao.getAllPlanners().map { it.toDomainModel() }
     }
 
-    fun getPlannerById(plannerId: String): Planner {
+    fun getPlannerById(plannerId: String): Flow<Planner> {
         return dao.getPlanner(plannerId = plannerId).toDomainModel()
     }
 

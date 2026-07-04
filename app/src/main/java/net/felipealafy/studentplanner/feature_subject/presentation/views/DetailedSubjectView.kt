@@ -48,16 +48,16 @@ import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
 import net.felipealafy.studentplanner.feature_class.domain.model.StudentClass
 import net.felipealafy.studentplanner.feature_subject.presentation.viewmodels.DetailedSubjectViewModel
 import net.felipealafy.studentplanner.feature_subject.presentation.viewmodels.SubjectDetailsUiState
-import net.felipealafy.studentplanner.ui.components.text.label.AverageGrade
+import net.felipealafy.studentplanner.core.ui.components.text.label.AverageGrade
 import net.felipealafy.studentplanner.ui.components.text.label.ClassesTaken
 import net.felipealafy.studentplanner.ui.components.text.label.SubjectTitleForAnyCard
-import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
-import net.felipealafy.studentplanner.ui.theme.PlannerTheme
-import net.felipealafy.studentplanner.ui.theme.PlannerThemeProvider
-import net.felipealafy.studentplanner.ui.theme.Typography
+import net.felipealafy.studentplanner.core.ui.components.text.label.TopAppBarTitle
+import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
+import net.felipealafy.studentplanner.core.ui.theme.Typography
 import net.felipealafy.studentplanner.feature_planner.presentation.views.SubjectTitle
-import net.felipealafy.studentplanner.ui.views.formattedValue
-import net.felipealafy.studentplanner.ui.views.getValueInDisplayStyle
+import net.felipealafy.studentplanner.core.ui.views.formattedValue
+import net.felipealafy.studentplanner.core.ui.views.getValueInDisplayStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

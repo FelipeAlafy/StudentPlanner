@@ -45,20 +45,20 @@ import kotlinx.coroutines.flow.collectLatest
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.feature_class.presentation.viewmodels.StudentClassCreationEvent
 import net.felipealafy.studentplanner.feature_subject.presentation.views.DateTimeSelector
-import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
-import net.felipealafy.studentplanner.ui.components.combobox.SelectSubjectComboBox
-import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
+import net.felipealafy.studentplanner.core.ui.components.color.chooser.ButtonWithBackgroundColor
+import net.felipealafy.studentplanner.core.ui.components.combobox.SelectSubjectComboBox
+import net.felipealafy.studentplanner.core.ui.components.text.label.TopAppBarTitle
 import net.felipealafy.studentplanner.feature_class.presentation.viewmodels.StudentClassCreationViewModel
 import net.felipealafy.studentplanner.feature_class.presentation.viewmodels.StudentClassUiState
-import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
-import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
-import net.felipealafy.studentplanner.ui.theme.DarkGray
-import net.felipealafy.studentplanner.ui.theme.LightGray
-import net.felipealafy.studentplanner.ui.theme.PlannerTheme
-import net.felipealafy.studentplanner.ui.theme.Red
-import net.felipealafy.studentplanner.ui.theme.StudentPlannerTheme
-import net.felipealafy.studentplanner.ui.theme.Typography
-import net.felipealafy.studentplanner.ui.theme.colorPallet
+import net.felipealafy.studentplanner.core.ui.date.time.picker.DateTimePickerDialog
+import net.felipealafy.studentplanner.core.ui.extensions.getFormattedDateTime
+import net.felipealafy.studentplanner.core.ui.theme.DarkGray
+import net.felipealafy.studentplanner.core.ui.theme.LightGray
+import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.core.ui.theme.Red
+import net.felipealafy.studentplanner.core.ui.theme.StudentPlannerTheme
+import net.felipealafy.studentplanner.core.ui.theme.Typography
+import net.felipealafy.studentplanner.core.ui.theme.colorPallet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

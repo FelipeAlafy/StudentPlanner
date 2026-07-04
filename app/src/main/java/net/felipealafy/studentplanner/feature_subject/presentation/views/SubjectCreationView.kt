@@ -34,16 +34,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonOpenColorSelectionDialog
-import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
-import net.felipealafy.studentplanner.ui.components.color.chooser.ColorSelectionDialog
+import net.felipealafy.studentplanner.core.ui.components.color.chooser.ButtonOpenColorSelectionDialog
+import net.felipealafy.studentplanner.core.ui.components.color.chooser.ButtonWithBackgroundColor
+import net.felipealafy.studentplanner.core.ui.components.color.chooser.ColorSelectionDialog
 import net.felipealafy.studentplanner.ui.components.text.input.TextInputWithColor
 import net.felipealafy.studentplanner.feature_subject.presentation.viewmodels.SubjectCreationViewModel
-import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
-import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
-import net.felipealafy.studentplanner.ui.theme.PlannerTheme
-import net.felipealafy.studentplanner.ui.theme.Typography
-import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
+import net.felipealafy.studentplanner.core.ui.date.time.picker.DateTimePickerDialog
+import net.felipealafy.studentplanner.core.ui.extensions.getFormattedDateTime
+import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.core.ui.theme.Typography
+import net.felipealafy.studentplanner.core.ui.theme.colorutils.getContrastingColorForText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

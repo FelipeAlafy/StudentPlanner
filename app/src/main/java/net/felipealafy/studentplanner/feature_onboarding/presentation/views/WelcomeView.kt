@@ -23,12 +23,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.ui.theme.Blue
-import net.felipealafy.studentplanner.ui.theme.DarkGray
-import net.felipealafy.studentplanner.ui.theme.LightGray
-import net.felipealafy.studentplanner.ui.theme.Typography
-import net.felipealafy.studentplanner.ui.theme.White
-import net.felipealafy.studentplanner.ui.theme.colorPallet
+import net.felipealafy.studentplanner.core.ui.theme.Blue
+import net.felipealafy.studentplanner.core.ui.theme.DarkGray
+import net.felipealafy.studentplanner.core.ui.theme.LightGray
+import net.felipealafy.studentplanner.core.ui.theme.Typography
+import net.felipealafy.studentplanner.core.ui.theme.White
+import net.felipealafy.studentplanner.core.ui.theme.colorPallet
 
 
 @Composable

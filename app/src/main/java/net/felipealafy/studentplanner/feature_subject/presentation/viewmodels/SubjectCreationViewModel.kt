@@ -4,13 +4,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -18,9 +15,7 @@ import net.felipealafy.studentplanner.feature_planner.domain.model.Planner
 import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 import net.felipealafy.studentplanner.feature_planner.data.repository.PlannerRepositoryImpl
 import net.felipealafy.studentplanner.feature_subject.data.repository.SubjectRepositoryImpl
-import net.felipealafy.studentplanner.ui.theme.colorPallet
-import net.felipealafy.studentplanner.ui.views.parseToDateTime
-import java.time.LocalDateTime
+import net.felipealafy.studentplanner.core.ui.views.parseToDateTime
 import java.util.UUID
 import javax.inject.Inject
 
@@ -42,26 +37,12 @@ class SubjectCreationViewModel @Inject constructor(
 ) : ViewModel() {
     private val plannerId: String = checkNotNull(savedStateHandle["plannerId"])
     private val _currentSubjectEntry = MutableStateFlow(getNewSubject())
-    private val plannerFlow = flow {
-        emit(plannerRepositoryImpl.getPlannerById(plannerId))
-    }.flowOn(Dispatchers.IO)
-
-    private fun getNewSubject(): Subject {
-        return Subject(
-            id = "",
-            plannerId = "",
-            name = "",
-            color = colorPallet[0][1],
-            start = LocalDateTime.now(),
-            end = LocalDateTime.now(),
-        )
-    }
 
     private val _uiState: StateFlow<SubjectCreationUiState> =
         combine(
             _currentSubjectEntry,
 
-            plannerFlow
+            plannerRepositoryImpl.getPlannerById(plannerId)
 
         ) { currentSubjectEntry, currentPlanner ->
 

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 
 @Dao
-interface nullExamDao {
+interface ExamDao {
     @Query("SELECT * FROM exam WHERE subjectId = :subjectId")
     fun getExams(subjectId: String): Flow<List<ExamTable>>
 

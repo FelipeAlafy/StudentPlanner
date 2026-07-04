@@ -48,15 +48,15 @@ import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 import net.felipealafy.studentplanner.feature_subject.presentation.views.Date
 import net.felipealafy.studentplanner.ui.components.text.label.ClassesTaken
 import net.felipealafy.studentplanner.ui.components.text.label.PlannerTitleForAnyCard
-import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
-import net.felipealafy.studentplanner.ui.theme.PlannerTheme
-import net.felipealafy.studentplanner.ui.theme.PlannerThemeProvider
+import net.felipealafy.studentplanner.core.ui.components.text.label.TopAppBarTitle
+import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
 import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.DetailedPlannerViewModel
-import net.felipealafy.studentplanner.ui.theme.Typography
+import net.felipealafy.studentplanner.core.ui.theme.Typography
 import net.felipealafy.studentplanner.feature_subject.domain.model.DetailedSubject
-import net.felipealafy.studentplanner.ui.views.formattedValue
-import net.felipealafy.studentplanner.ui.views.getPercentageFromZeroToOneHundred
-import net.felipealafy.studentplanner.ui.views.getValueInDisplayStyleForAverage
+import net.felipealafy.studentplanner.core.ui.views.formattedValue
+import net.felipealafy.studentplanner.core.ui.views.getPercentageFromZeroToOneHundred
+import net.felipealafy.studentplanner.core.ui.views.getValueInDisplayStyleForAverage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

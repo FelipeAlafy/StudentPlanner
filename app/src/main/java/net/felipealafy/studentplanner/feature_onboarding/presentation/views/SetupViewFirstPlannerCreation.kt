@@ -28,15 +28,15 @@ import kotlinx.coroutines.runBlocking
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.feature_onboarding.presentation.viewmodels.SetupViewModelFirstPlannerCreation
 import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.PlannerCreationEvent
-import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonOpenColorSelectionDialog
-import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
-import net.felipealafy.studentplanner.ui.components.color.chooser.ColorSelectionDialog
-import net.felipealafy.studentplanner.ui.components.grade.GradeStyleComboBox
+import net.felipealafy.studentplanner.core.ui.components.color.chooser.ButtonOpenColorSelectionDialog
+import net.felipealafy.studentplanner.core.ui.components.color.chooser.ButtonWithBackgroundColor
+import net.felipealafy.studentplanner.core.ui.components.color.chooser.ColorSelectionDialog
+import net.felipealafy.studentplanner.core.ui.components.grade.GradeStyleComboBox
 import net.felipealafy.studentplanner.ui.components.grade.MinimumGradeToPassInput
 import net.felipealafy.studentplanner.ui.components.text.input.TextInputWithColor
-import net.felipealafy.studentplanner.ui.theme.PlannerTheme
-import net.felipealafy.studentplanner.ui.theme.PlannerThemeProvider
-import net.felipealafy.studentplanner.ui.theme.Typography
+import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
+import net.felipealafy.studentplanner.core.ui.theme.Typography
 
 @Composable
 fun SetupViewFirstPlannerCreation(viewModel: SetupViewModelFirstPlannerCreation) {

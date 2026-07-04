@@ -32,7 +32,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -44,15 +43,14 @@ import net.felipealafy.studentplanner.feature_class.presentation.viewmodels.Edit
 import net.felipealafy.studentplanner.feature_class.presentation.viewmodels.EditStudentClassUiState
 import net.felipealafy.studentplanner.feature_class.presentation.viewmodels.EditStudentClassViewModel
 import net.felipealafy.studentplanner.feature_subject.presentation.views.DateTimeSelector
-import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
-import net.felipealafy.studentplanner.ui.components.combobox.SelectSubjectComboBox
-import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
-import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
-import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
-import net.felipealafy.studentplanner.ui.theme.PlannerTheme
-import net.felipealafy.studentplanner.ui.theme.StudentPlannerTheme
-import net.felipealafy.studentplanner.ui.theme.Typography
-import net.felipealafy.studentplanner.ui.theme.colorPallet
+import net.felipealafy.studentplanner.core.ui.components.color.chooser.ButtonWithBackgroundColor
+import net.felipealafy.studentplanner.core.ui.components.combobox.SelectSubjectComboBox
+import net.felipealafy.studentplanner.core.ui.components.text.label.TopAppBarTitle
+import net.felipealafy.studentplanner.core.ui.date.time.picker.DateTimePickerDialog
+import net.felipealafy.studentplanner.core.ui.extensions.getFormattedDateTime
+import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.core.ui.theme.StudentPlannerTheme
+import net.felipealafy.studentplanner.core.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

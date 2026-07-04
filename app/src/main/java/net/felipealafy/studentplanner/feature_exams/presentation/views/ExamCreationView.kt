@@ -45,20 +45,20 @@ import net.felipealafy.studentplanner.feature_exams.presentation.viewmodels.Exam
 import net.felipealafy.studentplanner.feature_exams.presentation.viewmodels.ExamCreationUiState
 import net.felipealafy.studentplanner.feature_exams.presentation.viewmodels.ExamCreationViewModel
 import net.felipealafy.studentplanner.feature_subject.presentation.views.DateTimeSelector
-import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
-import net.felipealafy.studentplanner.ui.components.combobox.SelectSubjectComboBox
-import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromAToF
-import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromAToFWithE
-import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromZeroToOneHundred
-import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromZeroToTen
-import net.felipealafy.studentplanner.ui.components.grade.GradeWeightInput
-import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
-import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
-import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
-import net.felipealafy.studentplanner.ui.theme.PlannerTheme
-import net.felipealafy.studentplanner.ui.theme.PlannerThemeProvider
-import net.felipealafy.studentplanner.ui.theme.Typography
-import net.felipealafy.studentplanner.ui.theme.colorPallet
+import net.felipealafy.studentplanner.core.ui.components.color.chooser.ButtonWithBackgroundColor
+import net.felipealafy.studentplanner.core.ui.components.combobox.SelectSubjectComboBox
+import net.felipealafy.studentplanner.core.ui.components.grade.GradeInputFromAToF
+import net.felipealafy.studentplanner.core.ui.components.grade.GradeInputFromAToFWithE
+import net.felipealafy.studentplanner.core.ui.components.grade.GradeInputFromZeroToOneHundred
+import net.felipealafy.studentplanner.core.ui.components.grade.GradeInputFromZeroToTen
+import net.felipealafy.studentplanner.core.ui.components.grade.GradeWeightInput
+import net.felipealafy.studentplanner.core.ui.components.text.label.TopAppBarTitle
+import net.felipealafy.studentplanner.core.ui.date.time.picker.DateTimePickerDialog
+import net.felipealafy.studentplanner.core.ui.extensions.getFormattedDateTime
+import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
+import net.felipealafy.studentplanner.core.ui.theme.Typography
+import net.felipealafy.studentplanner.core.ui.theme.colorPallet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

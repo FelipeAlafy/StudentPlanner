@@ -30,21 +30,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.PlannerCreationEvent
-import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonOpenColorSelectionDialog
-import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
-import net.felipealafy.studentplanner.ui.components.color.chooser.ColorSelectionDialog
-import net.felipealafy.studentplanner.ui.components.grade.GradeStyleComboBox
+import net.felipealafy.studentplanner.core.ui.components.color.chooser.ButtonOpenColorSelectionDialog
+import net.felipealafy.studentplanner.core.ui.components.color.chooser.ButtonWithBackgroundColor
+import net.felipealafy.studentplanner.core.ui.components.color.chooser.ColorSelectionDialog
+import net.felipealafy.studentplanner.core.ui.components.grade.GradeStyleComboBox
 import net.felipealafy.studentplanner.ui.components.grade.MinimumGradeToPassInput
 import net.felipealafy.studentplanner.ui.components.text.input.TextInputWithColor
 import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.PlannerCreationViewModel
-import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
-import net.felipealafy.studentplanner.ui.theme.PlannerTheme
-import net.felipealafy.studentplanner.ui.theme.PlannerThemeProvider
-import net.felipealafy.studentplanner.ui.theme.Typography
+import net.felipealafy.studentplanner.core.ui.components.text.label.TopAppBarTitle
+import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
+import net.felipealafy.studentplanner.core.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -1,7 +1,6 @@
 package net.felipealafy.studentplanner.feature_class.presentation.views
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,13 +40,13 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.feature_class.presentation.viewmodels.DetailedStudentClassViewModel
-import net.felipealafy.studentplanner.ui.theme.Typography
+import net.felipealafy.studentplanner.core.ui.theme.Typography
 import androidx.compose.runtime.collectAsState
 import net.felipealafy.studentplanner.feature_class.presentation.viewmodels.DetailedStudentClassUiState
-import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
-import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
-import net.felipealafy.studentplanner.ui.theme.PlannerTheme
-import net.felipealafy.studentplanner.ui.theme.PlannerThemeProvider
+import net.felipealafy.studentplanner.core.ui.components.text.label.TopAppBarTitle
+import net.felipealafy.studentplanner.core.ui.extensions.getFormattedDateTime
+import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

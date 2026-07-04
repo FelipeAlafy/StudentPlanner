@@ -25,8 +25,8 @@ import net.felipealafy.studentplanner.feature_exams.domain.model.ExamParams
 import net.felipealafy.studentplanner.feature_exams.domain.use_case.GetExamUseCase
 import net.felipealafy.studentplanner.feature_planner.domain.model.DetailedPlanner
 import net.felipealafy.studentplanner.feature_planner.domain.use_case.GetDetailedPlannerUseCase
-import net.felipealafy.studentplanner.ui.forms.ExamForm
-import net.felipealafy.studentplanner.ui.views.parseToDateTime
+import net.felipealafy.studentplanner.feature_exams.domain.model.ExamForm
+import net.felipealafy.studentplanner.core.ui.views.parseToDateTime
 import javax.inject.Inject
 
 sealed interface EditExamEvents {
