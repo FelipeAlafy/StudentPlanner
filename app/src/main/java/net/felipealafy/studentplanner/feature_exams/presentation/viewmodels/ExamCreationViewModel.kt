@@ -1,5 +1,6 @@
 package net.felipealafy.studentplanner.feature_exams.presentation.viewmodels
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -25,140 +27,85 @@ import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeAToFWit
 import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
 import net.felipealafy.studentplanner.feature_planner.domain.model.Planner
 import net.felipealafy.studentplanner.feature_exams.data.repository.ExamRepository
+import net.felipealafy.studentplanner.feature_exams.domain.exception.InvalidExamExceptions
+import net.felipealafy.studentplanner.feature_exams.domain.model.ExamParams
+import net.felipealafy.studentplanner.feature_exams.domain.use_case.CreateExamUseCase
+import net.felipealafy.studentplanner.feature_exams.domain.use_case.GetExamUseCase
 import net.felipealafy.studentplanner.feature_planner.data.repository.PlannerRepositoryImpl
+import net.felipealafy.studentplanner.feature_planner.domain.model.DetailedPlanner
+import net.felipealafy.studentplanner.feature_planner.domain.use_case.GetDetailedPlannerUseCase
 import net.felipealafy.studentplanner.feature_subject.data.repository.SubjectRepositoryImpl
 import net.felipealafy.studentplanner.ui.forms.ExamForm
 import net.felipealafy.studentplanner.ui.views.parseToDateTime
 import javax.inject.Inject
 
-data class ExamCreationUiState(
-    val planner: Planner? = null,
-    val entryExam: ExamForm = ExamForm(),
-    val isValid: Boolean = false,
-    val isLoading: Boolean = true
-)
+sealed interface ExamCreationEvent {
+    data class ShowError(@param:StringRes val messageResId: Int) : ExamCreationEvent
+    data object ExamCreatedSuccessfully : ExamCreationEvent
+}
+
+sealed interface ExamCreationUiState {
+    data object Loading : ExamCreationUiState
+    data class Error(@param:StringRes val messageResId: Int) : ExamCreationUiState
+    data class Success(
+        val detailedPlanner: DetailedPlanner,
+        val examForm: ExamForm
+    ) : ExamCreationUiState
+}
 
 @HiltViewModel
 class ExamCreationViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val plannerRepositoryImpl: PlannerRepositoryImpl,
-    subjectRepositoryImpl: SubjectRepositoryImpl,
-    private val examRepository: ExamRepository
+    private val getDetailedPlannerUseCase: GetDetailedPlannerUseCase,
+    private val createExamUseCase: CreateExamUseCase
 ) : ViewModel() {
     private val plannerId: String = checkNotNull(savedStateHandle["plannerId"])
 
-    private val plannerFlow: Flow<Planner?> = flow {
-        emit(plannerRepositoryImpl.getPlannerById(plannerId))
-    }.flowOn(Dispatchers.IO)
+    private val _examForm = MutableStateFlow<ExamForm>(ExamForm())
 
-    private val _currentForm = MutableStateFlow(ExamForm())
-
-    private val _toastEvent = MutableSharedFlow<Int>()
-
-    private var _isInvalidInputErrorForGrade = MutableStateFlow(false)
-
-    private var _isInvalidInputErrorForGradeWeight = MutableStateFlow(false)
-
-
-    val toastEvent: SharedFlow<Int> = _toastEvent.asSharedFlow()
-    val isInvalidInputErrorForGrade: StateFlow<Boolean> = _isInvalidInputErrorForGrade
-
-    val isInvalidInputErrorForGradeWeight: StateFlow<Boolean> = _isInvalidInputErrorForGradeWeight
+    private val _events = MutableSharedFlow<ExamCreationEvent>()
+    val events = _events.asSharedFlow()
 
     val uiState: StateFlow<ExamCreationUiState> = combine(
-        plannerFlow,
-        subjectRepositoryImpl.getAllSubjectsOfAPlanner(plannerId),
-        _currentForm
-    ) { planner, subjects, currentForm ->
+        getDetailedPlannerUseCase(plannerId),
+        _examForm
+    ) { detailedPlanner, examForm ->
+        if (detailedPlanner.planner.id.isEmpty()) return@combine ExamCreationUiState.Error(R.string.planner_not_found)
+        if (detailedPlanner.subjects.isEmpty()) return@combine ExamCreationUiState.Error(R.string.no_subjects_available_error_message)
 
-        val isValid = currentForm.name.isNotEmpty() &&
-                currentForm.subjectId.isNotEmpty()
-
-        val plannerWithSubjects = planner?.copy(subjects = subjects.toTypedArray())
-
-        ExamCreationUiState(
-            planner = plannerWithSubjects,
-            entryExam = currentForm,
-            isValid = isValid,
-            isLoading = false
+        ExamCreationUiState.Success(
+            detailedPlanner = detailedPlanner,
+            examForm = examForm
         )
+    }.catch {
+        emit(ExamCreationUiState.Error(R.string.unable_to_load))
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = ExamCreationUiState(
-            entryExam = ExamForm(),
-            isLoading = true
-        )
+        initialValue = ExamCreationUiState.Loading
     )
 
     fun updateSubject(subjectId: String) {
-        _currentForm.update {
+        _examForm.update {
             it.copy(subjectId = subjectId)
         }
     }
 
     fun updateName(newName: String) {
-        _currentForm.update {
+        _examForm.update {
             it.copy(name = newName)
         }
     }
 
     fun updateGradeFrom0to100(newGrade: String) {
-        validateGrade(false)
-        _currentForm.update {
+        _examForm.update {
             it.copy(grade = newGrade)
         }
     }
 
     fun updateGradeFrom0to10(newGrade: String) {
-        validateGrade(false)
-        _currentForm.update {
+        _examForm.update {
             it.copy(grade = newGrade)
-        }
-    }
-
-    fun validateGrade(shouldDisplayToast: Boolean = false) {
-        var pattern: Regex
-        var errorStringId: Int
-        if (uiState.value.planner!!.gradeDisplayStyle == GradeStyle.FROM_ZERO_TO_ONE_HUNDRED) {
-            pattern = Regex("^(100|[1-9]?[0-9])$")
-            errorStringId = R.string.invalid_grade_input_0_to_100
-        } else {
-            pattern = Regex("^(10([.,]0*)?|[0-9]([.,][0-9]+)?)$")
-            errorStringId = R.string.invalid_grade_input_0_to_10
-        }
-        if (!pattern.matches(_currentForm.value.grade)) {
-            _isInvalidInputErrorForGrade.update {
-                true
-            }
-            if (!shouldDisplayToast) return
-            viewModelScope.launch {
-                _toastEvent.emit(errorStringId)
-            }
-            return
-        }
-        _isInvalidInputErrorForGrade.update {
-            false
-        }
-    }
-
-    fun validateGradeWeight(shouldDisplayToast: Boolean = false) {
-        val pattern = Regex("^(100|[1-9]?[0-9])$")
-        val errorStringId = R.string.invalid_grade_input_0_to_100
-
-        if (!pattern.matches(_currentForm.value.gradeWeight)) {
-            _isInvalidInputErrorForGradeWeight.update {
-                true
-            }
-            if (!shouldDisplayToast) return
-            viewModelScope.launch {
-                _toastEvent.emit(errorStringId)
-            }
-            return
-        }
-
-        _isInvalidInputErrorForGradeWeight.update {
-            false
         }
     }
 
@@ -171,7 +118,7 @@ class ExamCreationViewModel @Inject constructor(
             GradeAToF.F -> 0F
         }
 
-        _currentForm.update {
+        _examForm.update {
             it.copy(grade = grade.toString())
         }
     }
@@ -186,50 +133,57 @@ class ExamCreationViewModel @Inject constructor(
             GradeAToFWithE.F -> 0F
         }
 
-        _currentForm.update {
+        _examForm.update {
             it.copy(grade = grade.toString())
         }
     }
 
     fun updateGradeWeight(newGradeWeight: String) {
-        _currentForm.update {
+        _examForm.update {
             it.copy(gradeWeight = newGradeWeight)
         }
     }
 
-    private fun validator(entryExam: ExamForm): Boolean {
-        if (entryExam.name.isEmpty()) return false
-        if (entryExam.subjectId.isEmpty()) return false
-        if (isInvalidInputErrorForGrade.value) return false
-        if (isInvalidInputErrorForGradeWeight.value) return false
-
-        return true
-    }
-
     fun saveExam() {
-        if (!uiState.value.isValid) return
-        if (!validator(uiState.value.entryExam)) return
-        viewModelScope.launch {
-            examRepository.insert(examFormToExam(uiState.value.entryExam))
-        }
-    }
+        val currentState = uiState.value
+        if (currentState !is ExamCreationUiState.Success) return
 
-    private fun examFormToExam(examForm: ExamForm): Exam {
-        return Exam(
-            id = examForm.id,
-            subjectId = examForm.subjectId,
-            name = examForm.name,
-            grade = (examForm.grade.replace(',', '.').toFloat()),
-            gradeWeight = (examForm.gradeWeight.replace(',', '.').toFloat() / 100F),
-            start = examForm.start,
-            end = examForm.end
-        )
+
+        viewModelScope.launch {
+            try {
+                val form = currentState.examForm
+                val plannerStyle = currentState.detailedPlanner.planner.gradeDisplayStyle
+
+                createExamUseCase(
+                    params = ExamParams(
+                        examId = "",
+                        subjectId = form.subjectId,
+                        name = form.name,
+                        gradeString = form.grade, // Mandando String!
+                        gradeWeightString = form.gradeWeight, // Mandando String!
+                        start = form.start,
+                        end = form.end,
+                        gradeStyle = plannerStyle
+                    )
+                )
+            } catch (e: Exception) {
+                val errorMessageId = when (e) {
+                    is InvalidExamExceptions.EmptyName -> R.string.empty_name_error
+                    is InvalidExamExceptions.SubjectNotSelected -> R.string.empty_subject_error
+                    is InvalidExamExceptions.InvalidDateSelection -> R.string.invalid_date_time_selection_error
+                    is InvalidExamExceptions.InvalidGradeFormat -> R.string.invalid_number_input
+                    is InvalidExamExceptions.InvalidWeightFormat -> R.string.invalid_grade_input_0_to_100
+                    else -> R.string.unable_to_load
+                }
+                _events.emit(ExamCreationEvent.ShowError(errorMessageId))
+            }
+        }
     }
 
     fun updateStartDate(dateMillis: Long?, hour: Int, minute: Int) {
         if (dateMillis == null) return
         val newDateTime = parseToDateTime(dateMillis, hour, minute)
-        _currentForm.update {
+        _examForm.update {
             it.copy(start = newDateTime)
         }
     }
@@ -237,7 +191,7 @@ class ExamCreationViewModel @Inject constructor(
     fun updateEndDate(dateMillis: Long?, hour: Int, minute: Int) {
         if (dateMillis == null) return
         val newDateTime = parseToDateTime(dateMillis, hour, minute)
-        _currentForm.update {
+        _examForm.update {
             it.copy(end = newDateTime)
         }
     }

@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -37,13 +36,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.collectLatest
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
 import net.felipealafy.studentplanner.feature_class.presentation.views.EditableTextEntry
-import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
+import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
+import net.felipealafy.studentplanner.feature_exams.presentation.viewmodels.ExamCreationEvent
+import net.felipealafy.studentplanner.feature_exams.presentation.viewmodels.ExamCreationUiState
+import net.felipealafy.studentplanner.feature_exams.presentation.viewmodels.ExamCreationViewModel
 import net.felipealafy.studentplanner.feature_subject.presentation.views.DateTimeSelector
 import net.felipealafy.studentplanner.ui.components.color.chooser.ButtonWithBackgroundColor
 import net.felipealafy.studentplanner.ui.components.combobox.SelectSubjectComboBox
@@ -53,14 +53,12 @@ import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromZeroToOn
 import net.felipealafy.studentplanner.ui.components.grade.GradeInputFromZeroToTen
 import net.felipealafy.studentplanner.ui.components.grade.GradeWeightInput
 import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
-import net.felipealafy.studentplanner.feature_exams.presentation.viewmodels.ExamCreationViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
+import net.felipealafy.studentplanner.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.ui.theme.PlannerThemeProvider
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
-import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
-import net.felipealafy.studentplanner.ui.theme.colorutils.getForBackgroundBasedOnTitleBarColor
-import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,357 +66,303 @@ fun ExamCreationView(
     viewModel: ExamCreationViewModel,
     onReturnAction: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    val planner = uiState.planner
-    if (planner == null) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(colorPallet[0][1])),
-            contentAlignment = Alignment.Center
-        ) {
-            if (uiState.isLoading) {
-                CircularProgressIndicator()
-            } else {
-                Column (
-                    modifier = Modifier.fillMaxWidth().padding(16.dp)
-                ) {
-                    Text(
-                        text = "No planners available.",
-                        textAlign = TextAlign.Center,
-                        color = Color(colorPallet[0][1].getContrastingColorForText())
-                    )
-                    IconButton(
-                        onClick = onReturnAction,
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            tint = Color(colorPallet[0][1].getContrastingColorForText()),
-                            contentDescription = stringResource(R.string.back_to_past_view)
-                        )
-                    }
-                }
-            }
-        }
-        return
-    }
-
-    if (uiState..isEmpty()) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(planner.color)),
-            contentAlignment = Alignment.Center
-        ) {
-            if (uiState.isLoading) {
-                CircularProgressIndicator()
-            } else {
-                Column (
-                    modifier = Modifier.fillMaxWidth().padding(16.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.no_subjects_available_error_message),
-                        textAlign = TextAlign.Center,
-                        color = Color(planner.color.getContrastingColorForText())
-                    )
-
-                    IconButton(
-                        modifier = Modifier.width(64.dp).align(Alignment.CenterHorizontally),
-                        onClick = onReturnAction
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            tint = Color(planner.color.getContrastingColorForText()),
-                            contentDescription = stringResource(R.string.back_to_past_view)
-                        )
-                    }
-                }
-            }
-        }
-        return
-    }
-
-    val subject = viewModel.uiState.value.planner?.subjects?.firstOrNull() ?: Subject(
-        plannerId = planner.id,
-        name = "Error while loading subject",
-        color = colorPallet[0][1],
-        start = LocalDateTime.now(),
-        end = LocalDateTime.now()
-    )
-
     val context = LocalContext.current
+
     LaunchedEffect(key1 = Unit) {
-        viewModel.toastEvent.collectLatest { messageId ->
-            Toast.makeText(
-                context,
-                context.getString(messageId),
-                Toast.LENGTH_SHORT
-            ).show()
+        viewModel.events.collectLatest { event ->
+            when (event) {
+                is ExamCreationEvent.ShowError -> {
+                    Toast.makeText(context, event.messageResId, Toast.LENGTH_SHORT).show()
+                }
+
+                is ExamCreationEvent.ExamCreatedSuccessfully -> {
+                    Toast.makeText(context, R.string.created_successfully, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
         }
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(subject.color.toInt())
-                ),
-                title = {
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        TopAppBarTitle(
-                            text = stringResource(R.string.exam_creation_view)
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(
-                        onClick = onReturnAction
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = stringResource(R.string.back_to_past_view),
-                            tint = Color(subject.color.getContrastingColorForText())
-                        )
-                    }
-                },
-            )
-        }
-    ) { innerPadding ->
-        val backgroundColor = Color(subject.color.getForBackgroundBasedOnTitleBarColor())
-        val textContrastedColor = Color(subject.color.getForBackgroundBasedOnTitleBarColor()
-            .getContrastingColorForText()
-        )
-        Column(
-            modifier = Modifier
-                .background(
-                    backgroundColor
-                )
-                .padding(innerPadding)
-                .fillMaxSize()
-        ) {
+    val uiState by viewModel.uiState.collectAsState()
 
-            EditableTextEntry(
-                value = uiState.entryExam.name,
-                onTextChanged = {
-                    viewModel.updateName(it)
-                },
-                labelText = R.string.exam_name,
-                color = subject.color
-            )
-
-            SelectSubjectComboBox(
-                subjectId = uiState.entryExam.subjectId,
-                subjects = planner.subjects.toList(),
-                onSubjectSelected = { id ->
-                    viewModel.updateSubject(id)
-                },
-                selectedColor = subject.color
-            )
-
-
-            when (planner.gradeDisplayStyle) {
-                GradeStyle.FROM_ZERO_TO_ONE_HUNDRED -> {
-                    Column {
-                        Text(
-                            text = stringResource(R.string.select_your_exam_grade),
-                            style = Typography.bodyMedium,
-                            modifier = Modifier.padding(start = 16.dp),
-                            color = textContrastedColor
-                        )
-                        GradeInputFromZeroToOneHundred(
-                            text = uiState.entryExam.grade,
-                            onValueChange = { newGrade ->
-                                viewModel.updateGradeFrom0to100(newGrade)
-                            },
-                            selectedColor = subject.color,
-                            onValidate = {viewModel.validateGrade()},
-                            invalidDigit = viewModel.isInvalidInputErrorForGrade.collectAsState().value
-                        )
-                    }
-
-                }
-
-                GradeStyle.FROM_ZERO_TO_TEN -> {
-
-                    Column {
-                        Text(
-                            text = stringResource(R.string.select_your_exam_grade),
-                            style = Typography.bodyMedium,
-                            color = textContrastedColor
-                        )
-                        GradeInputFromZeroToTen(
-                            text = uiState.entryExam.grade,
-                            onValueChange = { newGrade ->
-                                viewModel.updateGradeFrom0to10(newGrade)
-                            },
-                            selectedColor = subject.color,
-                            onValidate = {viewModel.validateGrade()},
-                            invalidDigit = viewModel.isInvalidInputErrorForGrade.collectAsState().value
-                        )
-                    }
-
-                }
-
-                GradeStyle.FROM_A_TO_F -> {
-                    Text(
-                        text = stringResource(R.string.select_your_exam_grade),
-                        style = Typography.bodyMedium,
-                        modifier = Modifier.padding(start = 16.dp, top = 8.dp),
-                        color = textContrastedColor
-                    )
-                    GradeInputFromAToF(
-                        selectedColor = subject.color,
-                        onSelectItem = { grade ->
-                            viewModel.updateGradeFromAToF(grade)
-                        }
-                    )
-
-                }
-
-                GradeStyle.FROM_A_TO_F_WITH_E -> {
-                    Text(
-                        text = stringResource(R.string.select_your_exam_grade),
-                        style = Typography.bodyMedium,
-                        modifier = Modifier.padding(start = 16.dp, top = 8.dp),
-                        color = textContrastedColor
-                    )
-                    GradeInputFromAToFWithE(
-                        selectedColor = subject.color,
-                        onSelectItem = { grade ->
-                            viewModel.updateGradeFromAToFWithE(grade)
-                        }
-                    )
-                }
-            }
-
-            GradeWeightInput(
-                text = uiState.entryExam.gradeWeight,
-                onValueChange = {
-                    viewModel.updateGradeWeight(it)
-                },
-                onValidate = {
-                    viewModel.validateGradeWeight()
-                },
-                invalidDigit = viewModel.isInvalidInputErrorForGradeWeight.collectAsState().value,
-                selectedColor = subject.color
-            )
-
-            Spacer(modifier = Modifier.padding(top = 16.dp))
-
-            var showStartDateTimeSelectorDialog by rememberSaveable { mutableStateOf(false) }
-            var showEndDateTimeSelectorDialog by rememberSaveable { mutableStateOf(false) }
-            Column(
+    when (val state = uiState) {
+        is ExamCreationUiState.Loading -> {
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp)
-                    .height(256.dp)
-                    .border(
-                        width = 2.dp,
-                        color = Gray,
-                        shape = RoundedCornerShape(32.dp)
-                    ),
+                    .fillMaxSize()
+                    .background(Color(colorPallet[0][1])),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+
+        is ExamCreationUiState.Error -> {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(
-                    text = stringResource(R.string.exam_date_time_start),
-                    style = Typography.bodyMedium,
-                    modifier = Modifier.padding(start = 16.dp),
-                    color = textContrastedColor
-                )
+                Text(text = stringResource(state.messageResId))
 
-                DateTimeSelector(
-                    onClick = {
-                        showStartDateTimeSelectorDialog = true
-                    },
-                    dateTime = uiState.entryExam.start.getFormattedDateTime(),
-                    selectedColor = subject.color
-                )
+                Spacer(modifier = Modifier.height(16.dp))
 
-                if (showStartDateTimeSelectorDialog) {
-                    DateTimePickerDialog(
-                        initialDateTime = uiState.entryExam.start,
-                        onDismissRequest = {
-                            showStartDateTimeSelectorDialog = false
-                        },
-                        onDateTimeSelected = { dateMillis, hour, minute ->
-                            viewModel.updateStartDate(dateMillis, hour, minute)
-                        },
-                        backgroundColor = subject.color
-                    )
-                }
-
-                Spacer(modifier = Modifier.padding(top = 16.dp))
-                Text(
-                    text = stringResource(R.string.exam_date_time_end),
-                    style = Typography.bodyMedium,
-                    modifier = Modifier.padding(start = 16.dp),
-                    color = textContrastedColor
-                )
-                DateTimeSelector(
-                    onClick = {
-                        showEndDateTimeSelectorDialog = true
-                    },
-                    dateTime = uiState.entryExam.end.getFormattedDateTime(),
-                    selectedColor = subject.color
-                )
-
-                if (showEndDateTimeSelectorDialog) {
-                    DateTimePickerDialog(
-                        initialDateTime = uiState.entryExam.end,
-                        onDismissRequest = {
-                            showEndDateTimeSelectorDialog = false
-                        },
-                        onDateTimeSelected = { dateMillis, hour, minute ->
-                            viewModel.updateEndDate(dateMillis, hour, minute)
-                        },
-                        backgroundColor = subject.color
+                IconButton(onClick = onReturnAction) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                        contentDescription = stringResource(R.string.back_to_past_view)
                     )
                 }
             }
+        }
+
+        is ExamCreationUiState.Success -> {
+            val selectedSubject by rememberSaveable { mutableStateOf(state.detailedPlanner.subjects.first()) }
+            val examForm = state.examForm
+            PlannerThemeProvider(selectedSubject.subject.color) {
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = PlannerTheme.colors.primary
+                            ),
+                            title = {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    TopAppBarTitle(
+                                        text = stringResource(R.string.exam_creation_view)
+                                    )
+                                }
+                            },
+                            navigationIcon = {
+                                IconButton(
+                                    onClick = onReturnAction
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                        contentDescription = stringResource(R.string.back_to_past_view),
+                                        tint = PlannerTheme.colors.onPrimary
+                                    )
+                                }
+                            },
+                        )
+                    }
+                ) { innerPadding ->
+                    Column(
+                        modifier = Modifier
+                            .background(
+                                PlannerTheme.colors.surface
+                            )
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                    ) {
+
+                        EditableTextEntry(
+                            value = examForm.name,
+                            onTextChanged = {
+                                viewModel.updateName(it)
+                            },
+                            labelText = R.string.exam_name,
+                        )
+
+                        SelectSubjectComboBox(
+                            subjectId = examForm.subjectId,
+                            subjects = state.detailedPlanner.pureSubjects,
+                            onSubjectSelected = { id ->
+                                viewModel.updateSubject(id)
+                            },
+                        )
 
 
-            if (showStartDateTimeSelectorDialog) {
-                DateTimePickerDialog(
-                    onDismissRequest = {
-                        showStartDateTimeSelectorDialog = false
-                    },
-                    onDateTimeSelected = { dateMillis, hour, minute ->
-                        viewModel.updateStartDate(dateMillis, hour, minute)
-                    },
-                    backgroundColor = subject.color
-                )
-            }
+                        when (state.detailedPlanner.planner.gradeDisplayStyle) {
+                            GradeStyle.FROM_ZERO_TO_ONE_HUNDRED -> {
+                                Column {
+                                    Text(
+                                        text = stringResource(R.string.select_your_exam_grade),
+                                        style = Typography.bodyMedium,
+                                        modifier = Modifier.padding(start = 16.dp),
+                                        color = PlannerTheme.colors.onSurface
+                                    )
+                                    GradeInputFromZeroToOneHundred(
+                                        text = examForm.grade,
+                                        onValueChange = { newGrade ->
+                                            viewModel.updateGradeFrom0to100(newGrade)
+                                        },
+                                    )
+                                }
 
-            if (showEndDateTimeSelectorDialog) {
-                DateTimePickerDialog(
-                    onDismissRequest = {
-                        showEndDateTimeSelectorDialog = false
-                    },
-                    onDateTimeSelected = { dateMillis, hour, minute ->
-                        viewModel.updateEndDate(dateMillis, hour, minute)
-                    },
-                    backgroundColor = subject.color
-                )
-            }
+                            }
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .padding(top = 16.dp)
-                    .fillMaxWidth()
-            ) {
-                ButtonWithBackgroundColor(
-                    onClick = {
-                        viewModel.saveExam()
-                        onReturnAction()
-                    },
-                    selectedColor = subject.color,
-                    placeholderTextPath = R.string.create_button
-                )
+                            GradeStyle.FROM_ZERO_TO_TEN -> {
+
+                                Column {
+                                    Text(
+                                        text = stringResource(R.string.select_your_exam_grade),
+                                        style = Typography.bodyMedium,
+                                        color = PlannerTheme.colors.onSurface
+                                    )
+                                    GradeInputFromZeroToTen(
+                                        text = examForm.grade,
+                                        onValueChange = { newGrade ->
+                                            viewModel.updateGradeFrom0to10(newGrade)
+                                        },
+                                    )
+                                }
+
+                            }
+
+                            GradeStyle.FROM_A_TO_F -> {
+                                Text(
+                                    text = stringResource(R.string.select_your_exam_grade),
+                                    style = Typography.bodyMedium,
+                                    modifier = Modifier.padding(start = 16.dp, top = 8.dp),
+                                    color = PlannerTheme.colors.onSurface
+                                )
+                                GradeInputFromAToF(
+                                    onSelectItem = { grade ->
+                                        viewModel.updateGradeFromAToF(grade)
+                                    }
+                                )
+
+                            }
+
+                            GradeStyle.FROM_A_TO_F_WITH_E -> {
+                                Text(
+                                    text = stringResource(R.string.select_your_exam_grade),
+                                    style = Typography.bodyMedium,
+                                    modifier = Modifier.padding(start = 16.dp, top = 8.dp),
+                                    color = PlannerTheme.colors.onSurface
+                                )
+                                GradeInputFromAToFWithE(
+                                    onSelectItem = { grade ->
+                                        viewModel.updateGradeFromAToFWithE(grade)
+                                    }
+                                )
+                            }
+                        }
+
+                        GradeWeightInput(
+                            text = examForm.gradeWeight,
+                            onValueChange = {
+                                viewModel.updateGradeWeight(it)
+                            },
+                        )
+
+                        Spacer(modifier = Modifier.padding(top = 16.dp))
+
+                        var showStartDateTimeSelectorDialog by rememberSaveable {
+                            mutableStateOf(
+                                false
+                            )
+                        }
+                        var showEndDateTimeSelectorDialog by rememberSaveable { mutableStateOf(false) }
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 8.dp, end = 8.dp)
+                                .height(256.dp)
+                                .border(
+                                    width = 2.dp,
+                                    color = Gray,
+                                    shape = RoundedCornerShape(32.dp)
+                                ),
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = stringResource(R.string.exam_date_time_start),
+                                style = Typography.bodyMedium,
+                                modifier = Modifier.padding(start = 16.dp),
+                                color = PlannerTheme.colors.onSurface
+                            )
+
+                            DateTimeSelector(
+                                onClick = {
+                                    showStartDateTimeSelectorDialog = true
+                                },
+                                dateTime = examForm.start.getFormattedDateTime(),
+                            )
+
+                            if (showStartDateTimeSelectorDialog) {
+                                DateTimePickerDialog(
+                                    initialDateTime = examForm.start,
+                                    onDismissRequest = {
+                                        showStartDateTimeSelectorDialog = false
+                                    },
+                                    onDateTimeSelected = { dateMillis, hour, minute ->
+                                        viewModel.updateStartDate(dateMillis, hour, minute)
+                                    },
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.padding(top = 16.dp))
+                            Text(
+                                text = stringResource(R.string.exam_date_time_end),
+                                style = Typography.bodyMedium,
+                                modifier = Modifier.padding(start = 16.dp),
+                                color = PlannerTheme.colors.onSurface
+                            )
+                            DateTimeSelector(
+                                onClick = {
+                                    showEndDateTimeSelectorDialog = true
+                                },
+                                dateTime = examForm.end.getFormattedDateTime(),
+                            )
+
+                            if (showEndDateTimeSelectorDialog) {
+                                DateTimePickerDialog(
+                                    initialDateTime = examForm.end,
+                                    onDismissRequest = {
+                                        showEndDateTimeSelectorDialog = false
+                                    },
+                                    onDateTimeSelected = { dateMillis, hour, minute ->
+                                        viewModel.updateEndDate(dateMillis, hour, minute)
+                                    },
+                                )
+                            }
+                        }
+
+
+                        if (showStartDateTimeSelectorDialog) {
+                            DateTimePickerDialog(
+                                onDismissRequest = {
+                                    showStartDateTimeSelectorDialog = false
+                                },
+                                onDateTimeSelected = { dateMillis, hour, minute ->
+                                    viewModel.updateStartDate(dateMillis, hour, minute)
+                                },
+                            )
+                        }
+
+                        if (showEndDateTimeSelectorDialog) {
+                            DateTimePickerDialog(
+                                onDismissRequest = {
+                                    showEndDateTimeSelectorDialog = false
+                                },
+                                onDateTimeSelected = { dateMillis, hour, minute ->
+                                    viewModel.updateEndDate(dateMillis, hour, minute)
+                                },
+                            )
+                        }
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier
+                                .padding(top = 16.dp)
+                                .fillMaxWidth()
+                        ) {
+                            ButtonWithBackgroundColor(
+                                onClick = {
+                                    viewModel.saveExam()
+                                    onReturnAction()
+                                },
+                                placeholderTextPath = R.string.create_button
+                            )
+                        }
+                    }
+                }
             }
         }
     }

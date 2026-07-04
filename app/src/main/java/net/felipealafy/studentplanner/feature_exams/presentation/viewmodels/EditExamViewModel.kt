@@ -17,23 +17,21 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.feature_class.domain.use_case.UpdateExamParams
-import net.felipealafy.studentplanner.feature_class.domain.use_case.UpdateExamUseCase
+import net.felipealafy.studentplanner.feature_exams.domain.use_case.UpdateExamUseCase
 import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeAToF
 import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeAToFWithE
 import net.felipealafy.studentplanner.feature_exams.domain.exception.InvalidExamExceptions
+import net.felipealafy.studentplanner.feature_exams.domain.model.ExamParams
 import net.felipealafy.studentplanner.feature_exams.domain.use_case.GetExamUseCase
 import net.felipealafy.studentplanner.feature_planner.domain.model.DetailedPlanner
-import net.felipealafy.studentplanner.feature_planner.domain.model.Planner
 import net.felipealafy.studentplanner.feature_planner.domain.use_case.GetDetailedPlannerUseCase
-import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 import net.felipealafy.studentplanner.ui.forms.ExamForm
 import net.felipealafy.studentplanner.ui.views.parseToDateTime
 import javax.inject.Inject
 
 sealed interface EditExamEvents {
     data class ShowError(@param:StringRes val messageResId: Int): EditExamEvents
-    data object ClassUpdatedSuccessfully: EditExamEvents
+    data object ExamUpdatedSuccessfully: EditExamEvents
 }
 
 sealed interface EditExamUiState {
@@ -172,7 +170,7 @@ class EditExamViewModel @Inject constructor (
                 val plannerStyle = currentState.detailedPlanner.planner.gradeDisplayStyle
 
                 updateExamUseCase(
-                    UpdateExamParams(
+                    ExamParams(
                         examId = form.id,
                         subjectId = form.subjectId,
                         name = form.name,
@@ -184,7 +182,7 @@ class EditExamViewModel @Inject constructor (
                     )
                 )
 
-                _events.emit(EditExamEvents.ClassUpdatedSuccessfully)
+                _events.emit(EditExamEvents.ExamUpdatedSuccessfully)
             } catch (e: InvalidExamExceptions) {
                 val errorMessageId = when (e) {
                     is InvalidExamExceptions.EmptyName -> R.string.empty_name_error

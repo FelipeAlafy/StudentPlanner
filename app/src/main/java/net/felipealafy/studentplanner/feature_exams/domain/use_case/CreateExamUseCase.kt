@@ -1,25 +1,14 @@
-package net.felipealafy.studentplanner.feature_class.domain.use_case
+package net.felipealafy.studentplanner.feature_exams.domain.use_case
 
 import net.felipealafy.studentplanner.feature_exams.data.local.Exam
 import net.felipealafy.studentplanner.feature_exams.data.repository.ExamRepository
 import net.felipealafy.studentplanner.feature_exams.domain.exception.InvalidExamExceptions
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
-import java.time.LocalDateTime
+import net.felipealafy.studentplanner.feature_exams.domain.model.ExamParams
+import java.util.UUID
 import javax.inject.Inject
 
-data class UpdateExamParams (
-    val examId: String,
-    val subjectId: String,
-    val name: String,
-    val gradeString: String,
-    val gradeWeightString: String,
-    val start: LocalDateTime,
-    val end: LocalDateTime,
-    val gradeStyle: GradeStyle
-)
-
-class UpdateExamUseCase @Inject constructor(private val repository: ExamRepository) {
-    suspend operator fun invoke(params: UpdateExamParams) {
+class CreateExamUseCase @Inject constructor(private val repository: ExamRepository) {
+    suspend operator fun invoke(params: ExamParams) {
         if (params.name.isBlank()) throw InvalidExamExceptions.EmptyName()
         if (params.subjectId.isBlank()) throw InvalidExamExceptions.SubjectNotSelected()
         if (params.start.isAfter(params.end)) throw InvalidExamExceptions.InvalidDateSelection()
@@ -41,8 +30,8 @@ class UpdateExamUseCase @Inject constructor(private val repository: ExamReposito
         val parsedGrade = params.gradeString.replace(',', '.').toFloat()
         val parsedWeight = params.gradeWeightString.replace(',', '.').toFloat() / 100f
 
-        val examToUpdate = Exam(
-            id = params.examId,
+        val newExam = Exam(
+            id = UUID.randomUUID().toString(),
             subjectId = params.subjectId,
             name = params.name,
             grade = parsedGrade,
@@ -51,6 +40,6 @@ class UpdateExamUseCase @Inject constructor(private val repository: ExamReposito
             end = params.end
         )
 
-        repository.update(examToUpdate)
+        repository.insert(newExam)
     }
 }

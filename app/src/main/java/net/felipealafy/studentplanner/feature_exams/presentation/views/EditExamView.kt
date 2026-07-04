@@ -75,7 +75,7 @@ fun EditExamView(
                     Toast.makeText(context, event.messageResId, Toast.LENGTH_SHORT).show()
                 }
 
-                is EditExamEvents.ClassUpdatedSuccessfully -> {
+                is EditExamEvents.ExamUpdatedSuccessfully -> {
                     Toast.makeText(context, R.string.update_successfully, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -113,7 +113,6 @@ fun EditExamView(
                     )
                 }
             }
-            return
         }
 
         is EditExamUiState.Success -> {
