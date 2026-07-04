@@ -35,7 +35,7 @@ import net.felipealafy.studentplanner.feature_subject.presentation.views.Subject
 import net.felipealafy.studentplanner.feature_today.presentation.viewmodels.TodayViewModel
 import net.felipealafy.studentplanner.feature_today.presentation.views.TodayView
 import net.felipealafy.studentplanner.core.ui.theme.StudentPlannerTheme
-import net.felipealafy.studentplanner.core.ui.views.StudentPlannerViews
+import net.felipealafy.studentplanner.core.ui.views.StudentPlannerRoutes
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -50,16 +50,16 @@ class MainActivity : ComponentActivity() {
                 NavHost(
                     navController = navController,
                     startDestination = mainViewModel.startDestination.collectAsState().value
-                        ?: StudentPlannerViews.WelcomeView.name
+                        ?: StudentPlannerRoutes.WelcomeView.route
                 ) {
-                    composable(route = StudentPlannerViews.WelcomeView.name) {
+                    composable(route = StudentPlannerRoutes.WelcomeView.route) {
                         WelcomeView(
                             onStartClick = {
-                                navController.navigate(route = StudentPlannerViews.SetupView.name)
+                                navController.navigate(route = StudentPlannerRoutes.SetupView.route)
                             }
                         )
                     }
-                    composable(route = StudentPlannerViews.SetupView.name) {
+                    composable(route = StudentPlannerRoutes.SetupView.route) {
                         val viewModel: PlannerCreationViewModel = hiltViewModel()
                         PlannerCreationView(
                             viewModel = viewModel,
@@ -67,40 +67,40 @@ class MainActivity : ComponentActivity() {
                                 navController.popBackStack()
                             },
                             forwardToTodayView = {
-                                navController.navigate(route = StudentPlannerViews.TodayView.name)
+                                navController.navigate(route = StudentPlannerRoutes.TodayView.route)
                             }
                         )
                     }
-                    composable(route = StudentPlannerViews.TodayView.name) {
+                    composable(route = StudentPlannerRoutes.TodayView.route) {
 
                         val todayViewModel: TodayViewModel = hiltViewModel()
                         TodayView(
                             viewModel = todayViewModel,
-                            onStudentClassClicked = { subjectId, studentClassId ->
-                                navController.navigate("${StudentPlannerViews.DetailedClassView.name}/$subjectId/$studentClassId")
+                            onStudentClassClicked = { plannerId, subjectId, studentClassId ->
+                                navController.navigate(StudentPlannerRoutes.DetailedClassView.createRoute(plannerId, subjectId, studentClassId))
                             },
                             onExamClicked = { plannerId, subjectId, examId ->
-                                navController.navigate("${StudentPlannerViews.DetailedExamView.name}/$plannerId/$subjectId/$examId")
+                                navController.navigate(StudentPlannerRoutes.DetailedExamView.createRoute(plannerId, subjectId, examId))
                             },
                             onCreatePlannerClicked = {
-                                navController.navigate(StudentPlannerViews.SetupView.name)
+                                navController.navigate(StudentPlannerRoutes.SetupView.route)
                             },
                             onCreateSubjectClicked = { plannerId ->
-                                navController.navigate("${StudentPlannerViews.SubjectCreationView.name}/$plannerId")
+                                navController.navigate(StudentPlannerRoutes.SubjectCreationView.createRoute(plannerId))
                             },
                             onCreateClassClicked = { plannerId ->
-                                navController.navigate("${StudentPlannerViews.StudentClassCreationView.name}/$plannerId")
+                                navController.navigate(StudentPlannerRoutes.StudentClassCreationView.createRoute(plannerId))
                             },
                             onCreateExamClicked = { plannerId ->
-                                navController.navigate("${StudentPlannerViews.ExamCreationView.name}/$plannerId")
+                                navController.navigate(StudentPlannerRoutes.ExamCreationView.createRoute(plannerId))
                             },
                             onAccessDetailedPlannerView = { plannerId ->
-                                navController.navigate("${StudentPlannerViews.DetailedPlannerView.name}/$plannerId")
+                                navController.navigate(StudentPlannerRoutes.DetailedPlannerView.createRoute(plannerId))
                             }
                         )
                     }
                     composable(
-                        route = "${StudentPlannerViews.DetailedPlannerView.name}/{plannerId}",
+                        route = StudentPlannerRoutes.DetailedPlannerView.route,
                         arguments = listOf(navArgument("plannerId") { type = NavType.StringType })
                     ) {
                         val viewModel: DetailedPlannerViewModel = hiltViewModel()
@@ -111,25 +111,26 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(
-                        route = "${StudentPlannerViews.StudentClassCreationView.name}/{plannerId}",
+                        route = StudentPlannerRoutes.StudentClassCreationView.route,
                         arguments = listOf(navArgument("plannerId") { type = NavType.StringType })
                     ) {
                         val viewModel: StudentClassCreationViewModel = hiltViewModel()
                         StudentClassCreationView(
                             viewModel = viewModel,
-                            onReturnAction = { navController.popBackStack() })
+                            onReturnAction = { navController.popBackStack() }
+                        )
                     }
 
                     composable(
-                        route = "${StudentPlannerViews.SubjectCreationView.name}/{plannerId}",
+                        route = StudentPlannerRoutes.SubjectCreationView.route,
                         arguments = listOf(navArgument("plannerId") { type = NavType.StringType })
                     ) {
                         val viewModel: SubjectCreationViewModel = hiltViewModel()
-                        SubjectCreationView(viewModel, { navController.popBackStack() })
+                        SubjectCreationView(viewModel) { navController.popBackStack() }
                     }
 
                     composable(
-                        route = "${StudentPlannerViews.DetailedClassView.name}/{subjectId}/{studentClassId}",
+                        route = StudentPlannerRoutes.DetailedClassView.route,
                         arguments = listOf(
                             navArgument("subjectId") { type = NavType.StringType },
                             navArgument("studentClassId") { type = NavType.StringType }
@@ -139,25 +140,25 @@ class MainActivity : ComponentActivity() {
                         DetailedClassView(
                             viewModel,
                             onEditMode = { plannerId, subjectId, classId ->
-                                navController.navigate("${StudentPlannerViews.EditStudentClassView.name}/$plannerId/$subjectId/$classId")
+                                navController.navigate(StudentPlannerRoutes.EditingClassView.createRoute(plannerId, subjectId, classId))
                             },
-                            onReturnAction = { navController.popBackStack() })
+                            onReturnAction = { navController.popBackStack() }
+                        )
                     }
 
                     composable(
-                        route = "{StudentPlannerViews.ExamCreationView.name}/{plannerId}",
-                        arguments = listOf(
-                            navArgument("plannerId") { type = NavType.StringType },
-                        )
+                        route = StudentPlannerRoutes.ExamCreationView.route,
+                        arguments = listOf(navArgument("plannerId") { type = NavType.StringType })
                     ) {
                         val viewModel: ExamCreationViewModel = hiltViewModel()
                         ExamCreationView(
                             viewModel = viewModel,
-                            onReturnAction = { navController.popBackStack() })
+                            onReturnAction = { navController.popBackStack() }
+                        )
                     }
 
                     composable(
-                        route = "${StudentPlannerViews.DetailedExamView.name}/{plannerId}/{subjectId}/{examId}",
+                        route = StudentPlannerRoutes.DetailedExamView.route,
                         arguments = listOf(
                             navArgument("plannerId") { type = NavType.StringType },
                             navArgument("subjectId") { type = NavType.StringType },
@@ -168,13 +169,14 @@ class MainActivity : ComponentActivity() {
                         DetailedExamView(
                             viewModel = viewModel,
                             onEditMode = { plannerId, subjectId, examId ->
-                                navController.navigate("${StudentPlannerViews.EditExamView.name}/$plannerId/$subjectId/$examId")
+                                navController.navigate(StudentPlannerRoutes.EditExamView.createRoute(plannerId, subjectId, examId))
                             },
                             onReturnAction = { navController.popBackStack() }
                         )
                     }
+
                     composable(
-                        route = "${StudentPlannerViews.EditStudentClassView.name}/{plannerId}/{subjectId}/{classId}",
+                        route = StudentPlannerRoutes.EditingClassView.route,
                         arguments = listOf(
                             navArgument("plannerId") { type = NavType.StringType },
                             navArgument("subjectId") { type = NavType.StringType },
@@ -182,12 +184,11 @@ class MainActivity : ComponentActivity() {
                         )
                     ) {
                         val viewModel: EditStudentClassViewModel = hiltViewModel()
-
                         EditStudentClassView(
                             viewModel = viewModel,
                             onReturnAction = {
-                                navController.navigate(StudentPlannerViews.TodayView.name) {
-                                    popUpTo(StudentPlannerViews.TodayView.name) {
+                                navController.navigate(StudentPlannerRoutes.TodayView.route) {
+                                    popUpTo(StudentPlannerRoutes.TodayView.route) {
                                         inclusive = true
                                     }
                                 }
@@ -196,7 +197,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(
-                        route = "${StudentPlannerViews.EditExamView.name}/{plannerId}/{subjectId}/{examId}",
+                        route = StudentPlannerRoutes.EditExamView.route,
                         arguments = listOf(
                             navArgument("plannerId") { type = NavType.StringType },
                             navArgument("subjectId") { type = NavType.StringType },
@@ -207,8 +208,8 @@ class MainActivity : ComponentActivity() {
                         EditExamView(
                             viewModel = viewModel,
                             onReturnAction = {
-                                navController.navigate(StudentPlannerViews.TodayView.name) {
-                                    popUpTo(StudentPlannerViews.TodayView.name) {
+                                navController.navigate(StudentPlannerRoutes.TodayView.route) {
+                                    popUpTo(StudentPlannerRoutes.TodayView.route) {
                                         inclusive = true
                                     }
                                 }

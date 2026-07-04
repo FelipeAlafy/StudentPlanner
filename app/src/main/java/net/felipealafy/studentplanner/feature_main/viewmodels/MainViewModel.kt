@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import net.felipealafy.studentplanner.feature_planner.data.repository.PlannerRepositoryImpl
-import net.felipealafy.studentplanner.core.ui.views.StudentPlannerViews
+import net.felipealafy.studentplanner.core.ui.views.StudentPlannerRoutes
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,9 +24,9 @@ class MainViewModel @Inject constructor(private val repository: PlannerRepositor
         viewModelScope.launch {
             val planners = repository.getAllPlanners().first()
             if (planners.isNotEmpty()) {
-                _startDestination.value = StudentPlannerViews.TodayView.name
+                _startDestination.value = StudentPlannerRoutes.TodayView.name
             } else {
-                _startDestination.value = StudentPlannerViews.WelcomeView.name
+                _startDestination.value = StudentPlannerRoutes.WelcomeView.name
             }
         }
     }

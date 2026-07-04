@@ -85,7 +85,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun TodayView(
     viewModel: TodayViewModel,
-    onStudentClassClicked: (String, String) -> Unit,
+    onStudentClassClicked: (String, String, String) -> Unit,
     onExamClicked: (String, String, String) -> Unit,
     onCreatePlannerClicked: () -> Unit,
     onCreateSubjectClicked: (plannerId: String) -> Unit,
@@ -441,7 +441,7 @@ fun TodayView(
 fun CalendarView(
     selectedPlanner: DetailedPlanner,
     gradeDisplayStyle: GradeStyle,
-    onStudentClassClicked: (String, String) -> Unit,
+    onStudentClassClicked: (String, String, String) -> Unit,
     onExamClicked: (String, String, String) -> Unit
 ) {
     LazyColumn(
@@ -477,7 +477,7 @@ fun ClassCard(
     subject: Subject,
     studentClass: StudentClass,
     subjectColor: Long,
-    onStudentClassClicked: (String, String) -> Unit
+    onStudentClassClicked: (String, String, String) -> Unit
 ) {
     PlannerThemeProvider(subjectColor) {
         Card(
@@ -489,7 +489,7 @@ fun ClassCard(
             ),
             shape = RoundedCornerShape(15.dp),
             onClick = {
-                onStudentClassClicked(studentClass.subjectId, studentClass.id)
+                onStudentClassClicked(subject.plannerId, studentClass.subjectId, studentClass.id)
             }) {
             Column(
                 modifier = Modifier.padding(bottom = 8.dp)
