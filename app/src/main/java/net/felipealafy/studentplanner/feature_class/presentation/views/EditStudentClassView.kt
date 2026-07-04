@@ -86,8 +86,7 @@ fun EditStudentClassView(
         is EditStudentClassUiState.Error -> {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color(colorPallet[0][1])),
+                    .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = stringResource(state.messageResId))
@@ -97,8 +96,7 @@ fun EditStudentClassView(
         EditStudentClassUiState.Loading -> {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color(colorPallet[0][1])),
+                    .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator()

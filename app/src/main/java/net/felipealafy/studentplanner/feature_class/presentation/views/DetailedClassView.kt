@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -42,6 +43,7 @@ import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.feature_class.presentation.viewmodels.DetailedStudentClassViewModel
 import net.felipealafy.studentplanner.ui.theme.Typography
 import androidx.compose.runtime.collectAsState
+import net.felipealafy.studentplanner.feature_class.presentation.viewmodels.DetailedStudentClassUiState
 import net.felipealafy.studentplanner.ui.components.text.label.TopAppBarTitle
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
 import net.felipealafy.studentplanner.ui.theme.PlannerTheme
@@ -55,100 +57,108 @@ fun DetailedClassView(
     onReturnAction: () -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState().value
-    val subject = uiState.subject
-    val studentClass = uiState.classEntry
 
-    if (subject == null) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White),
-            contentAlignment = Alignment.Center
-        ) {
-            if (uiState.isLoading) {
-                CircularProgressIndicator()
-            } else {
-                Text(text = "No Subject available.")
-            }
-        }
-        return
-    }
-
-    if (studentClass == null) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White),
-            contentAlignment = Alignment.Center
-        ) {
-            if (uiState.isLoading) {
-                CircularProgressIndicator()
-            } else {
-                Text(text = "No StudentClass available.")
-            }
-        }
-        return
-    }
-
-    PlannerThemeProvider(baseColor = subject.color) {
-        Scaffold(
-            containerColor = PlannerTheme.colors.container,
-            topBar = {
-                TopAppBar(
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = PlannerTheme.colors.primary
-                    ),
-                    title = {
-                        Box (
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            TopAppBarTitle(
-                                text = subject.name,
-                            )
-                        }
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = onReturnAction) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                contentDescription = stringResource(R.string.back_to_past_view),
-                                tint = PlannerTheme.colors.onPrimary
-                            )
-                        }
-                    },
-                    actions = {
-                        IconButton(onClick = {
-                            onEditMode(subject.plannerId, subject.id, studentClass.id)
-                        }) {
-                            Icon(
-                                imageVector = Icons.Filled.Edit,
-                                contentDescription = stringResource(R.string.go_on_edit_mode_for_planner),
-                                tint = PlannerTheme.colors.onPrimary
-                            )
-                        }
-                    }
-                )
-            }
-        ) { innerPadding ->
-            Column(
+    when (val state = uiState) {
+        is DetailedStudentClassUiState.Loading -> {
+            Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                Column(
-                    modifier = Modifier.padding(16.dp)
-                ) {
-                    ClassDate(start = studentClass.start.getFormattedDateTime(), end = studentClass.end.getFormattedDateTime())
-                    Spacer(modifier = Modifier.padding(top = 10.dp))
-                    InnerClassLink(notetakingLink = studentClass.noteTakingLink, classTitle = studentClass.title)
-                    Spacer(modifier = Modifier.padding(top = 10.dp))
-                    Observation(observation = studentClass.noteTakingLink)
+                CircularProgressIndicator()
+            }
+        }
+
+        is DetailedStudentClassUiState.Error -> {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = stringResource(R.string.unable_to_load))
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                IconButton(onClick = onReturnAction) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                        contentDescription = stringResource(R.string.back_to_past_view)
+                    )
                 }
             }
+            return
+        }
+
+        is DetailedStudentClassUiState.Success -> {
+            val subject = state.enrichedSubject.subject
+            val studentClass = state.enrichedSubject.studentClass
+            PlannerThemeProvider(subject.color) {
+                Scaffold(
+                    containerColor = PlannerTheme.colors.container,
+                    topBar = {
+                        TopAppBar(
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = PlannerTheme.colors.primary
+                            ),
+                            title = {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    TopAppBarTitle(
+                                        text = subject.name,
+                                    )
+                                }
+                            },
+                            navigationIcon = {
+                                IconButton(onClick = onReturnAction) {
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                        contentDescription = stringResource(R.string.back_to_past_view),
+                                        tint = PlannerTheme.colors.onPrimary
+                                    )
+                                }
+                            },
+                            actions = {
+                                IconButton(onClick = {
+                                    onEditMode(subject.plannerId, subject.id, studentClass.id)
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Edit,
+                                        contentDescription = stringResource(R.string.go_on_edit_mode_for_planner),
+                                        tint = PlannerTheme.colors.onPrimary
+                                    )
+                                }
+                            }
+                        )
+                    }
+                ) { innerPadding ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(16.dp)
+                        ) {
+                            ClassDate(
+                                start = studentClass.start.getFormattedDateTime(),
+                                end = studentClass.end.getFormattedDateTime()
+                            )
+                            Spacer(modifier = Modifier.padding(top = 10.dp))
+                            InnerClassLink(
+                                notetakingLink = studentClass.noteTakingLink,
+                                classTitle = studentClass.title
+                            )
+                            Spacer(modifier = Modifier.padding(top = 10.dp))
+                            Observation(observation = studentClass.noteTakingLink)
+                        }
+                    }
+                }
+
+            }
         }
     }
-
 }
 
 @Composable
@@ -186,7 +196,7 @@ fun InnerClassLink(notetakingLink: String, classTitle: String) {
             append("${stringResource(R.string.notetaking_text)} $classTitle ")
         }
     }
-    Row (
+    Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
@@ -214,7 +224,9 @@ fun Observation(observation: String) {
             color = PlannerTheme.colors.onSurface,
         ),
         shape = RoundedCornerShape(25.dp),
-        modifier = Modifier.fillMaxWidth().fillMaxHeight(0.75F)
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.75F)
     ) {
         Text(
             text = observation,

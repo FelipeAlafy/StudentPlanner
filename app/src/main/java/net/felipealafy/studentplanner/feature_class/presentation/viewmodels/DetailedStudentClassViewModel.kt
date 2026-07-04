@@ -17,7 +17,7 @@ import javax.inject.Inject
 sealed interface DetailedStudentClassUiState {
     data object Loading: DetailedStudentClassUiState
     data class Error(val exception: InvalidClassExceptions): DetailedStudentClassUiState
-    data class Success(val enrichedPlanner: EnrichedDetailedClass): DetailedStudentClassUiState
+    data class Success(val enrichedSubject: EnrichedDetailedClass): DetailedStudentClassUiState
 }
 
 @HiltViewModel
@@ -29,7 +29,7 @@ class DetailedStudentClassViewModel @Inject constructor(
     val studentClassId: String = checkNotNull(savedStateHandle["studentClassId"])
 
     val uiState: StateFlow<DetailedStudentClassUiState> = getClassUseCase(studentClassId).map {
-        DetailedStudentClassUiState.Success(enrichedPlanner = it) as DetailedStudentClassUiState
+        DetailedStudentClassUiState.Success(enrichedSubject = it) as DetailedStudentClassUiState
     }.catch { error ->
             emit(DetailedStudentClassUiState.Error(exception = error as InvalidClassExceptions))
     }.stateIn(
