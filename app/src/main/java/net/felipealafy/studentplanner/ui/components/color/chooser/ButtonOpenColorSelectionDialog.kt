@@ -11,11 +11,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.ui.theme.DarkGray
+import net.felipealafy.studentplanner.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.ui.theme.colorPallet
 
 @Composable
 fun ButtonOpenColorSelectionDialog(
-    selectedColor: Long,
     onClick: () -> Unit
 ) {
     Button(
@@ -24,7 +24,7 @@ fun ButtonOpenColorSelectionDialog(
             .size(35.dp)
             .border(width = 2.dp, color = DarkGray, shape = RoundedCornerShape(40.dp)),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(selectedColor)
+            containerColor = PlannerTheme.colors.primary
         )
     ) {}
 }
@@ -32,7 +32,5 @@ fun ButtonOpenColorSelectionDialog(
 @Preview
 @Composable
 private fun ButtonCOpenColorSelectionDialogPreview() {
-    ButtonOpenColorSelectionDialog(
-        selectedColor = colorPallet[0][1]
-    ) { }
+    ButtonOpenColorSelectionDialog { }
 }

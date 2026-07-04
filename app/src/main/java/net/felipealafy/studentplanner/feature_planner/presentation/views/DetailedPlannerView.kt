@@ -41,8 +41,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.datamodels.GradeStyle
-import net.felipealafy.studentplanner.feature_planner.domain.exception.InvalidPlannerException
+import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
 import net.felipealafy.studentplanner.feature_planner.domain.model.Planner
 import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.DetailedPlannerUiState
 import net.felipealafy.studentplanner.feature_subject.domain.model.Subject

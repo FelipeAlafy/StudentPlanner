@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 import net.felipealafy.studentplanner.ui.theme.DarkGray
+import net.felipealafy.studentplanner.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
 import java.time.LocalDateTime
@@ -36,7 +37,6 @@ import kotlin.collections.forEach
 fun SelectSubjectComboBox(
     subjectId: String,
     subjects: List<Subject>,
-    selectedColor: Long,
     onSubjectSelected: (id: String) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -47,7 +47,7 @@ fun SelectSubjectComboBox(
                 name = selectASubjectText,
                 id = "",
                 plannerId = "",
-                color = selectedColor,
+                color = 0x00000,
                 start = LocalDateTime.now(),
                 end = LocalDateTime.now(),
             )
@@ -80,7 +80,7 @@ fun SelectSubjectComboBox(
             Text(
                 text = subject.name,
                 style = Typography.labelMedium,
-                color = Color(selectedColor.getContrastingColorForText()),
+                color = PlannerTheme.colors.onSurface,
                 modifier = Modifier.padding(end = 5.dp)
             )
             DropdownMenu(
@@ -88,7 +88,7 @@ fun SelectSubjectComboBox(
                 onDismissRequest = {
                     expanded = !expanded
                 },
-                containerColor = Color(selectedColor),
+                containerColor = PlannerTheme.colors.container,
                 shape = RoundedCornerShape(30.dp)
             ) {
                 subjects.forEach {
@@ -97,7 +97,7 @@ fun SelectSubjectComboBox(
                             Text(
                                 text = it.name,
                                 style = Typography.labelSmall,
-                                color = Color(selectedColor.getContrastingColorForText())
+                                color = PlannerTheme.colors.onContainer
                             )
                         },
                         onClick = {

@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.ui.theme.LightGray
+import net.felipealafy.studentplanner.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
 import net.felipealafy.studentplanner.ui.theme.colorutils.getForBackgroundBasedOnTitleBarColor
@@ -23,10 +24,7 @@ import net.felipealafy.studentplanner.ui.theme.colorutils.getForBackgroundBasedO
 @Composable
 fun GradeInputFromZeroToOneHundred(
     text: String,
-    onValueChange: (String) -> Unit,
-    onValidate: () -> Unit,
-    invalidDigit: Boolean,
-    selectedColor: Long
+    onValueChange: (String) -> Unit
 ) {
     OutlinedTextField(
         onValueChange = onValueChange,
@@ -34,37 +32,22 @@ fun GradeInputFromZeroToOneHundred(
         textStyle = Typography.bodyMedium,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 10.dp, end = 10.dp)
-            .onFocusChanged {
-                if (!it.isFocused) {
-                    onValidate()
-                }
-            },
-        isError = invalidDigit,
+            .padding(start = 10.dp, end = 10.dp),
         singleLine = true,
         colors = OutlinedTextFieldDefaults.colors(
-            focusedContainerColor = LightGray,
             disabledContainerColor = LightGray,
-            unfocusedTextColor = Color(
-                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
-            ),
-            focusedTextColor = Color(
-                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
-            ),
-            errorTextColor = Color(
-                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
-            ),
-            focusedLabelColor = Color(
-                selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText()
-            ),
-            focusedBorderColor = Color(selectedColor),
+            unfocusedTextColor = PlannerTheme.colors.onSurface,
+            focusedTextColor = PlannerTheme.colors.onSurface,
+            errorTextColor = PlannerTheme.colors.onError,
+            focusedLabelColor = PlannerTheme.colors.onSurface,
+            focusedBorderColor = PlannerTheme.colors.primary,
             focusedPlaceholderColor = LightGray,
         ),
         label = {
             Text(
                 text = stringResource(R.string.insert_grade_value),
                 style = Typography.labelSmall,
-                color = Color(selectedColor.getContrastingColorForText())
+                color = PlannerTheme.colors.onSurface
             )
         },
         shape = RoundedCornerShape(25.dp),

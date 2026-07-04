@@ -43,9 +43,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.datamodels.Exam
-import net.felipealafy.studentplanner.datamodels.GradeStyle
-import net.felipealafy.studentplanner.datamodels.StudentClass
+import net.felipealafy.studentplanner.feature_exams.data.local.Exam
+import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
+import net.felipealafy.studentplanner.feature_class.domain.model.StudentClass
 import net.felipealafy.studentplanner.feature_subject.presentation.viewmodels.DetailedSubjectViewModel
 import net.felipealafy.studentplanner.feature_subject.presentation.viewmodels.SubjectDetailsUiState
 import net.felipealafy.studentplanner.ui.components.text.label.AverageGrade

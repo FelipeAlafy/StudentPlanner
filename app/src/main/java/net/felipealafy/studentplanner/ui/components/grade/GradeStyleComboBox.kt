@@ -27,8 +27,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.datamodels.GradeStyle
-import net.felipealafy.studentplanner.datamodels.getResourceLocation
+import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
+import net.felipealafy.studentplanner.feature_exams.domain.use_case.getResourceLocation
 import net.felipealafy.studentplanner.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.ui.theme.Typography
 

@@ -41,6 +41,7 @@ import net.felipealafy.studentplanner.ui.components.text.input.TextInputWithColo
 import net.felipealafy.studentplanner.feature_subject.presentation.viewmodels.SubjectCreationViewModel
 import net.felipealafy.studentplanner.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.ui.extensions.getFormattedDateTime
+import net.felipealafy.studentplanner.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
 
@@ -118,7 +119,6 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturn: () -> Uni
                     onValueChange = { newName ->
                         viewModel.updateName(newName)
                     },
-                    selectedColor = uiState.collectAsState().value.currentSubjectEntry.color,
                     hint = R.string.subject_name,
                 )
                 Row(
@@ -179,7 +179,6 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturn: () -> Uni
                             showStartDateTimeSelectorDialog.value = true
                         },
                         dateTime = uiState.collectAsState().value.currentSubjectEntry.start.getFormattedDateTime(),
-                        selectedColor = uiState.collectAsState().value.currentSubjectEntry.color
                     )
 
                     if (showStartDateTimeSelectorDialog.value) {
@@ -191,7 +190,6 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturn: () -> Uni
                             onDateTimeSelected = { dateMillis, hour, minute ->
                                 viewModel.updateStartDateTime(dateMillis, hour, minute)
                             },
-                            backgroundColor = uiState.collectAsState().value.currentSubjectEntry.color
                         )
                     }
 
@@ -207,7 +205,6 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturn: () -> Uni
                             showEndDateTimeSelectorDialog.value = true
                         },
                         dateTime = uiState.collectAsState().value.currentSubjectEntry.end.getFormattedDateTime(),
-                        selectedColor = uiState.collectAsState().value.currentSubjectEntry.color
                     )
 
                     if (showEndDateTimeSelectorDialog.value) {
@@ -219,7 +216,6 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturn: () -> Uni
                             onDateTimeSelected = { dateMillis, hour, minute ->
                                 viewModel.updateEndDateTime(dateMillis, hour, minute)
                             },
-                            backgroundColor = uiState.collectAsState().value.currentSubjectEntry.color
                         )
                     }
                 }
@@ -229,7 +225,6 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturn: () -> Uni
                         viewModel.saveSubject()
                         onReturn()
                     },
-                    selectedColor = uiState.collectAsState().value.currentSubjectEntry.color,
                     placeholderTextPath = R.string.create_button
                 )
             }
@@ -240,8 +235,7 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturn: () -> Uni
 @Composable
 fun DateTimeSelector(
     onClick: () -> Unit,
-    dateTime: String,
-    selectedColor: Long
+    dateTime: String
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -257,7 +251,7 @@ fun DateTimeSelector(
         Text(
             text = dateTime,
             style = Typography.labelLarge,
-            color = Color(selectedColor.getContrastingColorForText())
+            color = PlannerTheme.colors.onSurface
         )
     }
 }

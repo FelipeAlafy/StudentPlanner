@@ -20,7 +20,7 @@ fun TopAppBarTitle(
     modifier: Modifier = Modifier,
     textAlign: TextAlign = TextAlign.Center
 ) {
-    val tint = PlannerTheme.colors.onSurface
+    val tint = PlannerTheme.colors.onContainer
     var textStyle by rememberSaveable { mutableStateOf(Typography.headlineMedium) }
     Text(
         text = text,

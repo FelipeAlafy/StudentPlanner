@@ -1,8 +1,6 @@
 package net.felipealafy.studentplanner.feature_planner.domain.model
 
-import net.felipealafy.studentplanner.datamodels.GradeStyle
-import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
-import java.util.UUID
+import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
 
 data class Planner(
     val id: String,

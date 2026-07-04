@@ -1,6 +1,7 @@
 package net.felipealafy.studentplanner.feature_planner.domain.model
 
 import net.felipealafy.studentplanner.feature_subject.domain.model.DetailedSubject
+import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 
 data class DetailedPlanner(
     val planner: Planner,
@@ -28,4 +29,6 @@ data class DetailedPlanner(
             val finalScore = allExams.sumOf { it.grade.toDouble() * it.gradeWeight.toDouble() }.toFloat()
             return finalScore >= planner.minimumGradeToPass
         }
+
+    val pureSubjects: List<Subject> get() = subjects.map { it.subject }
 }

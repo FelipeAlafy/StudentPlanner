@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import net.felipealafy.studentplanner.R
+import net.felipealafy.studentplanner.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.ui.theme.Transparent
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
@@ -32,7 +33,6 @@ import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorFor
 
 @Composable
 fun ColorSelectionDialog(
-    selectedColor: Long,
     onColorSelected: (Long) -> Unit,
     onDismissRequest: () -> Unit
 ) {
@@ -47,7 +47,7 @@ fun ColorSelectionDialog(
                 modifier = Modifier
                     .fillMaxWidth(),
                 colors = CardDefaults.cardColors(
-                    containerColor = Color(selectedColor).copy(alpha = 0.7F)
+                    containerColor = PlannerTheme.colors.primary
                 ),
                 elevation = CardDefaults.cardElevation(20.dp),
                 shape = RoundedCornerShape(20.dp)
@@ -58,7 +58,7 @@ fun ColorSelectionDialog(
                         modifier = Modifier.fillMaxWidth(),
                         style = Typography.headlineLarge,
                         textAlign = TextAlign.Center,
-                        color = Color(selectedColor.getContrastingColorForText())
+                        color = PlannerTheme.colors.onPrimary
                     )
                     Row(
                         modifier = Modifier.padding(5.dp),
@@ -85,7 +85,7 @@ fun ColorSelectionDialog(
                                                 shape = RoundedCornerShape(40.dp)
                                             )
                                     ) {
-                                        if (color == selectedColor) {
+                                        if (color == PlannerTheme.colors.primary.value.toLong()) {
                                             Icon(
                                                 Icons.Default.Check,
                                                 contentDescription = stringResource(R.string.check_color)

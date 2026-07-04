@@ -2,7 +2,7 @@ package net.felipealafy.studentplanner.feature_planner.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import net.felipealafy.studentplanner.datamodels.GradeStyle
+import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
 import java.util.UUID
 
 @Entity(

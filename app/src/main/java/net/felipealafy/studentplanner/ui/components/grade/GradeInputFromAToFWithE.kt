@@ -27,23 +27,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.datamodels.GradeAToFWithE
+import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeAToFWithE
+import net.felipealafy.studentplanner.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.theme.colorPallet
 import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingColorForText
 import net.felipealafy.studentplanner.ui.theme.colorutils.getForBackgroundBasedOnTitleBarColor
 
 @Composable
-fun GradeInputFromAToFWithE(selectedColor: Long, onSelectItem: (GradeAToFWithE) -> Unit) {
-    val textColor =
-        Color(selectedColor.getForBackgroundBasedOnTitleBarColor().getContrastingColorForText())
+fun GradeInputFromAToFWithE(onSelectItem: (GradeAToFWithE) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
             .padding(16.dp)
             .border(
                 width = 30.dp,
-                color = Color(selectedColor).copy(alpha = 0.8F),
+                color = PlannerTheme.colors.container,
                 shape = RoundedCornerShape(30.dp)
             ),
     ) {
@@ -66,14 +65,14 @@ fun GradeInputFromAToFWithE(selectedColor: Long, onSelectItem: (GradeAToFWithE) 
                 ) {
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowDown,
-                        tint = textColor,
+                        tint = PlannerTheme.colors.onContainer,
                         contentDescription = stringResource(R.string.grade_style_combobox)
                     )
                     Spacer(Modifier.padding(start = 5.dp))
                     Text(
                         text = textToDisplay,
                         style = Typography.labelMedium,
-                        color = textColor,
+                        color = PlannerTheme.colors.onContainer,
                         modifier = Modifier.padding(end = 5.dp)
                     )
                 }
@@ -82,7 +81,7 @@ fun GradeInputFromAToFWithE(selectedColor: Long, onSelectItem: (GradeAToFWithE) 
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
-                containerColor = Color(selectedColor),
+                containerColor = PlannerTheme.colors.container,
                 shape = RoundedCornerShape(30.dp)
             ) {
                 GradeAToFWithE.entries.forEach {
@@ -90,7 +89,7 @@ fun GradeInputFromAToFWithE(selectedColor: Long, onSelectItem: (GradeAToFWithE) 
                         text = {
                             Text(
                                 text = it.name,
-                                color = textColor
+                                color = PlannerTheme.colors.onContainer
                             )
                         },
                         onClick = {
@@ -108,7 +107,5 @@ fun GradeInputFromAToFWithE(selectedColor: Long, onSelectItem: (GradeAToFWithE) 
 @Preview
 @Composable
 private fun GradeInputFromAToFWithEPreview() {
-    GradeInputFromAToFWithE(
-        selectedColor = colorPallet[0][1]
-    ) { }
+    GradeInputFromAToFWithE { }
 }

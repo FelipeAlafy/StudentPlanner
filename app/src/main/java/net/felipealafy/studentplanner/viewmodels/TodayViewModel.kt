@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import net.felipealafy.studentplanner.feature_planner.domain.model.Planner
 import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
-import net.felipealafy.studentplanner.repositories.ClassRepository
-import net.felipealafy.studentplanner.repositories.ExamRepository
+import net.felipealafy.studentplanner.feature_class.data.repository.ClassRepositoryImpl
+import net.felipealafy.studentplanner.feature_exams.data.repository.ExamRepository
 import net.felipealafy.studentplanner.feature_planner.data.repository.PlannerRepositoryImpl
 import net.felipealafy.studentplanner.feature_subject.data.repository.SubjectRepositoryImpl
 import java.time.Instant
@@ -35,7 +35,7 @@ data class TodayUiState(
 class TodayViewModel @Inject constructor(
     plannerRepositoryImpl: PlannerRepositoryImpl,
     subjectRepositoryImpl: SubjectRepositoryImpl,
-    classRepository: ClassRepository,
+    classRepositoryImpl: ClassRepositoryImpl,
     examRepository: ExamRepository
 ) : ViewModel() {
     private val _selectedPlannerId = MutableStateFlow<String?>(null)
@@ -47,7 +47,7 @@ class TodayViewModel @Inject constructor(
         val endOfDay = date.atTime(LocalTime.MAX)
 
         combine(
-            classRepository.getClassesByDateTime(startOfDay, endOfDay),
+            classRepositoryImpl.getClassesByDateTime(startOfDay, endOfDay),
             examRepository.getExamsByDateTime(startOfDay, endOfDay)
         ) { classes, exams ->
             Pair(classes, exams)

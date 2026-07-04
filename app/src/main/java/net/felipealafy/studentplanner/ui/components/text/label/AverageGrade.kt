@@ -9,7 +9,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.datamodels.GradeStyle
+import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
 import net.felipealafy.studentplanner.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.ui.theme.Typography
 import net.felipealafy.studentplanner.ui.views.getValueInDisplayStyleForAverage

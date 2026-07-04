@@ -7,15 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import net.felipealafy.studentplanner.datamodels.Exam
-import net.felipealafy.studentplanner.datamodels.StudentClass
-import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
-import net.felipealafy.studentplanner.repositories.ClassRepository
-import net.felipealafy.studentplanner.repositories.ExamRepository
-import net.felipealafy.studentplanner.feature_subject.data.repository.SubjectRepositoryImpl
 import net.felipealafy.studentplanner.feature_subject.domain.model.DetailedSubject
 import net.felipealafy.studentplanner.feature_subject.domain.use_case.GetDetailedSubjectUseCase
 import javax.inject.Inject

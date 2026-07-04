@@ -11,4 +11,6 @@ data class ExamForm(
     val gradeWeight: String = "0",
     val start: LocalDateTime = LocalDateTime.now(),
     val end: LocalDateTime = LocalDateTime.now().plusMinutes(50),
-)
+) {
+
+}

@@ -1,8 +1,9 @@
 package net.felipealafy.studentplanner.feature_subject.data.mapper
 
+import net.felipealafy.studentplanner.feature_class.data.mapper.toDomainModel
 import net.felipealafy.studentplanner.feature_subject.data.local.SubjectWithDetailsTable
 import net.felipealafy.studentplanner.feature_subject.domain.model.DetailedSubject
-import net.felipealafy.studentplanner.feature_planner.data.mapper.toDomainModel
+import net.felipealafy.studentplanner.feature_exams.data.mapper.toDomainModel
 
 fun SubjectWithDetailsTable.toDomainModel(): DetailedSubject {
     val domainSubject = this.subject.toDomainModel()

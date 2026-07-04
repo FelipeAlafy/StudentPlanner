@@ -36,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.ui.theme.Green
+import net.felipealafy.studentplanner.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.ui.theme.Red
 import net.felipealafy.studentplanner.ui.theme.colorPallet
 import net.felipealafy.studentplanner.ui.theme.colorutils.getContrastingButtonColor
@@ -51,8 +52,7 @@ private enum class DateTimePickerState {
 fun DateTimePickerDialog(
     initialDateTime: LocalDateTime = LocalDateTime.now(),
     onDismissRequest: () -> Unit,
-    onDateTimeSelected: (Long?, Int, Int) -> Unit,
-    backgroundColor: Long
+    onDateTimeSelected: (Long?, Int, Int) -> Unit
 ) {
     var currentSelectedMode by rememberSaveable { mutableStateOf(DateTimePickerState.DATE) }
     val dateState = rememberDatePickerState(
@@ -68,7 +68,7 @@ fun DateTimePickerDialog(
     DatePickerDialog(
         modifier = Modifier.heightIn(min = 500.dp),
         colors = DatePickerDefaults.colors(
-            containerColor = Color(backgroundColor)
+            containerColor = PlannerTheme.colors.container
         ),
         onDismissRequest = onDismissRequest,
         confirmButton = {
@@ -104,7 +104,7 @@ fun DateTimePickerDialog(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
-            modifier = Modifier.background(Color(backgroundColor))
+            modifier = Modifier.background(PlannerTheme.colors.container)
         ) {
             SingleChoiceSegmentedButtonRow(
                 modifier = Modifier
@@ -124,9 +124,10 @@ fun DateTimePickerDialog(
                     },
                     shape = RoundedCornerShape(20.dp),
                     colors = SegmentedButtonDefaults.colors(
-                        activeContainerColor = Color(backgroundColor.getContrastingButtonColor()),
-                        activeContentColor = Color(backgroundColor),
-                        inactiveContentColor = Color(backgroundColor)
+                        activeContainerColor = PlannerTheme.colors.primary,
+                        activeContentColor = PlannerTheme.colors.onPrimary,
+                        inactiveContentColor = PlannerTheme.colors.onContainer,
+                        inactiveContainerColor = PlannerTheme.colors.container
                     )
                 ) {
                     Icon(
@@ -141,15 +142,15 @@ fun DateTimePickerDialog(
                     },
                     shape = RoundedCornerShape(20.dp),
                     colors = SegmentedButtonDefaults.colors(
-                        activeContainerColor = Color(backgroundColor.getContrastingButtonColor()),
-                        activeContentColor = Color(backgroundColor),
-                        inactiveContentColor = Color(backgroundColor)
+                        activeContainerColor = PlannerTheme.colors.primary,
+                        activeContentColor = PlannerTheme.colors.onPrimary,
+                        inactiveContentColor = PlannerTheme.colors.onContainer,
+                        inactiveContainerColor = PlannerTheme.colors.container
                     )
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.clock_icon),
-                        contentDescription = stringResource(R.string.time_mode),
-                        tint = Color(backgroundColor)
+                        contentDescription = stringResource(R.string.time_mode)
                     )
                 }
             }
@@ -159,22 +160,12 @@ fun DateTimePickerDialog(
                     DatePicker(
                         state = dateState,
                         showModeToggle = false,
-                        colors = DatePickerDefaults.colors(
-                            selectedDayContainerColor = Color(backgroundColor.getContrastingButtonColor()),
-                            containerColor = Color(backgroundColor)
-                        )
                     )
                 }
 
                 DateTimePickerState.TIME -> {
                     TimePicker(
                         state = timeState,
-                        colors = TimePickerDefaults.colors(
-                            selectorColor = Color(backgroundColor.getContrastingButtonColor()),
-                            timeSelectorSelectedContainerColor = Color(backgroundColor.getContrastingButtonColor()),
-                            timeSelectorSelectedContentColor = Color(backgroundColor),
-                            timeSelectorUnselectedContentColor = Color(backgroundColor.getContrastingButtonColor())
-                        )
                     )
                 }
             }
@@ -190,8 +181,7 @@ private fun DateTimePickerPreview() {
             onDismissRequest = {},
             onDateTimeSelected = { _, _, _ ->
 
-            },
-            backgroundColor = colorPallet[0][1]
+            }
         )
     }
 }
