@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -55,6 +53,7 @@ import net.felipealafy.studentplanner.core.ui.extensions.getFormattedDateTime
 import net.felipealafy.studentplanner.core.ui.theme.DarkGray
 import net.felipealafy.studentplanner.core.ui.theme.LightGray
 import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
 import net.felipealafy.studentplanner.core.ui.theme.Red
 import net.felipealafy.studentplanner.core.ui.theme.StudentPlannerTheme
 import net.felipealafy.studentplanner.core.ui.theme.Typography
@@ -108,174 +107,192 @@ fun StudentClassCreationView(
             }
         }
         is StudentClassUiState.Success -> {
-            StudentPlannerTheme {
-                Scaffold(
-                    topBar = {
-                        TopAppBar(
-                            navigationIcon = {
-                                IconButton(onClick = onReturnAction) {
-                                    Icon(
-                                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                        contentDescription = stringResource(R.string.back_to_past_view),
-                                        tint = PlannerTheme.colors.onPrimary
-                                    )
-                                }
-                            },
-                            title = {
-                                Box(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    TopAppBarTitle(
-                                        text = stringResource(R.string.student_class_creation_view_title)
-                                    )
-                                }
-                            },
-                            actions = {
-                                if (state.formState.isValid) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.check_icon),
-                                        contentDescription = stringResource(R.string.class_is_able_to_save),
-                                    )
-                                } else {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.baseline_close),
-                                        contentDescription = stringResource(R.string.class_is_not_able_to_save)
-                                    )
-                                }
-                            },
-                            colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = PlannerTheme.colors.primary
+            PlannerThemeProvider(state.detailedPlanner.planner.color) {
+                StudentPlannerTheme {
+                    Scaffold(
+                        topBar = {
+                            TopAppBar(
+                                navigationIcon = {
+                                    IconButton(onClick = onReturnAction) {
+                                        Icon(
+                                            painter = painterResource(R.drawable.back_arrow),
+                                            contentDescription = stringResource(R.string.back_to_past_view),
+                                            tint = PlannerTheme.colors.onPrimary
+                                        )
+                                    }
+                                },
+                                title = {
+                                    Box(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        TopAppBarTitle(
+                                            text = stringResource(R.string.student_class_creation_view_title)
+                                        )
+                                    }
+                                },
+                                actions = {
+                                    if (state.formState.isValid) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.check_icon),
+                                            contentDescription = stringResource(R.string.class_is_able_to_save),
+                                        )
+                                    } else {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.baseline_close),
+                                            contentDescription = stringResource(R.string.class_is_not_able_to_save)
+                                        )
+                                    }
+                                },
+                                colors = TopAppBarDefaults.topAppBarColors(
+                                    containerColor = PlannerTheme.colors.primary
+                                )
                             )
-                        )
-                    }
-                ) { innerPadding ->
+                        }
+                    ) { innerPadding ->
 
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = PlannerTheme.colors.surface)
-                            .padding(innerPadding),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        LazyColumn(
+                        Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(start = 8.dp, end = 8.dp)
+                                .background(color = PlannerTheme.colors.surface)
+                                .padding(innerPadding),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            item { NewClassTitle() }
+                            LazyColumn(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(start = 8.dp, end = 8.dp)
+                            ) {
+                                item { NewClassTitle() }
 
-                            item { Spacer(modifier = Modifier.padding(top = 16.dp)) }
+                                item { Spacer(modifier = Modifier.padding(top = 16.dp)) }
 
-                            item {
-                                EditableTextEntry(
-                                    value = state.formState.title,
-                                    onTextChanged = { viewModel.updateTitle(newTitle = it) },
-                                    labelText = R.string.title
-                                )
-                            }
-
-                            item { Spacer(modifier = Modifier.padding(top = 16.dp)) }
-
-                            item {
-                                SelectSubjectComboBox(
-                                    onSubjectSelected = { id -> viewModel.updateAssociatedSubject(id) },
-                                    subjectId = state.formState.subjectId,
-                                    subjects = state.detailedPlanner.subjects.map { it.subject },
-                                )
-                            }
-
-                            item {
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(200.dp)
-                                        .border(
-                                            width = 2.dp,
-                                            color = Gray,
-                                            shape = RoundedCornerShape(32.dp)
-                                        ),
-                                    verticalArrangement = Arrangement.Center
-                                ) {
-                                    Text(
-                                        text = stringResource(R.string.exam_date_time_start),
-                                        style = Typography.bodyMedium,
-                                        modifier = Modifier.padding(start = 16.dp),
-                                        color = PlannerTheme.colors.onSurface
+                                item {
+                                    EditableTextEntry(
+                                        value = state.formState.title,
+                                        onTextChanged = { viewModel.updateTitle(newTitle = it) },
+                                        labelText = R.string.title
                                     )
+                                }
 
-                                    DateTimeSelector(
-                                        onClick = { showStartDateTimeSelectorDialog = true },
-                                        dateTime = state.formState.start.getFormattedDateTime()
+                                item { Spacer(modifier = Modifier.padding(top = 16.dp)) }
+
+                                item {
+                                    SelectSubjectComboBox(
+                                        onSubjectSelected = { id ->
+                                            viewModel.updateAssociatedSubject(
+                                                id
+                                            )
+                                        },
+                                        subjectId = state.formState.subjectId,
+                                        subjects = state.detailedPlanner.subjects.map { it.subject },
                                     )
+                                }
 
-                                    if (showStartDateTimeSelectorDialog) {
-                                        DateTimePickerDialog(
-                                            initialDateTime = state.formState.start,
-                                            onDismissRequest = { showStartDateTimeSelectorDialog = false },
-                                            onDateTimeSelected = { dateMillis, hour, minute ->
-                                                viewModel.updateStartDate(dateMillis, hour, minute)
-                                            }
+                                item {
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .height(200.dp)
+                                            .border(
+                                                width = 2.dp,
+                                                color = Gray,
+                                                shape = RoundedCornerShape(32.dp)
+                                            ),
+                                        verticalArrangement = Arrangement.Center
+                                    ) {
+                                        Text(
+                                            text = stringResource(R.string.exam_date_time_start),
+                                            style = Typography.bodyMedium,
+                                            modifier = Modifier.padding(start = 16.dp),
+                                            color = PlannerTheme.colors.onSurface
                                         )
-                                    }
 
-                                    Spacer(modifier = Modifier.padding(top = 16.dp))
-
-                                    Text(
-                                        text = stringResource(R.string.exam_date_time_end),
-                                        style = Typography.bodyMedium,
-                                        modifier = Modifier.padding(start = 16.dp),
-                                        color = PlannerTheme.colors.onSurface
-                                    )
-
-                                    DateTimeSelector(
-                                        onClick = { showEndDateTimeSelectorDialog = true },
-                                        dateTime = state.formState.end.getFormattedDateTime()
-                                    )
-
-                                    if (showEndDateTimeSelectorDialog) {
-                                        DateTimePickerDialog(
-                                            initialDateTime = state.formState.end,
-                                            onDismissRequest = { showEndDateTimeSelectorDialog = false },
-                                            onDateTimeSelected = { dateMillis, hour, minute ->
-                                                viewModel.updateEndDate(dateMillis, hour, minute)
-                                            }
+                                        DateTimeSelector(
+                                            onClick = { showStartDateTimeSelectorDialog = true },
+                                            dateTime = state.formState.start.getFormattedDateTime()
                                         )
+
+                                        if (showStartDateTimeSelectorDialog) {
+                                            DateTimePickerDialog(
+                                                initialDateTime = state.formState.start,
+                                                onDismissRequest = {
+                                                    showStartDateTimeSelectorDialog = false
+                                                },
+                                                onDateTimeSelected = { dateMillis, hour, minute ->
+                                                    viewModel.updateStartDate(
+                                                        dateMillis,
+                                                        hour,
+                                                        minute
+                                                    )
+                                                }
+                                            )
+                                        }
+
+                                        Spacer(modifier = Modifier.padding(top = 16.dp))
+
+                                        Text(
+                                            text = stringResource(R.string.exam_date_time_end),
+                                            style = Typography.bodyMedium,
+                                            modifier = Modifier.padding(start = 16.dp),
+                                            color = PlannerTheme.colors.onSurface
+                                        )
+
+                                        DateTimeSelector(
+                                            onClick = { showEndDateTimeSelectorDialog = true },
+                                            dateTime = state.formState.end.getFormattedDateTime()
+                                        )
+
+                                        if (showEndDateTimeSelectorDialog) {
+                                            DateTimePickerDialog(
+                                                initialDateTime = state.formState.end,
+                                                onDismissRequest = {
+                                                    showEndDateTimeSelectorDialog = false
+                                                },
+                                                onDateTimeSelected = { dateMillis, hour, minute ->
+                                                    viewModel.updateEndDate(
+                                                        dateMillis,
+                                                        hour,
+                                                        minute
+                                                    )
+                                                }
+                                            )
+                                        }
                                     }
                                 }
-                            }
 
-                            item {
-                                EditableTextEntry(
-                                    value = state.formState.noteTakingLink,
-                                    onTextChanged = { viewModel.updateNoteTakingLink(it) },
-                                    labelText = R.string.notetaking_link
-                                )
-                            }
-
-                            item {
-                                EditableTextEntry(
-                                    value = state.formState.observation,
-                                    onTextChanged = { viewModel.updateObservation(it) },
-                                    labelText = R.string.observation_field,
-                                    singleLine = false
-                                )
-                            }
-
-                            item {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(top = 8.dp),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    ButtonWithBackgroundColor(
-                                        onClick = {
-                                            viewModel.saveStudentClass()
-                                        },
-                                        placeholderTextPath = R.string.create_button,
-                                        isButtonEnabled = state.formState.isValid
+                                item {
+                                    EditableTextEntry(
+                                        value = state.formState.noteTakingLink,
+                                        onTextChanged = { viewModel.updateNoteTakingLink(it) },
+                                        labelText = R.string.notetaking_link
                                     )
+                                }
+
+                                item {
+                                    EditableTextEntry(
+                                        value = state.formState.observation,
+                                        onTextChanged = { viewModel.updateObservation(it) },
+                                        labelText = R.string.observation_field,
+                                        singleLine = false
+                                    )
+                                }
+
+                                item {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(top = 8.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        ButtonWithBackgroundColor(
+                                            onClick = {
+                                                viewModel.saveStudentClass()
+                                            },
+                                            placeholderTextPath = R.string.create_button,
+                                            isButtonEnabled = state.formState.isValid
+                                        )
+                                    }
                                 }
                             }
                         }

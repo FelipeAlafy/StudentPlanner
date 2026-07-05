@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import net.felipealafy.studentplanner.feature_planner.data.repository.PlannerRepositoryImpl
-import net.felipealafy.studentplanner.core.ui.views.StudentPlannerRoutes
+import net.felipealafy.studentplanner.feature_main.routes.StudentPlannerRoutes
 import javax.inject.Inject
 
 @HiltViewModel

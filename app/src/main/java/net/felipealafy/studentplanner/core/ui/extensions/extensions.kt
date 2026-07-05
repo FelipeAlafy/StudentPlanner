@@ -1,4 +1,4 @@
-package net.felipealafy.studentplanner.core.ui.views
+package net.felipealafy.studentplanner.core.ui.extensions
 
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle

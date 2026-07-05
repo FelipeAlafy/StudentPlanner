@@ -14,9 +14,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -55,8 +52,8 @@ import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
 import net.felipealafy.studentplanner.core.ui.theme.Typography
 import net.felipealafy.studentplanner.core.ui.theme.colorPallet
-import net.felipealafy.studentplanner.core.ui.views.getGradePhrase
-import net.felipealafy.studentplanner.core.ui.views.getValueInDisplayStyle
+import net.felipealafy.studentplanner.core.ui.extensions.getGradePhrase
+import net.felipealafy.studentplanner.core.ui.extensions.getValueInDisplayStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,7 +77,7 @@ fun DetailedExamView(
 
                 IconButton(onClick = onReturnAction) {
                     Icon(
-                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                        painter = painterResource(R.drawable.back_arrow),
                         contentDescription = stringResource(R.string.back_to_past_view)
                     )
                 }
@@ -120,7 +117,7 @@ fun DetailedExamView(
                                     onClick = { onReturnAction() }
                                 ) {
                                     Icon(
-                                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                        painter = painterResource(R.drawable.back_arrow),
                                         contentDescription = stringResource(R.string.back_to_past_view),
                                         tint = PlannerTheme.colors.onPrimary
                                     )
@@ -137,7 +134,7 @@ fun DetailedExamView(
                                     }
                                 ) {
                                     Icon(
-                                        imageVector = Icons.Default.Edit,
+                                        painter = painterResource(R.drawable.edit_document),
                                         contentDescription = stringResource(R.string.go_on_edit_mode_for_edit),
                                         tint = PlannerTheme.colors.onPrimary
                                     )

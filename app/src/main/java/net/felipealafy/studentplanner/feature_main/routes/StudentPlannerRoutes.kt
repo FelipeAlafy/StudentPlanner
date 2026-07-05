@@ -1,4 +1,4 @@
-package net.felipealafy.studentplanner.core.ui.views
+package net.felipealafy.studentplanner.feature_main.routes
 
 sealed class StudentPlannerRoutes(val route: String) {
     data object WelcomeView: StudentPlannerRoutes("welcome_view")
@@ -36,9 +36,9 @@ sealed class StudentPlannerRoutes(val route: String) {
         fun createRoute(plannerId: String, subjectId: String) = "editing_subject/$plannerId/$subjectId"
     }
 
-    data object DetailedClassView : StudentPlannerRoutes("detailed_class/{plannerId}/{subjectId}/{classId}") {
-        fun createRoute(plannerId: String, subjectId: String, classId: String) =
-            "detailed_class/$plannerId/$subjectId/$classId"
+    data object DetailedClassView : StudentPlannerRoutes("detailed_class/{subjectId}/{studentClassId}") {
+        fun createRoute(subjectId: String, studentClassId: String) =
+            "detailed_class/$subjectId/$studentClassId"
     }
 
     data object EditingClassView : StudentPlannerRoutes("editing_class/{plannerId}/{subjectId}/{classId}") {

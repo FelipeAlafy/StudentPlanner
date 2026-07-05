@@ -47,6 +47,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
@@ -65,7 +66,7 @@ import net.felipealafy.studentplanner.core.ui.theme.Typography
 import net.felipealafy.studentplanner.core.ui.theme.colorutils.getContrastingButtonColor
 import net.felipealafy.studentplanner.core.ui.theme.colorutils.getContrastingColorForText
 import net.felipealafy.studentplanner.core.ui.theme.colorutils.getForBackgroundBasedOnTitleBarColor
-import net.felipealafy.studentplanner.core.ui.views.getValueInDisplayStyle
+import net.felipealafy.studentplanner.core.ui.extensions.getValueInDisplayStyle
 import net.felipealafy.studentplanner.feature_class.domain.model.StudentClass
 import net.felipealafy.studentplanner.feature_exams.data.local.Exam
 import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
@@ -83,7 +84,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun TodayView(
     viewModel: TodayViewModel,
-    onStudentClassClicked: (String, String, String) -> Unit,
+    onStudentClassClicked: (String, String) -> Unit,
     onExamClicked: (String, String, String) -> Unit,
     onCreatePlannerClicked: () -> Unit,
     onCreateSubjectClicked: (plannerId: String) -> Unit,
@@ -217,7 +218,8 @@ fun TodayView(
                             TopAppBar(
                                 colors = TopAppBarDefaults.topAppBarColors(
                                     containerColor = PlannerTheme.colors.primary
-                                ), navigationIcon = {
+                                ),
+                                navigationIcon = {
                                     IconButton(onClick = {
                                         scope.launch {
                                             drawerState.apply {
@@ -234,7 +236,8 @@ fun TodayView(
 
                                         )
                                     }
-                                }, title = {
+                                },
+                                title = {
                                     Box(
                                         modifier = Modifier.fillMaxWidth(),
                                         contentAlignment = Alignment.Center
@@ -243,7 +246,8 @@ fun TodayView(
                                             text = today
                                         )
                                     }
-                                }, actions = {
+                                },
+                                actions = {
                                     Row {
                                         IconButton(onClick = {
                                             showDateSelection.value = true
@@ -255,7 +259,9 @@ fun TodayView(
                                             )
                                         }
                                     }
-                                })
+                                },
+                                modifier = Modifier.clip(RoundedCornerShape(bottomStart = 15.dp, bottomEnd = 15.dp))
+                            )
                         },
                         floatingActionButton = {
                             var expanded by remember { mutableStateOf(false) }
@@ -449,7 +455,7 @@ fun TodayView(
 fun CalendarView(
     selectedPlanner: DetailedPlanner,
     gradeDisplayStyle: GradeStyle,
-    onStudentClassClicked: (String, String, String) -> Unit,
+    onStudentClassClicked: (String, String) -> Unit,
     onExamClicked: (String, String, String) -> Unit
 ) {
     LazyColumn(
@@ -485,7 +491,7 @@ fun ClassCard(
     subject: Subject,
     studentClass: StudentClass,
     subjectColor: Long,
-    onStudentClassClicked: (String, String, String) -> Unit
+    onStudentClassClicked: (String, String) -> Unit
 ) {
     PlannerThemeProvider(subjectColor) {
         Card(
@@ -497,7 +503,7 @@ fun ClassCard(
             ),
             shape = RoundedCornerShape(15.dp),
             onClick = {
-                onStudentClassClicked(subject.plannerId, studentClass.subjectId, studentClass.id)
+                onStudentClassClicked(studentClass.subjectId, studentClass.id)
             }) {
             Column(
                 modifier = Modifier.padding(bottom = 8.dp)

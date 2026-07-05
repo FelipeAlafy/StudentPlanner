@@ -1,5 +1,6 @@
 package net.felipealafy.studentplanner.feature_planner.presentation.views
 
+import TextInputWithColor
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,8 +11,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,22 +26,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.collectLatest
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.PlannerCreationEvent
 import net.felipealafy.studentplanner.core.ui.components.color.chooser.ButtonOpenColorSelectionDialog
 import net.felipealafy.studentplanner.core.ui.components.color.chooser.ButtonWithBackgroundColor
 import net.felipealafy.studentplanner.core.ui.components.color.chooser.ColorSelectionDialog
 import net.felipealafy.studentplanner.core.ui.components.grade.GradeStyleComboBox
-import net.felipealafy.studentplanner.ui.components.grade.MinimumGradeToPassInput
-import net.felipealafy.studentplanner.ui.components.text.input.TextInputWithColor
-import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.PlannerCreationViewModel
+import net.felipealafy.studentplanner.core.ui.components.grade.MinimumGradeToPassInput
 import net.felipealafy.studentplanner.core.ui.components.text.label.TopAppBarTitle
 import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
 import net.felipealafy.studentplanner.core.ui.theme.Typography
+import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.PlannerCreationEvent
+import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.PlannerCreationViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -99,7 +98,7 @@ fun PlannerCreationView(
                                 onClick = backOnClick
                             ) {
                                 Icon(
-                                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                    painter = painterResource(R.drawable.back_arrow),
                                     contentDescription = stringResource(R.string.back_to_past_view),
                                     tint = PlannerTheme.colors.onContainer
                                 )
@@ -146,7 +145,6 @@ fun PlannerCreationView(
                             .padding(start = 20.dp, top = 10.dp)
                     ) {
                         ButtonOpenColorSelectionDialog(
-                            selectedColor = uiState.color,
                             onClick = { viewModel.showColorDialog() }
                         )
                         GradeStyleComboBox(
@@ -165,7 +163,6 @@ fun PlannerCreationView(
 
                 if (uiState.isColorDialogVisible) {
                     ColorSelectionDialog(
-                        selectedColor = uiState.color,
                         onDismissRequest = { viewModel.hideColorDialog() },
                         onColorSelected = { color ->
                             viewModel.onColorChange(color)

@@ -21,7 +21,7 @@ import net.felipealafy.studentplanner.feature_class.domain.use_case.CreateClassP
 import net.felipealafy.studentplanner.feature_class.domain.use_case.CreateClassUseCase
 import net.felipealafy.studentplanner.feature_planner.domain.model.DetailedPlanner
 import net.felipealafy.studentplanner.feature_planner.domain.use_case.GetDetailedPlannerUseCase
-import net.felipealafy.studentplanner.core.ui.views.parseToDateTime
+import net.felipealafy.studentplanner.core.ui.extensions.parseToDateTime
 import java.time.LocalDateTime
 import javax.inject.Inject
 

@@ -35,7 +35,7 @@ import net.felipealafy.studentplanner.feature_subject.presentation.views.Subject
 import net.felipealafy.studentplanner.feature_today.presentation.viewmodels.TodayViewModel
 import net.felipealafy.studentplanner.feature_today.presentation.views.TodayView
 import net.felipealafy.studentplanner.core.ui.theme.StudentPlannerTheme
-import net.felipealafy.studentplanner.core.ui.views.StudentPlannerRoutes
+import net.felipealafy.studentplanner.feature_main.routes.StudentPlannerRoutes
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -76,8 +76,8 @@ class MainActivity : ComponentActivity() {
                         val todayViewModel: TodayViewModel = hiltViewModel()
                         TodayView(
                             viewModel = todayViewModel,
-                            onStudentClassClicked = { plannerId, subjectId, studentClassId ->
-                                navController.navigate(StudentPlannerRoutes.DetailedClassView.createRoute(plannerId, subjectId, studentClassId))
+                            onStudentClassClicked = { plannerId, subjectId ->
+                                navController.navigate(StudentPlannerRoutes.DetailedClassView.createRoute(plannerId, subjectId))
                             },
                             onExamClicked = { plannerId, subjectId, examId ->
                                 navController.navigate(StudentPlannerRoutes.DetailedExamView.createRoute(plannerId, subjectId, examId))

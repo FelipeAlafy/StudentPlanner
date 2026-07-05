@@ -12,9 +12,7 @@ fun SubjectTable.toDomainModel(): Subject {
         name = this.name,
         color = this.color,
         start = this.start,
-        end = this.end,
-        studentClasses = emptyArray<StudentClass>(),
-        exams = emptyArray<Exam>(),
+        end = this.end
     )
 }
 

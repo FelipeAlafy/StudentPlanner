@@ -4,7 +4,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -19,7 +19,7 @@ fun TopAppBarTitle(
     textAlign: TextAlign = TextAlign.Center
 ) {
     val tint = PlannerTheme.colors.onContainer
-    var textStyle by rememberSaveable { mutableStateOf(Typography.headlineMedium) }
+    var textStyle by remember { mutableStateOf(Typography.headlineMedium) }
     Text(
         text = text,
         color = tint,

@@ -24,7 +24,7 @@ import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +50,7 @@ fun DateTimePickerDialog(
     onDismissRequest: () -> Unit,
     onDateTimeSelected: (Long?, Int, Int) -> Unit
 ) {
-    var currentSelectedMode by rememberSaveable { mutableStateOf(DateTimePickerState.DATE) }
+    var currentSelectedMode by remember { mutableStateOf(DateTimePickerState.DATE) }
     val dateState = rememberDatePickerState(
         initialSelectedDateMillis = initialDateTime.toInstant(ZoneOffset.UTC).toEpochMilli()
     )

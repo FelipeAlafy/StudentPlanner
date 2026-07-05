@@ -1,5 +1,6 @@
 package net.felipealafy.studentplanner.feature_planner.presentation.views
 
+import PlannerTitleForAnyCard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -14,10 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -41,22 +38,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
+import net.felipealafy.studentplanner.core.ui.components.text.label.ClassesTaken
 import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
 import net.felipealafy.studentplanner.feature_planner.domain.model.Planner
 import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.DetailedPlannerUiState
 import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 import net.felipealafy.studentplanner.feature_subject.presentation.views.Date
-import net.felipealafy.studentplanner.ui.components.text.label.ClassesTaken
-import net.felipealafy.studentplanner.ui.components.text.label.PlannerTitleForAnyCard
 import net.felipealafy.studentplanner.core.ui.components.text.label.TopAppBarTitle
 import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
 import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.DetailedPlannerViewModel
 import net.felipealafy.studentplanner.core.ui.theme.Typography
 import net.felipealafy.studentplanner.feature_subject.domain.model.DetailedSubject
-import net.felipealafy.studentplanner.core.ui.views.formattedValue
-import net.felipealafy.studentplanner.core.ui.views.getPercentageFromZeroToOneHundred
-import net.felipealafy.studentplanner.core.ui.views.getValueInDisplayStyleForAverage
+import net.felipealafy.studentplanner.core.ui.extensions.formattedValue
+import net.felipealafy.studentplanner.core.ui.extensions.getPercentageFromZeroToOneHundred
+import net.felipealafy.studentplanner.core.ui.extensions.getValueInDisplayStyleForAverage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -113,7 +109,7 @@ fun DetailedPlannerView(
                             navigationIcon = {
                                 IconButton(onClick = { onReturnToPreviousView() }) {
                                     Icon(
-                                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                        painter = painterResource(R.drawable.back_arrow),
                                         contentDescription = stringResource(R.string.back_to_past_view),
                                         tint = PlannerTheme.colors.onPrimary
                                     )
@@ -122,7 +118,7 @@ fun DetailedPlannerView(
                             actions = {
                                 IconButton(onClick = {}) {
                                     Icon(
-                                        imageVector = Icons.Filled.Edit,
+                                        painter = painterResource(R.drawable.edit_document),
                                         contentDescription = stringResource(R.string.go_on_edit_mode_for_planner),
                                         tint = PlannerTheme.colors.onPrimary
                                     )
@@ -377,7 +373,7 @@ fun Date(subject: Subject) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                imageVector = Icons.Filled.DateRange,
+                painter = painterResource(R.drawable.calendar),
                 contentDescription = stringResource(R.string.date_icon),
                 tint = PlannerTheme.colors.onSurface
             )

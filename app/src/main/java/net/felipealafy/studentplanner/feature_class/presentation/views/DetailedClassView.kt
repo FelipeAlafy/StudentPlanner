@@ -12,9 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -80,7 +77,7 @@ fun DetailedClassView(
 
                 IconButton(onClick = onReturnAction) {
                     Icon(
-                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                        painter = painterResource(R.drawable.back_arrow),
                         contentDescription = stringResource(R.string.back_to_past_view)
                     )
                 }
@@ -112,7 +109,7 @@ fun DetailedClassView(
                             navigationIcon = {
                                 IconButton(onClick = onReturnAction) {
                                     Icon(
-                                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                        painter = painterResource(R.drawable.back_arrow),
                                         contentDescription = stringResource(R.string.back_to_past_view),
                                         tint = PlannerTheme.colors.onPrimary
                                     )
@@ -123,7 +120,7 @@ fun DetailedClassView(
                                     onEditMode(subject.plannerId, subject.id, studentClass.id)
                                 }) {
                                     Icon(
-                                        imageVector = Icons.Filled.Edit,
+                                        painter = painterResource(R.drawable.edit_document),
                                         contentDescription = stringResource(R.string.go_on_edit_mode_for_planner),
                                         tint = PlannerTheme.colors.onPrimary
                                     )

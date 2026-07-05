@@ -5,19 +5,21 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import net.felipealafy.studentplanner.database.StudentPlannerDatabase
+import net.felipealafy.studentplanner.feature_planner.data.repository.PlannerRepositoryImpl
+import net.felipealafy.studentplanner.feature_planner.domain.repository.PlannerRepository
 import javax.inject.Singleton
 
 @Suppress("unused")
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
-
     //Database migration history
     //Version 1 to Version 2 - entries added to the database
     val MIGRATION_V1_TO_V2 = object : Migration(1, 2) {

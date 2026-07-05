@@ -12,14 +12,14 @@ import net.felipealafy.studentplanner.core.ui.theme.Typography
 import net.felipealafy.studentplanner.feature_subject.domain.model.DetailedSubject
 
 @Composable
-fun ClassesTaken(subject: DetailedSubject) {
+fun ClassesTaken(count: Int) {
     Row {
         Icon(
             painter = painterResource(R.drawable.resource_class),
             contentDescription = stringResource(R.string.class_icon)
         )
         Text(
-            text = "${stringResource(R.string.classes_taken)} ${subject.countClassesTaken} ${
+            text = "${stringResource(R.string.classes_taken)} $count ${
                 stringResource(
                     R.string.classes
                 )

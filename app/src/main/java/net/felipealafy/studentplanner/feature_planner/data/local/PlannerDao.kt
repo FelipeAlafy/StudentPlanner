@@ -14,7 +14,7 @@ interface PlannerDao {
     fun getAllPlanners(): Flow<List<PlannerTable>>
 
     @Query("SELECT * FROM planner WHERE id = :plannerId ORDER BY name ASC")
-    fun getPlanner(plannerId: String): PlannerTable
+    fun getPlanner(plannerId: String): Flow<PlannerTable>
 
     @Transaction
     @Query("SELECT * FROM planner WHERE id = :plannerId")

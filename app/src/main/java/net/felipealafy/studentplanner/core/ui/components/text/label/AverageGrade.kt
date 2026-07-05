@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.core.ui.theme.Typography
-import net.felipealafy.studentplanner.core.ui.views.getValueInDisplayStyleForAverage
+import net.felipealafy.studentplanner.core.ui.extensions.getValueInDisplayStyleForAverage
 import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
 
 @Composable
