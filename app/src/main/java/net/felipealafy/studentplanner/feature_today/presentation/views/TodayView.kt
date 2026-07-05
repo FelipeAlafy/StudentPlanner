@@ -1,6 +1,7 @@
 package net.felipealafy.studentplanner.feature_today.presentation.views
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -15,10 +16,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -50,6 +47,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
@@ -121,7 +119,7 @@ fun TodayView(
                     )
                     Spacer(modifier = Modifier.padding(8.dp))
                     FloatingActionButton(onClick = onCreatePlannerClicked) {
-                        Icon(Icons.Default.Add, contentDescription = "Create Planner")
+                        Icon(painter = painterResource(R.drawable.add_icon), contentDescription = "Create Planner")
                     }
                 }
             }
@@ -228,7 +226,9 @@ fun TodayView(
                                         }
                                     }) {
                                         Icon(
-                                            Icons.Default.Menu,
+                                            painter = painterResource(
+                                                if (drawerState.isClosed) R.drawable.left_panel_open else R.drawable.left_panel_close
+                                            ),
                                             contentDescription = stringResource(R.string.planners_menu),
                                             tint = PlannerTheme.colors.onPrimary
 
@@ -249,7 +249,7 @@ fun TodayView(
                                             showDateSelection.value = true
                                         }) {
                                             Icon(
-                                                Icons.Default.DateRange,
+                                                painter = painterResource(R.drawable.calendar),
                                                 contentDescription = stringResource(R.string.calendars_view),
                                                 tint = PlannerTheme.colors.onPrimary
                                             )
@@ -264,6 +264,11 @@ fun TodayView(
                                 with(density) { LocalWindowInfo.current.containerSize.width.toDp() }
                             val isExpanded = screenWidth < 600.dp
 
+                            val rotationAngle by animateFloatAsState(
+                                targetValue = if (expanded) 45f else 0f,
+                                label = "fab_add_rotation"
+                            )
+
                             Box {
                                 if (isExpanded) {
                                     FloatingActionButton(
@@ -271,9 +276,10 @@ fun TodayView(
                                         containerColor = PlannerTheme.colors.primary,
                                     ) {
                                         Icon(
-                                            Icons.Default.Add,
+                                            painterResource(R.drawable.add_icon),
                                             contentDescription = stringResource(R.string.add_floating_action_button),
                                             tint = PlannerTheme.colors.onPrimary,
+                                            modifier = Modifier.rotate(rotationAngle)
                                         )
                                     }
                                 } else {
@@ -286,12 +292,14 @@ fun TodayView(
                                             shape = RoundedCornerShape(8.dp)
                                         )
                                     ) {
-                                        Row {
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
                                             Icon(
-                                                Icons.Default.Add,
+                                                painterResource(R.drawable.add_icon),
                                                 contentDescription = stringResource(R.string.add_floating_action_button),
-                                                tint = PlannerTheme.colors.onPrimary
+                                                tint = PlannerTheme.colors.onPrimary,
+                                                modifier = Modifier.rotate(rotationAngle)
                                             )
+                                            Spacer(modifier = Modifier.padding(end = 8.dp))
                                             Text(
                                                 text = stringResource(R.string.add_expanded_floating_action_button),
                                                 color = PlannerTheme.colors.onPrimary

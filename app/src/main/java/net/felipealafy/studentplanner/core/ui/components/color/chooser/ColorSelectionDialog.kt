@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -20,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,6 +28,7 @@ import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.core.ui.theme.Transparent
 import net.felipealafy.studentplanner.core.ui.theme.Typography
 import net.felipealafy.studentplanner.core.ui.theme.colorPallet
+import java.util.function.IntConsumer
 
 @Composable
 fun ColorSelectionDialog(
@@ -86,7 +86,7 @@ fun ColorSelectionDialog(
                                     ) {
                                         if (color == PlannerTheme.colors.primary.value.toLong()) {
                                             Icon(
-                                                Icons.Default.Check,
+                                                painter = painterResource(R.drawable.check_icon),
                                                 contentDescription = stringResource(R.string.check_color)
                                             )
                                         }

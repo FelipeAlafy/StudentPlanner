@@ -1,5 +1,6 @@
 package net.felipealafy.studentplanner.feature_onboarding.presentation.views
 
+import TextInputWithColor
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,8 +33,6 @@ import net.felipealafy.studentplanner.core.ui.components.color.chooser.ButtonOpe
 import net.felipealafy.studentplanner.core.ui.components.color.chooser.ButtonWithBackgroundColor
 import net.felipealafy.studentplanner.core.ui.components.color.chooser.ColorSelectionDialog
 import net.felipealafy.studentplanner.core.ui.components.grade.GradeStyleComboBox
-import net.felipealafy.studentplanner.ui.components.grade.MinimumGradeToPassInput
-import net.felipealafy.studentplanner.ui.components.text.input.TextInputWithColor
 import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
 import net.felipealafy.studentplanner.core.ui.theme.Typography

@@ -24,9 +24,9 @@ class MainViewModel @Inject constructor(private val repository: PlannerRepositor
         viewModelScope.launch {
             val planners = repository.getAllPlanners().first()
             if (planners.isNotEmpty()) {
-                _startDestination.value = StudentPlannerRoutes.TodayView.name
+                _startDestination.value = StudentPlannerRoutes.TodayView.route
             } else {
-                _startDestination.value = StudentPlannerRoutes.WelcomeView.name
+                _startDestination.value = StudentPlannerRoutes.WelcomeView.route
             }
         }
     }

@@ -5,8 +5,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import net.felipealafy.studentplanner.core.ui.theme.colorutils.blendWith
 import net.felipealafy.studentplanner.core.ui.theme.colorutils.getContrastingColorForText
-import net.felipealafy.studentplanner.ui.theme.colorutils.blendWith
 
 data class SemanticTheme(
     val primary: Color,
