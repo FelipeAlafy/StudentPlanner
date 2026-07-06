@@ -155,7 +155,7 @@ fun TopPlannerCard(planner: Planner, plannerProgress: Float, passedSubjectCount:
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = PlannerTheme.colors.surface,
+                color = PlannerTheme.colors.cardTop,
                 shape = RoundedCornerShape(
                     topStart = 0.dp,
                     topEnd = 0.dp,
@@ -196,7 +196,7 @@ fun AverageGradeForAllSubjects(
             }
         } ${displayStyle.getValueInDisplayStyleForAverage(average)}",
         style = Typography.labelLarge,
-        color = PlannerTheme.colors.onSurface
+        color = PlannerTheme.colors.onCardTop
     )
 }
 
@@ -206,7 +206,7 @@ private fun SubjectsFinished(countOfFinishedSubjects: Int) {
         text = stringResource(R.string.subjects_done) +
                 " $countOfFinishedSubjects ${stringResource(R.string.subjects)}.",
         style = Typography.labelLarge,
-        color = PlannerTheme.colors.onSurface
+        color = PlannerTheme.colors.onCardTop
     )
 }
 
@@ -281,7 +281,7 @@ fun SubjectCard(
             .fillMaxWidth()
             .padding(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = PlannerTheme.colors.surface
+            containerColor = PlannerTheme.colors.cardTop
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 5.dp
@@ -347,7 +347,7 @@ fun AverageGrade(
         Text(
             text = "${stringResource(R.string.average_grade_for_subject)} $formattedAverage",
             style = Typography.labelLarge,
-            color = PlannerTheme.colors.onSurface
+            color = PlannerTheme.colors.onCardTop
         )
         Spacer(modifier = Modifier.padding(start = 8.dp))
         Box(
@@ -375,13 +375,13 @@ fun Date(subject: Subject) {
             Icon(
                 painter = painterResource(R.drawable.calendar),
                 contentDescription = stringResource(R.string.date_icon),
-                tint = PlannerTheme.colors.onSurface
+                tint = PlannerTheme.colors.onCardTop
             )
             Text(
                 text = "${stringResource(R.string.subject_period)}:",
                 style = Typography.labelMedium,
                 modifier = Modifier.padding(start = 8.dp),
-                color = PlannerTheme.colors.onSurface
+                color = PlannerTheme.colors.onCardTop
             )
         }
         Row {
@@ -393,7 +393,7 @@ fun Date(subject: Subject) {
                     )
                 } ${subject.end.formattedValue()}",
                 style = Typography.labelMedium,
-                color = PlannerTheme.colors.onSurface
+                color = PlannerTheme.colors.onCardTop
             )
         }
     }
@@ -405,7 +405,7 @@ fun SubjectTitle(title: String) {
         modifier = Modifier.padding(top = 8.dp),
         text = title,
         style = Typography.bodyMedium,
-        color = PlannerTheme.colors.onSurface,
+        color = PlannerTheme.colors.onCardTop,
         maxLines = 2,
         overflow = TextOverflow.Ellipsis
     )

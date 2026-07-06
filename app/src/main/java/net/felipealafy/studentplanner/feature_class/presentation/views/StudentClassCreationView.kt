@@ -154,7 +154,7 @@ fun StudentClassCreationView(
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .background(color = PlannerTheme.colors.surface)
+                                .background(color = PlannerTheme.colors.cardTop)
                                 .padding(innerPadding),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
@@ -205,7 +205,7 @@ fun StudentClassCreationView(
                                             text = stringResource(R.string.exam_date_time_start),
                                             style = Typography.bodyMedium,
                                             modifier = Modifier.padding(start = 16.dp),
-                                            color = PlannerTheme.colors.onSurface
+                                            color = PlannerTheme.colors.onCardTop
                                         )
 
                                         DateTimeSelector(
@@ -235,7 +235,7 @@ fun StudentClassCreationView(
                                             text = stringResource(R.string.exam_date_time_end),
                                             style = Typography.bodyMedium,
                                             modifier = Modifier.padding(start = 16.dp),
-                                            color = PlannerTheme.colors.onSurface
+                                            color = PlannerTheme.colors.onCardTop
                                         )
 
                                         DateTimeSelector(

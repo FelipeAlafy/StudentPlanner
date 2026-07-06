@@ -57,7 +57,7 @@ fun GradeInputFromAToF(onSelectItem: (GradeAToF) -> Unit) {
                 Spacer(Modifier.padding(start = 8.dp))
                 Icon(
                     painter = painterResource(R.drawable.dropdown),
-                    tint = PlannerTheme.colors.onSurface,
+                    tint = PlannerTheme.colors.onCardTop,
                     contentDescription = stringResource(R.string.grade_style_combobox)
                 )
             }
@@ -67,13 +67,13 @@ fun GradeInputFromAToF(onSelectItem: (GradeAToF) -> Unit) {
             Text(
                 text = textToDisplay,
                 style = Typography.labelMedium,
-                color = PlannerTheme.colors.onSurface,
+                color = PlannerTheme.colors.onCardTop,
             )
 
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
-                containerColor = PlannerTheme.colors.surface,
+                containerColor = PlannerTheme.colors.cardTop,
                 shape = RoundedCornerShape(30.dp)
             ) {
                 GradeAToF.entries.forEach {
@@ -81,7 +81,7 @@ fun GradeInputFromAToF(onSelectItem: (GradeAToF) -> Unit) {
                         text = {
                             Text(
                                 text = it.name,
-                                color = PlannerTheme.colors.onSurface
+                                color = PlannerTheme.colors.onCardTop
                             )
                         },
                         onClick = {

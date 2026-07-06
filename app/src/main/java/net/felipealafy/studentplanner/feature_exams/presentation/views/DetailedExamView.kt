@@ -179,7 +179,7 @@ fun GradeIndicatorWithLabel(exam: Exam, gradeStyle: GradeStyle) {
             .fillMaxWidth()
             .height(200.dp),
         colors = CardDefaults.cardColors(
-            containerColor = PlannerTheme.colors.surface
+            containerColor = PlannerTheme.colors.cardTop
         ),
         shape = RoundedCornerShape(24.dp),
         elevation = CardDefaults.cardElevation(0.dp),
@@ -190,7 +190,7 @@ fun GradeIndicatorWithLabel(exam: Exam, gradeStyle: GradeStyle) {
             Text(
                 text = stringResource(R.string.performance),
                 style = Typography.headlineMedium,
-                color = PlannerTheme.colors.onSurface
+                color = PlannerTheme.colors.onCardTop
             )
             GradeIndicator(exam = exam)
 
@@ -205,12 +205,12 @@ fun GradeIndicatorWithLabel(exam: Exam, gradeStyle: GradeStyle) {
                         exam.grade
                     ),
                     style = Typography.bodyLarge,
-                    color = PlannerTheme.colors.onSurface
+                    color = PlannerTheme.colors.onCardTop
                 )
                 Text(
                     text = stringResource(gradeStyle.getGradePhrase(exam.grade)),
                     style = Typography.labelLarge,
-                    color = PlannerTheme.colors.onSurface
+                    color = PlannerTheme.colors.onCardTop
                 )
             }
         }
@@ -267,7 +267,7 @@ fun GradeIndicator(exam: Exam) {
             modifier = Modifier
                 .size(iconSizeDp)
                 .offset(x = animatedOffsetX, y = finalOffsetY),
-            tint = PlannerTheme.colors.onSurface
+            tint = PlannerTheme.colors.onCardTop
         )
     }
 }

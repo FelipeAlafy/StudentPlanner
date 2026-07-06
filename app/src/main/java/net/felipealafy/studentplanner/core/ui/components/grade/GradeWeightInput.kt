@@ -29,10 +29,10 @@ fun GradeWeightInput(
             .padding(start = 10.dp, end = 10.dp),
         colors = OutlinedTextFieldDefaults.colors(
             disabledContainerColor = LightGray,
-            unfocusedTextColor = PlannerTheme.colors.onSurface,
-            focusedTextColor = PlannerTheme.colors.onSurface,
+            unfocusedTextColor = PlannerTheme.colors.onCardTop,
+            focusedTextColor = PlannerTheme.colors.onCardTop,
             errorTextColor = PlannerTheme.colors.onError,
-            focusedLabelColor = PlannerTheme.colors.onSurface,
+            focusedLabelColor = PlannerTheme.colors.onCardTop,
             focusedBorderColor = PlannerTheme.colors.primary,
             focusedPlaceholderColor = LightGray,
         ),

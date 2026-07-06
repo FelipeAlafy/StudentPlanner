@@ -18,14 +18,14 @@ fun ButtonWithBackgroundColor(
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = PlannerTheme.colors.container,
+            containerColor = PlannerTheme.colors.primary,
         ),
         enabled = isButtonEnabled,
     ) {
         Text(
             stringResource(placeholderTextPath),
-            style = Typography.labelSmall,
-            color = PlannerTheme.colors.onContainer
+            style = Typography.labelLarge,
+            color = PlannerTheme.colors.onPrimary
         )
     }
 }

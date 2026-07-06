@@ -153,7 +153,7 @@ fun EditExamView(
                     Column(
                         modifier = Modifier
                             .background(
-                                PlannerTheme.colors.surface
+                                PlannerTheme.colors.cardTop
                             )
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -183,7 +183,7 @@ fun EditExamView(
                                         text = stringResource(R.string.select_your_exam_grade),
                                         style = Typography.bodyMedium,
                                         modifier = Modifier.padding(start = 16.dp),
-                                        color = PlannerTheme.colors.onSurface
+                                        color = PlannerTheme.colors.onCardTop
                                     )
                                     GradeInputFromZeroToOneHundred(
                                         text = state.examForm.grade,
@@ -201,7 +201,7 @@ fun EditExamView(
                                     Text(
                                         text = stringResource(R.string.select_your_exam_grade),
                                         style = Typography.bodyMedium,
-                                        color = PlannerTheme.colors.onSurface
+                                        color = PlannerTheme.colors.onCardTop
                                     )
                                     GradeInputFromZeroToTen(
                                         text = state.examForm.grade,
@@ -218,7 +218,7 @@ fun EditExamView(
                                     text = stringResource(R.string.select_your_exam_grade),
                                     style = Typography.bodyMedium,
                                     modifier = Modifier.padding(start = 16.dp, top = 8.dp),
-                                    color = PlannerTheme.colors.onSurface
+                                    color = PlannerTheme.colors.onCardTop
                                 )
                                 GradeInputFromAToF(
                                     onSelectItem = { grade ->
@@ -233,7 +233,7 @@ fun EditExamView(
                                     text = stringResource(R.string.select_your_exam_grade),
                                     style = Typography.bodyMedium,
                                     modifier = Modifier.padding(start = 16.dp, top = 8.dp),
-                                    color = PlannerTheme.colors.onSurface
+                                    color = PlannerTheme.colors.onCardTop
                                 )
                                 GradeInputFromAToFWithE(
                                     onSelectItem = { grade ->
@@ -274,7 +274,7 @@ fun EditExamView(
                                 text = stringResource(R.string.exam_date_time_start),
                                 style = Typography.bodyMedium,
                                 modifier = Modifier.padding(start = 16.dp),
-                                color = PlannerTheme.colors.onSurface
+                                color = PlannerTheme.colors.onCardTop
                             )
 
                             DateTimeSelector(
@@ -301,7 +301,7 @@ fun EditExamView(
                                 text = stringResource(R.string.exam_date_time_end),
                                 style = Typography.bodyMedium,
                                 modifier = Modifier.padding(start = 16.dp),
-                                color = PlannerTheme.colors.onSurface
+                                color = PlannerTheme.colors.onCardTop
                             )
                             DateTimeSelector(
                                 onClick = {

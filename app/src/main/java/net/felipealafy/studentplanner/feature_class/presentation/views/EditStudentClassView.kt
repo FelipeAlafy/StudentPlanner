@@ -149,7 +149,7 @@ fun EditStudentClassView(
                         modifier = Modifier
                             .fillMaxSize()
                             .background(
-                                color = PlannerTheme.colors.surface
+                                color = PlannerTheme.colors.cardTop
                             )
                             .padding(innerPadding),
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -204,7 +204,7 @@ fun EditStudentClassView(
                                         text = stringResource(R.string.exam_date_time_start),
                                         style = Typography.bodyMedium,
                                         modifier = Modifier.padding(start = 16.dp),
-                                        color = PlannerTheme.colors.onSurface
+                                        color = PlannerTheme.colors.onCardTop
                                     )
 
                                     DateTimeSelector(
@@ -231,7 +231,7 @@ fun EditStudentClassView(
                                         text = stringResource(R.string.exam_date_time_end),
                                         style = Typography.bodyMedium,
                                         modifier = Modifier.padding(start = 16.dp),
-                                        color = PlannerTheme.colors.onSurface
+                                        color = PlannerTheme.colors.onCardTop
                                     )
                                     DateTimeSelector(
                                         onClick = {

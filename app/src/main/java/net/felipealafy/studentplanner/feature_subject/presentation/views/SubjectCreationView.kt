@@ -106,7 +106,7 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturnAction: () 
         }
 
         is SubjectCreationUiState.Success -> {
-            PlannerThemeProvider(state.detailedPlanner.planner.color) {
+            PlannerThemeProvider(state.form.color) {
                 Scaffold(
                     topBar = {
                         TopAppBar(
@@ -118,7 +118,7 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturnAction: () 
                                     Text(
                                         text = stringResource(R.string.subject_creation_title),
                                         style = Typography.headlineMedium,
-                                        color = PlannerTheme.colors.onPrimary
+                                        color = PlannerTheme.colors.onSurface
                                     )
                                 }
                             },
@@ -129,18 +129,18 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturnAction: () 
                                     Icon(
                                         painter = painterResource(R.drawable.back_arrow),
                                         contentDescription = stringResource(R.string.back_to_past_view),
-                                        tint = PlannerTheme.colors.onPrimary
+                                        tint = PlannerTheme.colors.onSurface
                                     )
                                 }
                             },
                             colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = PlannerTheme.colors.primary
+                                containerColor = PlannerTheme.colors.surface
                             )
                         )
                     }
                 ) { innerPadding ->
                     Column(
-                        modifier = Modifier.padding(innerPadding),
+                        modifier = Modifier.padding(innerPadding).background(Color.White),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Column(
@@ -291,7 +291,7 @@ fun DateTimeSelector(
         Text(
             text = dateTime,
             style = Typography.labelLarge,
-            color = PlannerTheme.colors.onSurface
+            color = PlannerTheme.colors.onCardTop
         )
     }
 }

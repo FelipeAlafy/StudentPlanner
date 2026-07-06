@@ -28,7 +28,7 @@ fun AverageGrade(
             text = stringResource(text) +
                     " $averageGradeFormatted",
             style = Typography.labelLarge,
-            color = PlannerTheme.colors.onSurface
+            color = PlannerTheme.colors.onCardTop
         )
     }
 }

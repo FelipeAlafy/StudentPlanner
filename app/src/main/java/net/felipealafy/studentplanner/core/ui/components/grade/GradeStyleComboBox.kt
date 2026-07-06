@@ -36,7 +36,7 @@ fun GradeStyleComboBox(onSelectItem: (GradeStyle) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     var selectedItem by remember { mutableStateOf(GradeStyle.FROM_ZERO_TO_ONE_HUNDRED) }
 
-    val textColor = PlannerTheme.colors.onSurface
+    val textColor = PlannerTheme.colors.onCardTop
     val backgroundColor = PlannerTheme.colors.container
     val textToDisplay = stringResource(selectedItem.getResourceLocation())
     var textStyle by remember { mutableStateOf(Typography.labelMedium) }

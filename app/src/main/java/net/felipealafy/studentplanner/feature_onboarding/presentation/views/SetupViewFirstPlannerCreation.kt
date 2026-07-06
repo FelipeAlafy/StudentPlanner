@@ -62,7 +62,7 @@ fun SetupViewFirstPlannerCreation(viewModel: SetupViewModelFirstPlannerCreation)
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(PlannerTheme.colors.surface),
+                .background(PlannerTheme.colors.cardTop),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

@@ -13,6 +13,8 @@ data class SemanticTheme(
     val onPrimary: Color,
     val container: Color,
     val onContainer: Color,
+    val cardTop: Color,
+    val onCardTop: Color,
     val surface: Color,
     val onSurface: Color,
     val error: Color = ErrorRed,
@@ -28,7 +30,9 @@ fun generateThemeFromColor(baseColor: Long, isDarkTheme: Boolean = false): Seman
     val appBackground = if (isDarkTheme) DarkBackground else LightBackground
 
     val containerSolid = primaryColor.blendWith(appBackground, alpha = 0.10F)
-    val surfaceSolid = primaryColor.blendWith(appBackground, alpha = 0.25F)
+    val cardTop = primaryColor.blendWith(appBackground, alpha = 0.75F)
+    val surfaceSolid = primaryColor.blendWith(appBackground, alpha = 0.2F)
+    val onSurfaceSolid = surfaceSolid.getContrastingColorForText()
 
     val textColorBasedOnBackground = if (isDarkTheme) White else SpaceGray
 
@@ -37,8 +41,10 @@ fun generateThemeFromColor(baseColor: Long, isDarkTheme: Boolean = false): Seman
         onPrimary = textOnPrimary,
         container = containerSolid,
         onContainer = textColorBasedOnBackground,
+        cardTop = cardTop,
+        onCardTop = textOnPrimary,
         surface = surfaceSolid,
-        onSurface = textOnPrimary
+        onSurface = onSurfaceSolid
     )
 }
 

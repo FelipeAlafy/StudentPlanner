@@ -61,6 +61,8 @@ class SubjectCreationViewModel @Inject constructor(
     private val _events = MutableSharedFlow<SubjectCreationEvent>()
     val events = _events.asSharedFlow()
 
+    private var firstCombineIteration: Boolean = false
+
     private val _uiState: StateFlow<SubjectCreationUiState> =
         combine(
             getDetailedPlanner(plannerId),
@@ -69,6 +71,11 @@ class SubjectCreationViewModel @Inject constructor(
         ) { detailedPlanner, currentForm ->
             if (detailedPlanner.planner.id.isEmpty()) {
                 return@combine SubjectCreationUiState.Error(R.string.planner_not_found)
+            }
+
+            if (!firstCombineIteration) {
+                _formState.update { it.copy(color = detailedPlanner.planner.color) }
+                firstCombineIteration = true
             }
 
             SubjectCreationUiState.Success(

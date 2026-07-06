@@ -153,7 +153,7 @@ fun SubjectBox(countClassesTaken: Int, averageGradeFormatted: String) {
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = PlannerTheme.colors.surface,
+                color = PlannerTheme.colors.cardTop,
                 shape = RoundedCornerShape(
                     topStart = 0.dp,
                     topEnd = 0.dp,
@@ -185,7 +185,7 @@ fun ClassCard(studentClass: StudentClass) {
             .fillMaxWidth()
             .padding(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = PlannerTheme.colors.surface
+            containerColor = PlannerTheme.colors.cardTop
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 5.dp
@@ -236,7 +236,7 @@ fun NoteTakingLink(classTitle: String, noteTakingLink: String) {
         Icon(
             painter = painterResource(R.drawable.link),
             contentDescription = stringResource(R.string.notetaking_link),
-            tint = PlannerTheme.colors.onSurface
+            tint = PlannerTheme.colors.onCardTop
         )
         Text(annotatedLink, modifier = Modifier.padding(start = 8.dp, top = 8.dp), style = Typography.labelMedium)
     }
@@ -251,14 +251,14 @@ fun Date(startDate: String, endDate: String) {
             Icon(
                 painter = painterResource(R.drawable.calendar),
                 contentDescription = stringResource(R.string.date_icon),
-                tint = PlannerTheme.colors.onSurface
+                tint = PlannerTheme.colors.onCardTop
             )
             Spacer(modifier = Modifier.padding(end= 8.dp))
             Column {
                 Text(
                     text = "${stringResource(R.string.subject_period)}:",
                     style = Typography.labelMedium,
-                    color = PlannerTheme.colors.onSurface
+                    color = PlannerTheme.colors.onCardTop
                 )
                 Spacer(modifier = Modifier.padding(start = 16.dp))
                 Text(
@@ -268,7 +268,7 @@ fun Date(startDate: String, endDate: String) {
                         )
                     } $endDate",
                     style = Typography.labelMedium,
-                    color = PlannerTheme.colors.onSurface
+                    color = PlannerTheme.colors.onCardTop
                 )
             }
         }
@@ -282,7 +282,7 @@ fun ExamCard(exam: Exam) {
             .fillMaxWidth()
             .padding(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = PlannerTheme.colors.surface
+            containerColor = PlannerTheme.colors.cardTop
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 5.dp
@@ -314,7 +314,7 @@ fun ExamDate(startDate: String, endDate: String) {
             Icon(
                 painter = painterResource(R.drawable.calendar),
                 contentDescription = stringResource(R.string.date_icon),
-                tint = PlannerTheme.colors.onSurface
+                tint = PlannerTheme.colors.onCardTop
             )
             Column (
                 verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -322,7 +322,7 @@ fun ExamDate(startDate: String, endDate: String) {
                 Text(
                     text = "${stringResource(R.string.subject_period)}:",
                     style = Typography.labelMedium,
-                    color = PlannerTheme.colors.onSurface
+                    color = PlannerTheme.colors.onCardTop
                 )
                 Text(
                     text = "${stringResource(R.string.from)} $startDate → ${
@@ -331,7 +331,7 @@ fun ExamDate(startDate: String, endDate: String) {
                         )
                     } $endDate",
                     style = Typography.labelMedium,
-                    color = PlannerTheme.colors.onSurface
+                    color = PlannerTheme.colors.onCardTop
                 )
             }
         }
@@ -355,7 +355,7 @@ fun ExamGrade(
                     " ${displayStyle.getValueInDisplayStyle(value = grade)} " +
             stringResource(R.string.on_this_exam),
             style = Typography.labelLarge,
-            color = PlannerTheme.colors.onSurface
+            color = PlannerTheme.colors.onCardTop
         )
     }
 }

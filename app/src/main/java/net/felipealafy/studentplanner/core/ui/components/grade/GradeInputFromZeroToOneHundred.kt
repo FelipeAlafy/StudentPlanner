@@ -32,10 +32,10 @@ fun GradeInputFromZeroToOneHundred(
         singleLine = true,
         colors = OutlinedTextFieldDefaults.colors(
             disabledContainerColor = LightGray,
-            unfocusedTextColor = PlannerTheme.colors.onSurface,
-            focusedTextColor = PlannerTheme.colors.onSurface,
+            unfocusedTextColor = PlannerTheme.colors.onCardTop,
+            focusedTextColor = PlannerTheme.colors.onCardTop,
             errorTextColor = PlannerTheme.colors.onError,
-            focusedLabelColor = PlannerTheme.colors.onSurface,
+            focusedLabelColor = PlannerTheme.colors.onCardTop,
             focusedBorderColor = PlannerTheme.colors.primary,
             focusedPlaceholderColor = LightGray,
         ),
@@ -43,7 +43,7 @@ fun GradeInputFromZeroToOneHundred(
             Text(
                 text = stringResource(R.string.insert_grade_value),
                 style = Typography.labelSmall,
-                color = PlannerTheme.colors.onSurface
+                color = PlannerTheme.colors.onCardTop
             )
         },
         shape = RoundedCornerShape(25.dp),

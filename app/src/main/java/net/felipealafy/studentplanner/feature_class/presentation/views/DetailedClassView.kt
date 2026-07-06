@@ -163,7 +163,7 @@ fun ClassDate(start: String, end: String) {
         Text(
             text = "${stringResource(R.string.when_class_was_take)}:",
             style = Typography.bodyLarge,
-            color = PlannerTheme.colors.onSurface
+            color = PlannerTheme.colors.onCardTop
         )
         Spacer(modifier = Modifier.padding(start = 16.dp))
         Text(
@@ -173,7 +173,7 @@ fun ClassDate(start: String, end: String) {
                 )
             } $end",
             style = Typography.labelLarge,
-            color = PlannerTheme.colors.onSurface
+            color = PlannerTheme.colors.onCardTop
         )
     }
 }
@@ -199,7 +199,7 @@ fun InnerClassLink(notetakingLink: String, classTitle: String) {
         Icon(
             painter = painterResource(R.drawable.link),
             contentDescription = stringResource(R.string.notetaking_link),
-            tint = PlannerTheme.colors.onSurface
+            tint = PlannerTheme.colors.onCardTop
         )
         Text(
             text = annotatedLink,
@@ -213,11 +213,11 @@ fun InnerClassLink(notetakingLink: String, classTitle: String) {
 fun Observation(observation: String) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = PlannerTheme.colors.surface
+            containerColor = PlannerTheme.colors.cardTop
         ),
         border = BorderStroke(
             width = 2.dp,
-            color = PlannerTheme.colors.onSurface,
+            color = PlannerTheme.colors.onCardTop,
         ),
         shape = RoundedCornerShape(25.dp),
         modifier = Modifier

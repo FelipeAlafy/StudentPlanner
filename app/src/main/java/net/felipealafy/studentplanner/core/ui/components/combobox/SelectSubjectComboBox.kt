@@ -77,7 +77,7 @@ fun SelectSubjectComboBox(
             Text(
                 text = subject.name,
                 style = Typography.labelMedium,
-                color = PlannerTheme.colors.onSurface,
+                color = PlannerTheme.colors.onCardTop,
                 modifier = Modifier.padding(end = 5.dp)
             )
             DropdownMenu(
