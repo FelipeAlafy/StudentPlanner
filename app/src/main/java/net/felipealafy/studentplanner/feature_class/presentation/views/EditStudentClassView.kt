@@ -47,6 +47,7 @@ import net.felipealafy.studentplanner.core.ui.components.text.label.TopAppBarTit
 import net.felipealafy.studentplanner.core.ui.date.time.picker.DateTimePickerDialog
 import net.felipealafy.studentplanner.core.ui.extensions.getFormattedDateTime
 import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
 import net.felipealafy.studentplanner.core.ui.theme.StudentPlannerTheme
 import net.felipealafy.studentplanner.core.ui.theme.Typography
 
@@ -100,7 +101,7 @@ fun EditStudentClassView(
         }
 
         is EditStudentClassUiState.Success -> {
-            StudentPlannerTheme {
+            PlannerThemeProvider(baseColor = state.detailedPlanner.planner.color) {
                 Scaffold(
                     topBar = {
                         TopAppBar(

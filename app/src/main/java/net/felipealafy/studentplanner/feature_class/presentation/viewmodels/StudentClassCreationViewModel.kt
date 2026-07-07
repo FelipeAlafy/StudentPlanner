@@ -22,6 +22,7 @@ import net.felipealafy.studentplanner.feature_class.domain.use_case.CreateClassU
 import net.felipealafy.studentplanner.feature_planner.domain.model.DetailedPlanner
 import net.felipealafy.studentplanner.feature_planner.domain.use_case.GetDetailedPlannerUseCase
 import net.felipealafy.studentplanner.core.ui.extensions.parseToDateTime
+import net.felipealafy.studentplanner.core.ui.theme.colorPallet
 import java.time.LocalDateTime
 import javax.inject.Inject
 
@@ -37,6 +38,7 @@ data class  ClassFormState(
     val observation: String = "",
     val start: LocalDateTime = LocalDateTime.now(),
     val end: LocalDateTime = LocalDateTime.now().plusMinutes(50),
+    val selectedColor: Long = colorPallet[0][1]
 ) {
     val isValid: Boolean get() = title.isNotBlank() && subjectId.isNotBlank() && end.isAfter(start)
 }
@@ -61,10 +63,22 @@ class StudentClassCreationViewModel @Inject constructor(
     private val _events = MutableSharedFlow<StudentClassCreationEvent>()
     val events = _events.asSharedFlow()
 
+    var firstCombineIteration: Boolean = false
+
     private val _uiState: StateFlow<StudentClassUiState> = combine(
         _formState,
         getDetailedPlannerUseCase(plannerId)
     ) { formState, detailedPlanner ->
+
+        if (!firstCombineIteration) {
+            _formState.update { it.copy(selectedColor = detailedPlanner.planner.color) }
+            firstCombineIteration = true
+        } else {
+            _formState.update {
+                it.copy(selectedColor = detailedPlanner.subjects.first {detailedSubject -> detailedSubject.subject.id == _formState.value.subjectId}.subject.color)
+            }
+        }
+
         StudentClassUiState.Success(
             formState = formState,
             detailedPlanner = detailedPlanner

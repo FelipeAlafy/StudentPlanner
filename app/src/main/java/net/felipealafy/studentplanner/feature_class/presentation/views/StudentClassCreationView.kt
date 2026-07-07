@@ -107,7 +107,7 @@ fun StudentClassCreationView(
             }
         }
         is StudentClassUiState.Success -> {
-            PlannerThemeProvider(state.detailedPlanner.planner.color) {
+            PlannerThemeProvider(state.formState.selectedColor) {
                 StudentPlannerTheme {
                     Scaffold(
                         topBar = {
@@ -117,7 +117,7 @@ fun StudentClassCreationView(
                                         Icon(
                                             painter = painterResource(R.drawable.back_arrow),
                                             contentDescription = stringResource(R.string.back_to_past_view),
-                                            tint = PlannerTheme.colors.onPrimary
+                                            tint = PlannerTheme.colors.onSurface
                                         )
                                     }
                                 },
@@ -131,21 +131,8 @@ fun StudentClassCreationView(
                                         )
                                     }
                                 },
-                                actions = {
-                                    if (state.formState.isValid) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.check_icon),
-                                            contentDescription = stringResource(R.string.class_is_able_to_save),
-                                        )
-                                    } else {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.baseline_close),
-                                            contentDescription = stringResource(R.string.class_is_not_able_to_save)
-                                        )
-                                    }
-                                },
                                 colors = TopAppBarDefaults.topAppBarColors(
-                                    containerColor = PlannerTheme.colors.primary
+                                    containerColor = PlannerTheme.colors.surface
                                 )
                             )
                         }
@@ -154,7 +141,7 @@ fun StudentClassCreationView(
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .background(color = PlannerTheme.colors.cardTop)
+                                .background(color = PlannerTheme.colors.background)
                                 .padding(innerPadding),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {

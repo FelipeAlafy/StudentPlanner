@@ -20,7 +20,8 @@ data class SemanticTheme(
     val error: Color = ErrorRed,
     val onError: Color = Color.White,
     val success: Color = SuccessGreen,
-    val onSuccess: Color = Color.White
+    val onSuccess: Color = Color.White,
+    val background: Color = Color.White
 )
 
 fun generateThemeFromColor(baseColor: Long, isDarkTheme: Boolean = false): SemanticTheme {
@@ -44,7 +45,8 @@ fun generateThemeFromColor(baseColor: Long, isDarkTheme: Boolean = false): Seman
         cardTop = cardTop,
         onCardTop = textOnPrimary,
         surface = surfaceSolid,
-        onSurface = onSurfaceSolid
+        onSurface = onSurfaceSolid,
+        background = Color.White
     )
 }
 
