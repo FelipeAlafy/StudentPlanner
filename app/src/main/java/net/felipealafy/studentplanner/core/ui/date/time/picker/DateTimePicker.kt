@@ -3,8 +3,10 @@ package net.felipealafy.studentplanner.core.ui.date.time.picker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -62,9 +65,9 @@ fun DateTimePickerDialog(
 
 
     DatePickerDialog(
-        modifier = Modifier.heightIn(min = 500.dp),
+        modifier = Modifier,
         colors = DatePickerDefaults.colors(
-            containerColor = PlannerTheme.colors.container
+            containerColor = PlannerTheme.colors.surface
         ),
         onDismissRequest = onDismissRequest,
         confirmButton = {
@@ -100,7 +103,7 @@ fun DateTimePickerDialog(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
-            modifier = Modifier.background(PlannerTheme.colors.container)
+            modifier = Modifier.background(PlannerTheme.colors.surface)
         ) {
             SingleChoiceSegmentedButtonRow(
                 modifier = Modifier
@@ -156,6 +159,10 @@ fun DateTimePickerDialog(
                     DatePicker(
                         state = dateState,
                         showModeToggle = false,
+                        colors = DatePickerDefaults.colors(
+                            containerColor = PlannerTheme.colors.surface,
+                        ),
+                        title = null
                     )
                 }
 

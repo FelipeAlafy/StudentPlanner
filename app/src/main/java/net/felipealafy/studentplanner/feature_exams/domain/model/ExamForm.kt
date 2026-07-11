@@ -1,5 +1,6 @@
 package net.felipealafy.studentplanner.feature_exams.domain.model
 
+import net.felipealafy.studentplanner.core.ui.theme.colorPallet
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -11,6 +12,5 @@ data class ExamForm(
     val gradeWeight: String = "0",
     val start: LocalDateTime = LocalDateTime.now(),
     val end: LocalDateTime = LocalDateTime.now().plusMinutes(50),
-) {
-
-}
+    val color: Long = colorPallet[0][1]
+)

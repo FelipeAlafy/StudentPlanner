@@ -92,8 +92,8 @@
     <string name="create_new_subject">Vamos criar uma nova matéria</string>
     <string name="subject_name">Dê um nome a sua matéria</string>
     <string name="subject_color_selection">Cor da sua matéria: </string>
-    <string name="subject_date_time_start">Quando começa o período dessa matéria</string>
-    <string name="subject_date_time_end">Qaundo termina o período dessa matéria</string>
+    <string name="subject_date_time_start">Início da matéria:</string>
+    <string name="subject_date_time_end">Fim da matéria</string>
     <string name="exam_date_time_start">Quando sua prova começa</string>
     <string name="exam_date_time_end">Quando sua prova termina</string>
     <string name="your_planners">Seus organizadores</string>

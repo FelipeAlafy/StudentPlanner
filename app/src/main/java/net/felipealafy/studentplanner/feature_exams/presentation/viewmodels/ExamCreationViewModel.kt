@@ -61,9 +61,21 @@ class ExamCreationViewModel @Inject constructor(
         if (detailedPlanner.planner.id.isEmpty()) return@combine ExamCreationUiState.Error(R.string.planner_not_found)
         if (detailedPlanner.subjects.isEmpty()) return@combine ExamCreationUiState.Error(R.string.no_subjects_available_error_message)
 
+        val resolvedColor = if (examForm.subjectId.isNotBlank()) {
+            val subjectColor = detailedPlanner.subjects.firstOrNull {
+                it.subject.id == examForm.subjectId
+            }?.subject?.color
+
+            subjectColor ?: detailedPlanner.planner.color
+        } else {
+            detailedPlanner.planner.color
+        }
+
+        val formForUi = examForm.copy(color = resolvedColor)
+
         ExamCreationUiState.Success(
             detailedPlanner = detailedPlanner,
-            examForm = examForm
+            examForm = formForUi
         )
     }.catch {
         emit(ExamCreationUiState.Error(R.string.unable_to_load))

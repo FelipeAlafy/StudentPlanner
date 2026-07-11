@@ -3,15 +3,14 @@ package net.felipealafy.studentplanner.core.ui.date.time.picker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
+
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,13 +22,15 @@ import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.core.ui.theme.Green
 import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
+import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
 import net.felipealafy.studentplanner.core.ui.theme.Red
+import net.felipealafy.studentplanner.core.ui.theme.colorPallet
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DatePickerDialog(
+fun DatePickerDialogWithColor(
     initialDateTime: LocalDateTime = LocalDateTime.now(),
     onDismissRequest: () -> Unit,
     onDateSelected: (Long?) -> Unit
@@ -40,7 +41,7 @@ fun DatePickerDialog(
     DatePickerDialog(
         modifier = Modifier.heightIn(min = 500.dp),
         colors = DatePickerDefaults.colors(
-            containerColor = PlannerTheme.colors.container
+            containerColor = PlannerTheme.colors.surface
         ),
         onDismissRequest = onDismissRequest,
         confirmButton = {
@@ -74,14 +75,14 @@ fun DatePickerDialog(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
-            modifier = Modifier.background(PlannerTheme.colors.container)
+            modifier = Modifier.background(PlannerTheme.colors.surface)
         ) {
             DatePicker(
                 state = dateState,
                 showModeToggle = false,
                 colors = DatePickerDefaults.colors(
-                    selectedDayContainerColor = PlannerTheme.colors.onPrimary,
-                    containerColor = PlannerTheme.colors.primary
+                    selectedDayContainerColor = PlannerTheme.colors.onSurface,
+                    containerColor = PlannerTheme.colors.surface
                 )
             )
         }
@@ -92,7 +93,10 @@ fun DatePickerDialog(
 @Preview
 @Composable
 private fun DatePickerPreview() {
-    Surface(modifier = Modifier.fillMaxSize()) {
-
+    PlannerThemeProvider(baseColor = colorPallet[0][1]) {
+        DatePickerDialogWithColor(
+            onDismissRequest = {  },
+            onDateSelected = {}
+        )
     }
 }

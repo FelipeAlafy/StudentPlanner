@@ -81,7 +81,7 @@ fun PlannerCreationView(
 
                     TopAppBar(
                         colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = PlannerTheme.colors.container
+                            containerColor = PlannerTheme.colors.surface
                         ),
                         title = {
                             Box(
@@ -100,7 +100,7 @@ fun PlannerCreationView(
                                 Icon(
                                     painter = painterResource(R.drawable.back_arrow),
                                     contentDescription = stringResource(R.string.back_to_past_view),
-                                    tint = PlannerTheme.colors.onContainer
+                                    tint = PlannerTheme.colors.onSurface
                                 )
                             }
                         }
@@ -111,7 +111,7 @@ fun PlannerCreationView(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(innerPadding)
-                        .background(PlannerTheme.colors.cardTop),
+                        .background(PlannerTheme.colors.background),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -121,6 +121,7 @@ fun PlannerCreationView(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 10.dp),
+                        color = PlannerTheme.colors.onSurface
                     )
                     Spacer(modifier = Modifier.padding(top = 20.dp))
                     TextInputWithColor(

@@ -140,7 +140,10 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturnAction: () 
                     }
                 ) { innerPadding ->
                     Column(
-                        modifier = Modifier.padding(innerPadding).background(Color.White),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                            .background(PlannerTheme.colors.background),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Column(
@@ -150,7 +153,7 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturnAction: () 
                             Text(
                                 text = stringResource(R.string.create_new_subject),
                                 style = Typography.headlineLarge,
-                                color = PlannerTheme.colors.onContainer
+                                color = PlannerTheme.colors.onSurface
                             )
 
                             TextInputWithColor(
@@ -170,7 +173,7 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturnAction: () 
                                 Text(
                                     text = stringResource(R.string.subject_color_selection),
                                     style = Typography.bodyMedium,
-                                    color = PlannerTheme.colors.onContainer
+                                    color = PlannerTheme.colors.onSurface
                                 )
                                 Spacer(modifier = Modifier.padding(start = 20.dp))
                                 ButtonOpenColorSelectionDialog(
@@ -208,7 +211,7 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturnAction: () 
                                     text = stringResource(R.string.subject_date_time_start),
                                     style = Typography.bodyMedium,
                                     modifier = Modifier.padding(start = 16.dp),
-                                    color = PlannerTheme.colors.onContainer
+                                    color = PlannerTheme.colors.onSurface
                                 )
 
                                 DateTimeSelector(
@@ -235,7 +238,7 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturnAction: () 
                                     text = stringResource(R.string.subject_date_time_end),
                                     style = Typography.bodyMedium,
                                     modifier = Modifier.padding(start = 16.dp),
-                                    color = PlannerTheme.colors.onContainer
+                                    color = PlannerTheme.colors.onSurface
                                 )
                                 DateTimeSelector(
                                     onClick = {
@@ -285,7 +288,8 @@ fun DateTimeSelector(
         ) {
             Icon(
                 painter = painterResource(R.drawable.calendar_start),
-                contentDescription = stringResource(R.string.start_date_time)
+                contentDescription = stringResource(R.string.start_date_time),
+                tint = PlannerTheme.colors.onSurface
             )
         }
         Text(

@@ -261,7 +261,8 @@ fun SubjectsColumn(subjects: List<DetailedSubject>, minimumGradeToPass: Float) {
                 endDate = detailedSubject.subject.end.formattedValue(),
                 formattedAverage = detailedSubject.averageGrade.toString(),
                 countClassTaken = detailedSubject.countClassesTaken,
-                isSubjectApproved = detailedSubject.isApproved(minimumGradeToPass)
+                isSubjectApproved = detailedSubject.isApproved(minimumGradeToPass),
+                subjectColor = detailedSubject.subject.color
             )
         }
     }
@@ -274,27 +275,30 @@ fun SubjectCard(
     endDate: String,
     formattedAverage: String,
     countClassTaken: Int,
-    isSubjectApproved: Boolean
+    isSubjectApproved: Boolean,
+    subjectColor: Long
 ) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = PlannerTheme.colors.cardTop
-        ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 5.dp
-        )
-    ) {
-        SubjectCardComponents(
-            subjectName = subjectName,
-            startDate = startDate,
-            endDate = endDate,
-            formattedAverage = formattedAverage,
-            countClassTaken = countClassTaken,
-            isSubjectApproved = isSubjectApproved
-        )
+    PlannerThemeProvider(baseColor = subjectColor) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = PlannerTheme.colors.cardTop
+            ),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 5.dp
+            )
+        ) {
+            SubjectCardComponents(
+                subjectName = subjectName,
+                startDate = startDate,
+                endDate = endDate,
+                formattedAverage = formattedAverage,
+                countClassTaken = countClassTaken,
+                isSubjectApproved = isSubjectApproved
+            )
+        }
     }
 }
 
@@ -312,18 +316,18 @@ private fun SubjectCardComponents(
             .fillMaxSize()
             .padding(start = 8.dp)
     ) {
-        SubjectTitle(subjectName)
-        Spacer(modifier = Modifier.padding(top = 16.dp))
-        Date(startDate, endDate)
-        Spacer(modifier = Modifier.padding(top = 4.dp))
-        AverageGrade(
-            formattedAverage,
-            isSubjectApproved
-        )
-        Spacer(modifier = Modifier.padding(top = 8.dp))
-        ClassesTaken(countClassTaken)
-        Spacer(modifier = Modifier.padding(bottom = 8.dp))
-    }
+            SubjectTitle(subjectName)
+            Spacer(modifier = Modifier.padding(top = 16.dp))
+            Date(startDate, endDate)
+            Spacer(modifier = Modifier.padding(top = 4.dp))
+            AverageGrade(
+                formattedAverage,
+                isSubjectApproved
+            )
+            Spacer(modifier = Modifier.padding(top = 8.dp))
+            ClassesTaken(countClassTaken)
+            Spacer(modifier = Modifier.padding(bottom = 8.dp))
+        }
 }
 
 @Composable

@@ -117,14 +117,13 @@ fun ExamCreationView(
         }
 
         is ExamCreationUiState.Success -> {
-            val selectedSubject by remember { mutableStateOf(state.detailedPlanner.subjects.first()) }
             val examForm = state.examForm
-            PlannerThemeProvider(selectedSubject.subject.color) {
+            PlannerThemeProvider(examForm.color) {
                 Scaffold(
                     topBar = {
                         TopAppBar(
                             colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = PlannerTheme.colors.primary
+                                containerColor = PlannerTheme.colors.surface
                             ),
                             title = {
                                 Box(
@@ -143,7 +142,7 @@ fun ExamCreationView(
                                     Icon(
                                         painter = painterResource(R.drawable.back_arrow),
                                         contentDescription = stringResource(R.string.back_to_past_view),
-                                        tint = PlannerTheme.colors.onPrimary
+                                        tint = PlannerTheme.colors.onSurface
                                     )
                                 }
                             },
@@ -153,7 +152,7 @@ fun ExamCreationView(
                     Column(
                         modifier = Modifier
                             .background(
-                                PlannerTheme.colors.cardTop
+                                PlannerTheme.colors.background
                             )
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -183,7 +182,7 @@ fun ExamCreationView(
                                         text = stringResource(R.string.select_your_exam_grade),
                                         style = Typography.bodyMedium,
                                         modifier = Modifier.padding(start = 16.dp),
-                                        color = PlannerTheme.colors.onCardTop
+                                        color = PlannerTheme.colors.onSurface
                                     )
                                     GradeInputFromZeroToOneHundred(
                                         text = examForm.grade,
@@ -201,7 +200,7 @@ fun ExamCreationView(
                                     Text(
                                         text = stringResource(R.string.select_your_exam_grade),
                                         style = Typography.bodyMedium,
-                                        color = PlannerTheme.colors.onCardTop
+                                        color = PlannerTheme.colors.onSurface
                                     )
                                     GradeInputFromZeroToTen(
                                         text = examForm.grade,
@@ -218,7 +217,7 @@ fun ExamCreationView(
                                     text = stringResource(R.string.select_your_exam_grade),
                                     style = Typography.bodyMedium,
                                     modifier = Modifier.padding(start = 16.dp, top = 8.dp),
-                                    color = PlannerTheme.colors.onCardTop
+                                    color = PlannerTheme.colors.onSurface
                                 )
                                 GradeInputFromAToF(
                                     onSelectItem = { grade ->
@@ -233,7 +232,7 @@ fun ExamCreationView(
                                     text = stringResource(R.string.select_your_exam_grade),
                                     style = Typography.bodyMedium,
                                     modifier = Modifier.padding(start = 16.dp, top = 8.dp),
-                                    color = PlannerTheme.colors.onCardTop
+                                    color = PlannerTheme.colors.onSurface
                                 )
                                 GradeInputFromAToFWithE(
                                     onSelectItem = { grade ->
@@ -274,7 +273,7 @@ fun ExamCreationView(
                                 text = stringResource(R.string.exam_date_time_start),
                                 style = Typography.bodyMedium,
                                 modifier = Modifier.padding(start = 16.dp),
-                                color = PlannerTheme.colors.onCardTop
+                                color = PlannerTheme.colors.onSurface
                             )
 
                             DateTimeSelector(
@@ -301,7 +300,7 @@ fun ExamCreationView(
                                 text = stringResource(R.string.exam_date_time_end),
                                 style = Typography.bodyMedium,
                                 modifier = Modifier.padding(start = 16.dp),
-                                color = PlannerTheme.colors.onCardTop
+                                color = PlannerTheme.colors.onSurface
                             )
                             DateTimeSelector(
                                 onClick = {

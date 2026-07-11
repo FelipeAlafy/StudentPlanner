@@ -24,6 +24,8 @@ import net.felipealafy.studentplanner.feature_planner.domain.use_case.GetDetaile
 import net.felipealafy.studentplanner.core.ui.extensions.parseToDateTime
 import net.felipealafy.studentplanner.core.ui.theme.colorPallet
 import java.time.LocalDateTime
+import java.util.logging.Level
+import java.util.logging.Logger
 import javax.inject.Inject
 
 sealed class StudentClassCreationEvent {
@@ -63,28 +65,31 @@ class StudentClassCreationViewModel @Inject constructor(
     private val _events = MutableSharedFlow<StudentClassCreationEvent>()
     val events = _events.asSharedFlow()
 
-    var firstCombineIteration: Boolean = false
-
     private val _uiState: StateFlow<StudentClassUiState> = combine(
         _formState,
         getDetailedPlannerUseCase(plannerId)
     ) { formState, detailedPlanner ->
 
-        if (!firstCombineIteration) {
-            _formState.update { it.copy(selectedColor = detailedPlanner.planner.color) }
-            firstCombineIteration = true
+        val resolvedColor = if (formState.subjectId.isNotBlank()) {
+            val subjectColor = detailedPlanner.subjects.firstOrNull {
+                it.subject.id == formState.subjectId
+            }?.subject?.color
+
+            subjectColor ?: detailedPlanner.planner.color
         } else {
-            _formState.update {
-                it.copy(selectedColor = detailedPlanner.subjects.first {detailedSubject -> detailedSubject.subject.id == _formState.value.subjectId}.subject.color)
-            }
+            detailedPlanner.planner.color
         }
 
+        val formForUi = formState.copy(selectedColor = resolvedColor)
+
         StudentClassUiState.Success(
-            formState = formState,
+            formState = formForUi,
             detailedPlanner = detailedPlanner
         ) as StudentClassUiState
-    }.catch {
+    }.catch { e ->
         emit(StudentClassUiState.Error(R.string.no_planners_available))
+        Logger.getGlobal().log(Level.WARNING, e.message)
+        Logger.getGlobal().log(Level.WARNING, e.cause.toString())
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),

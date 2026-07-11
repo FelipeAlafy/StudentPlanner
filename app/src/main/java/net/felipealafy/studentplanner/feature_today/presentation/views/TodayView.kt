@@ -62,7 +62,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.core.ui.components.text.label.TopAppBarTitle
-import net.felipealafy.studentplanner.core.ui.date.time.picker.DatePickerDialog
+import net.felipealafy.studentplanner.core.ui.date.time.picker.DatePickerDialogWithColor
 import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
 import net.felipealafy.studentplanner.core.ui.theme.Transparent
@@ -586,7 +586,7 @@ private fun TodayViewContents(
                 .background(Color.White)
         ) {
             if (showDateSelection.value) {
-                DatePickerDialog(
+                DatePickerDialogWithColor(
                     initialDateTime = LocalDateTime.of(
                         state.currentDate,
                         LocalTime.now()
