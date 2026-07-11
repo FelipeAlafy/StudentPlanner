@@ -92,8 +92,8 @@
     <string name="create_new_subject">Vamos criar uma nova matéria</string>
     <string name="subject_name">Dê um nome a sua matéria</string>
     <string name="subject_color_selection">Cor da sua matéria: </string>
-    <string name="subject_date_time_start">Quando começa o período dessa matéria</string>
-    <string name="subject_date_time_end">Qaundo termina o período dessa matéria</string>
+    <string name="subject_date_time_start">Início da matéria:</string>
+    <string name="subject_date_time_end">Fim da matéria</string>
     <string name="exam_date_time_start">Quando sua prova começa</string>
     <string name="exam_date_time_end">Quando sua prova termina</string>
     <string name="your_planners">Seus organizadores</string>
@@ -117,4 +117,12 @@
     <string name="edit_student_class_view">Editing the class</string>
     <string name="update_button">Update</string>
     <string name="edit_exam_view">Edit Exam</string>
+    <string name="invalid_date_time_selection_error">Please, fix your date/time selection.</string>
+    <string name="created_successfully">Created Successfully!</string>
+    <string name="class_loading_error">App was not able to load this class, try again.</string>
+    <string name="update_successfully">Updated successfully</string>
+    <string name="exam_load_error">Unable to load the selected exam, please try again.\n</string>
+    <string name="insert_number_based_on_grade_style">Insert a number value based on the grade display style used by the current planner settings.</string>
+    <string name="error_updating_exam">Student Planner was not able to update the exam please try again after restart.</string>
+    <string name="unable_to_load">Unable to load this Class.</string>
 </resources>

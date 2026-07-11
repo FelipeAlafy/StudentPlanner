@@ -15,6 +15,7 @@ ui = "1.9.0"
 uiUnit = "1.9.0"
 composeTesting = "1.0.0-alpha08"
 hilt = "2.52"
+material3 = "1.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -41,6 +42,7 @@ androidx-compose-testing = { group = "androidx.xr.compose", name = "compose-test
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version = "1.2.0" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
