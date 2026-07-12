@@ -113,7 +113,6 @@
     <string name="exam_not_founded">Exam could not be loaded, please create a exam before trying acessing this view.</string>
     <string name="when_date">When</string>
     <string name="chart">Bar chart icon</string>
-    <string name="class_is_able_">This class is able to save.</string>
     <string name="class_is_not_able_to_save">This class is not able to be saved.</string>
     <string name="class_is_able_to_save">this class is able to be saved.</string>
     <string name="no_planners_available">There are no planners available, please create a planner before acessing this view.</string>
@@ -124,7 +123,6 @@
     <string name="empty_name_error">An invalid name was provided.</string>
     <string name="planner_not_found">There is no planners available, please create a planner First.</string>
     <string name="empty_subject_error">Please, select a subject before saving.</string>
-    <string name="Inv">Please, fix your time selection.</string>
     <string name="class_not_founded_error">Couldn\'t find this class in the database.</string>
     <string name="invalid_date_time_selection_error">Please, fix your date/time selection.</string>
     <string name="created_successfully">Created Successfully!</string>
@@ -135,4 +133,12 @@
     <string name="error_updating_exam">Student Planner was not able to update the exam please try again after restart.</string>
     <string name="unable_to_load">Unable to load this Class.</string>
     <string name="unable_to_create">Unable to create.</string>
+    <string name="stopwatch_title">Stopwatch</string>
+    <string name="stopwatch_button_pause">Pause</string>
+    <string name="stopwatch_button_start">Start</string>
+    <string name="stopwatch_finish">Finish the stopwatch</string>
+    <string name="stopwatch_reset">Reset the stopwatch</string>
+    <string name="add_time_to_class">add time to class</string>
+    <string name="add_time_to_exam">Add time to exam</string>
+    <string name="hourglass_icon">Hourglass Icon</string>
 </resources>

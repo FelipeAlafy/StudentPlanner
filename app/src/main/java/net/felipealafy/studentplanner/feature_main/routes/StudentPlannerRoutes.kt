@@ -19,12 +19,22 @@ sealed class StudentPlannerRoutes(val route: String) {
         fun createRoute(plannerId: String) = "subject_creation/$plannerId"
     }
 
-    data object StudentClassCreationView : StudentPlannerRoutes("class_creation/{plannerId}") {
+    data object StudentClassCreationView : StudentPlannerRoutes("class_creation/{plannerId}?startMillis={startMillis}&endMillis={endMillis}") {
         fun createRoute(plannerId: String) = "class_creation/$plannerId"
+
+        fun createRouteWithTime(plannerId: String, startMillis: Long, endMillis: Long): String {
+            val baseRoute = createRoute(plannerId)
+            return "$baseRoute?startMillis=$startMillis&endMillis=$endMillis"
+        }
     }
 
-    data object ExamCreationView : StudentPlannerRoutes("exam_creation/{plannerId}") {
+    data object ExamCreationView : StudentPlannerRoutes("exam_creation/{plannerId}?startMillis={startMillis}&endMillis={endMillis}") {
         fun createRoute(plannerId: String) = "exam_creation/$plannerId"
+
+        fun createRouteWithTime(plannerId: String, startMillis: Long, endMillis: Long): String {
+            val baseRoute = createRoute(plannerId)
+            return "$baseRoute?startMillis=$startMillis&endMillis=$endMillis"
+        }
     }
 
     // Rotas que precisam de MÚLTIPLOS argumentos (Hierarquia completa)
@@ -54,5 +64,9 @@ sealed class StudentPlannerRoutes(val route: String) {
     data object EditExamView : StudentPlannerRoutes("edit_exam/{plannerId}/{subjectId}/{examId}") {
         fun createRoute(plannerId: String, subjectId: String, examId: String) =
             "edit_exam/$plannerId/$subjectId/$examId"
+    }
+
+    data object StopWatchView: StudentPlannerRoutes("stopwatch/{plannerId}") {
+        fun createRoute(plannerId: String) = "stopwatch/$plannerId"
     }
 }

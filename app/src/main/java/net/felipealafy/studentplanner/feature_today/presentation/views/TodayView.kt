@@ -92,6 +92,7 @@ fun TodayView(
     onCreateSubjectClicked: (plannerId: String) -> Unit,
     onCreateClassClicked: (plannerId: String) -> Unit,
     onCreateExamClicked: (plannerId: String) -> Unit,
+    onStopWatchClicked: (String) -> Unit,
     onAccessDetailedPlannerView: (plannerId: String) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -144,6 +145,7 @@ fun TodayView(
                     onCreateSubjectClicked,
                     onCreateClassClicked,
                     onCreateExamClicked,
+                    onStopWatchClicked,
                     onStudentClassClicked,
                     onExamClicked
                 )
@@ -156,6 +158,7 @@ fun TodayView(
                     onCreateSubjectClicked,
                     onCreateClassClicked,
                     onCreateExamClicked,
+                    onStopWatchClicked,
                     onStudentClassClicked,
                     onExamClicked
                 )
@@ -174,6 +177,7 @@ private fun SmallScreenContent(
     onCreateSubjectClicked: (String) -> Unit,
     onCreateClassClicked: (String) -> Unit,
     onCreateExamClicked: (String) -> Unit,
+    onStopWatchClicked: (String) -> Unit,
     onStudentClassClicked: (String, String) -> Unit,
     onExamClicked: (String, String, String) -> Unit
 ) {
@@ -255,6 +259,7 @@ private fun SmallScreenContent(
                 onCreateSubjectClicked,
                 onCreateClassClicked,
                 onCreateExamClicked,
+                onStopWatchClicked,
                 viewModel,
                 onStudentClassClicked,
                 onExamClicked
@@ -272,6 +277,7 @@ private fun LargeScreenContent(
     onCreateSubjectClicked: (String) -> Unit,
     onCreateClassClicked: (String) -> Unit,
     onCreateExamClicked: (String) -> Unit,
+    onStopWatchClicked: (String) -> Unit,
     onStudentClassClicked: (String, String) -> Unit,
     onExamClicked: (String, String, String) -> Unit
 ) {
@@ -351,6 +357,7 @@ private fun LargeScreenContent(
                 onCreateSubjectClicked,
                 onCreateClassClicked,
                 onCreateExamClicked,
+                onStopWatchClicked,
                 viewModel,
                 onStudentClassClicked,
                 onExamClicked
@@ -372,6 +379,7 @@ private fun TodayViewContents(
     onCreateSubjectClicked: (String) -> Unit,
     onCreateClassClicked: (String) -> Unit,
     onCreateExamClicked: (String) -> Unit,
+    onStopWatchClicked: (String) -> Unit,
     viewModel: TodayViewModel,
     onStudentClassClicked: (String, String) -> Unit,
     onExamClicked: (String, String, String) -> Unit
@@ -569,6 +577,29 @@ private fun TodayViewContents(
                         },
                         onClick = {
                             onCreateExamClicked(state.selectedPlanner.planner.id)
+                            expanded = false
+                        }, modifier = Modifier.background(
+                            color = PlannerTheme.colors.primary,
+                            shape = RoundedCornerShape(30.dp)
+                        )
+                    )
+                    Spacer(Modifier.padding(top = 8.dp))
+                    DropdownMenuItem(
+                        leadingIcon = {
+                            Icon(
+                                painter = painterResource(R.drawable.hourglass),
+                                contentDescription = stringResource(R.string.grade),
+                                tint = PlannerTheme.colors.onPrimary
+                            )
+                        },
+                        text = {
+                            Text(
+                                stringResource(R.string.stopwatch_title),
+                                color = PlannerTheme.colors.onPrimary
+                            )
+                        },
+                        onClick = {
+                            onStopWatchClicked(state.selectedPlanner.planner.id)
                             expanded = false
                         }, modifier = Modifier.background(
                             color = PlannerTheme.colors.primary,

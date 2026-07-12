@@ -125,4 +125,21 @@
     <string name="insert_number_based_on_grade_style">Insert a number value based on the grade display style used by the current planner settings.</string>
     <string name="error_updating_exam">Student Planner was not able to update the exam please try again after restart.</string>
     <string name="unable_to_load">Unable to load this Class.</string>
+    <string name="stopwatch_title">Stopwatch</string>
+    <string name="stopwatch_button_pause">Pause</string>
+    <string name="stopwatch_button_start">Start</string>
+    <string name="stopwatch_finish">Terminar o cronometro</string>
+    <string name="stopwatch_reset">Redefinir o cronometro</string>
+    <string name="add_time_to_class">Adicionar tempo a uma aula</string>
+    <string name="add_time_to_exam">Adicionar tempo a uma prova</string>
+    <string name="hourglass_icon">Icone de ampulheta</string>
+    <string name="unable_to_create">Não é possível criar</string>
+    <string name="class_not_founded_error">Não foi possível encontrar a aula no banco de dados</string>
+    <string name="on_access_detailed_planner_view">Clique aqui para ver mais detalhes do planner</string>
+    <string name="empty_name_error">Nome invalido provido</string>
+    <string name="planner_not_found">Não há planners disponíveis, crie um primeiro por gentileza.</string>
+    <string name="empty_subject_error">Por favor, selecione uma matéria antes de salvar</string>
+    <string name="class_is_not_able_to_save">Está aula não está pronta para ser salva</string>
+    <string name="class_is_able_to_save">Está aula está pronta para ser salva</string>
+    <string name="no_planners_available">Não há planners disponíveis, por favor crie um planner antes de começar</string>
 </resources>
