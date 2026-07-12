@@ -14,8 +14,8 @@ android {
         applicationId = "net.felipealafy.studentplanner"
         minSdk = 26
         targetSdk = 36
-        versionCode = (project.findProperty("versionCode") as String?)?.toInt() ?: 1
-        versionName = (project.findProperty("versionName") as String?) ?: "0.9-PREVIEW"
+        versionCode = (project.findProperty("versionCode") as String?)?.toInt() ?: 2
+        versionName = (project.findProperty("versionName") as String?) ?: "0.9.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -43,7 +43,6 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
