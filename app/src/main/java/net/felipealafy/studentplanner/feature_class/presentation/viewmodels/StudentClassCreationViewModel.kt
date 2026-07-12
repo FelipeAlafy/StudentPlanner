@@ -23,7 +23,9 @@ import net.felipealafy.studentplanner.feature_planner.domain.model.DetailedPlann
 import net.felipealafy.studentplanner.feature_planner.domain.use_case.GetDetailedPlannerUseCase
 import net.felipealafy.studentplanner.core.ui.extensions.parseToDateTime
 import net.felipealafy.studentplanner.core.ui.theme.colorPallet
+import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.logging.Level
 import java.util.logging.Logger
 import javax.inject.Inject
@@ -61,7 +63,22 @@ class StudentClassCreationViewModel @Inject constructor(
     private val createClassUseCase: CreateClassUseCase,
 ) : ViewModel() {
     private val plannerId: String = checkNotNull(savedStateHandle["plannerId"])
-    private val _formState = MutableStateFlow(ClassFormState())
+    private val startMillis: Long = savedStateHandle.get<Long>("startMillis")?: -1L
+    private val endMillis: Long = savedStateHandle.get<Long>("endMillis")?: -1L
+
+    private val _formState = MutableStateFlow(ClassFormState(
+        start = if (startMillis != -1L) {
+            Instant.ofEpochMilli(startMillis).atZone(ZoneId.systemDefault()).toLocalDateTime()
+        } else {
+            LocalDateTime.now()
+        },
+
+        end = if (endMillis != -1L) {
+            Instant.ofEpochMilli(endMillis).atZone(ZoneId.systemDefault()).toLocalDateTime()
+        } else {
+            LocalDateTime.now().plusMinutes(50)
+        }
+    ))
     private val _events = MutableSharedFlow<StudentClassCreationEvent>()
     val events = _events.asSharedFlow()
 

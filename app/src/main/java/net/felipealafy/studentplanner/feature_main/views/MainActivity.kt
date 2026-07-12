@@ -36,6 +36,8 @@ import net.felipealafy.studentplanner.feature_today.presentation.viewmodels.Toda
 import net.felipealafy.studentplanner.feature_today.presentation.views.TodayView
 import net.felipealafy.studentplanner.core.ui.theme.StudentPlannerTheme
 import net.felipealafy.studentplanner.feature_main.routes.StudentPlannerRoutes
+import net.felipealafy.studentplanner.feature_stopwatch.presentation.view.StopWatchView
+import net.felipealafy.studentplanner.feature_stopwatch.presentation.viewmodel.StopWatchViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -96,6 +98,9 @@ class MainActivity : ComponentActivity() {
                             },
                             onAccessDetailedPlannerView = { plannerId ->
                                 navController.navigate(StudentPlannerRoutes.DetailedPlannerView.createRoute(plannerId))
+                            },
+                            onStopWatchClicked = { plannerId ->
+                                navController.navigate(StudentPlannerRoutes.StopWatchView.createRoute(plannerId))
                             }
                         )
                     }
@@ -112,7 +117,17 @@ class MainActivity : ComponentActivity() {
 
                     composable(
                         route = StudentPlannerRoutes.StudentClassCreationView.route,
-                        arguments = listOf(navArgument("plannerId") { type = NavType.StringType })
+                        arguments = listOf(
+                            navArgument("plannerId") { type = NavType.StringType },
+                            navArgument("startMillis") {
+                                type = NavType.LongType
+                                defaultValue = -1L
+                            },
+                            navArgument("endMillis") {
+                                type = NavType.LongType
+                                defaultValue = -1L
+                            }
+                        )
                     ) {
                         val viewModel: StudentClassCreationViewModel = hiltViewModel()
                         StudentClassCreationView(
@@ -148,7 +163,17 @@ class MainActivity : ComponentActivity() {
 
                     composable(
                         route = StudentPlannerRoutes.ExamCreationView.route,
-                        arguments = listOf(navArgument("plannerId") { type = NavType.StringType })
+                        arguments = listOf(
+                            navArgument("plannerId") { type = NavType.StringType },
+                            navArgument("startMillis") {
+                                type = NavType.LongType
+                                defaultValue = -1L
+                            },
+                            navArgument("endMillis") {
+                                type = NavType.LongType
+                                defaultValue = -1L
+                            }
+                        )
                     ) {
                         val viewModel: ExamCreationViewModel = hiltViewModel()
                         ExamCreationView(
@@ -213,6 +238,43 @@ class MainActivity : ComponentActivity() {
                                         inclusive = true
                                     }
                                 }
+                            }
+                        )
+                    }
+
+                    composable (
+                        route = StudentPlannerRoutes.StopWatchView.route,
+                        arguments = listOf(
+                            navArgument("plannerId") { type = NavType.StringType }
+                        )
+                    ) {
+                        val viewModel: StopWatchViewModel = hiltViewModel()
+                        StopWatchView(
+                            viewModel = viewModel,
+                            onReturnAction = {
+                                navController.navigate(StudentPlannerRoutes.TodayView.route) {
+                                    popUpTo(StudentPlannerRoutes.TodayView.route) {
+                                        inclusive = true
+                                    }
+                                }
+                            },
+                            onNavigateToCreateClass = { plannerId, startMillis, endMillis ->
+                                navController.navigate(
+                                    StudentPlannerRoutes.StudentClassCreationView.createRouteWithTime(
+                                        plannerId = plannerId,
+                                        startMillis = startMillis,
+                                        endMillis = endMillis
+                                    )
+                                )
+                            },
+                            onNavigateToCreateExam = { plannerId, startMillis, endMillis ->
+                                navController.navigate(
+                                    StudentPlannerRoutes.ExamCreationView.createRouteWithTime(
+                                        plannerId = plannerId,
+                                        startMillis = startMillis,
+                                        endMillis = endMillis
+                                    )
+                                )
                             }
                         )
                     }
