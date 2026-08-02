@@ -96,11 +96,11 @@ fun DetailedExamView(
         is DetailedExamUiState.Success -> {
             PlannerThemeProvider(state.subject.color) {
                 Scaffold(
-                    containerColor = PlannerTheme.colors.container,
+                    containerColor = PlannerTheme.colors.background,
                     topBar = {
                         TopAppBar(
                             colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = PlannerTheme.colors.primary
+                                containerColor = PlannerTheme.colors.surface
                             ),
                             title = {
                                 Box(
@@ -119,7 +119,7 @@ fun DetailedExamView(
                                     Icon(
                                         painter = painterResource(R.drawable.back_arrow),
                                         contentDescription = stringResource(R.string.back_to_past_view),
-                                        tint = PlannerTheme.colors.onPrimary
+                                        tint = PlannerTheme.colors.onSurface
                                     )
                                 }
                             },
@@ -136,7 +136,7 @@ fun DetailedExamView(
                                     Icon(
                                         painter = painterResource(R.drawable.edit_document),
                                         contentDescription = stringResource(R.string.go_on_edit_mode_for_edit),
-                                        tint = PlannerTheme.colors.onPrimary
+                                        tint = PlannerTheme.colors.onSurface
                                     )
                                 }
                             }

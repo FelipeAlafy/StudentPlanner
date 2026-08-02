@@ -116,14 +116,13 @@ fun EditExamView(
         }
 
         is EditExamUiState.Success -> {
-            val planner = remember { state.detailedPlanner.planner }
-            PlannerThemeProvider(planner.color) {
+            PlannerThemeProvider(state.examForm.color) {
 
                 Scaffold(
                     topBar = {
                         TopAppBar(
                             colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = PlannerTheme.colors.primary
+                                containerColor = PlannerTheme.colors.surface
                             ),
                             title = {
                                 Box(
@@ -146,14 +145,21 @@ fun EditExamView(
                                     )
                                 }
                             },
+                            actions = {
+                                Icon(
+                                    painter = painterResource(R.drawable.exam_icon),
+                                    contentDescription = stringResource(R.string.exam_icon),
+                                    tint = PlannerTheme.colors.onSurface
+                                )
+                            }
                         )
                     }
                 ) { innerPadding ->
-
+                    Spacer(Modifier.padding(top = 16.dp))
                     Column(
                         modifier = Modifier
                             .background(
-                                PlannerTheme.colors.cardTop
+                                PlannerTheme.colors.background
                             )
                             .padding(innerPadding)
                             .fillMaxSize()
@@ -176,7 +182,7 @@ fun EditExamView(
                         )
 
 
-                        when (planner.gradeDisplayStyle) {
+                        when (state.detailedPlanner.planner.gradeDisplayStyle) {
                             GradeStyle.FROM_ZERO_TO_ONE_HUNDRED -> {
                                 Column {
                                     Text(
@@ -242,6 +248,8 @@ fun EditExamView(
                                 )
                             }
                         }
+
+                        Spacer(Modifier.padding(top = 16.dp))
 
                         GradeWeightInput(
                             text = state.examForm.gradeWeight,

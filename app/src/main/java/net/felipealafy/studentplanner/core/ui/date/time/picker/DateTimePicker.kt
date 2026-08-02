@@ -16,11 +16,13 @@ import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TimePicker
+import androidx.compose.material3.TimePickerDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
@@ -35,10 +37,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.core.ui.theme.Green
 import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.core.ui.theme.Red
+import net.felipealafy.studentplanner.core.ui.theme.Typography
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
@@ -161,15 +165,44 @@ fun DateTimePickerDialog(
                         showModeToggle = false,
                         colors = DatePickerDefaults.colors(
                             containerColor = PlannerTheme.colors.surface,
+                            selectedDayContainerColor = PlannerTheme.colors.primary,
+                            selectedDayContentColor = PlannerTheme.colors.onPrimary,
+                            selectedYearContainerColor = PlannerTheme.colors.primary,
+                            selectedYearContentColor = PlannerTheme.colors.onPrimary,
+                            navigationContentColor = PlannerTheme.colors.onSurface,
+                            dayContentColor = PlannerTheme.colors.onSurface,
+                            titleContentColor = PlannerTheme.colors.onSurface,
+                            weekdayContentColor = PlannerTheme.colors.onSurface,
+                            yearContentColor = PlannerTheme.colors.onSurface,
+                            todayContentColor = PlannerTheme.colors.onSurface,
+                            subheadContentColor = PlannerTheme.colors.onSurface,
+                            headlineContentColor = PlannerTheme.colors.onSurface,
                         ),
                         title = null
                     )
                 }
 
                 DateTimePickerState.TIME -> {
-                    TimePicker(
-                        state = timeState,
+                    val customizedTypography = MaterialTheme.typography.copy(
+                        displayLarge = Typography.displayLarge,
+                        labelMedium = Typography.labelSmall.copy(fontSize = 10.sp)
                     )
+                    MaterialTheme(
+                        typography = customizedTypography
+                    ) {
+                        TimePicker(
+                            state = timeState,
+                            colors = TimePickerDefaults.colors(
+                                containerColor = PlannerTheme.colors.surface,
+                                timeSelectorSelectedContainerColor = PlannerTheme.colors.primary,
+                                timeSelectorSelectedContentColor = PlannerTheme.colors.onPrimary,
+                                periodSelectorSelectedContainerColor = PlannerTheme.colors.primary,
+                                periodSelectorBorderColor = PlannerTheme.colors.primary,
+                                periodSelectorSelectedContentColor = PlannerTheme.colors.onPrimary,
+                                selectorColor = PlannerTheme.colors.primary
+                            ),
+                        )
+                    }
                 }
             }
         }

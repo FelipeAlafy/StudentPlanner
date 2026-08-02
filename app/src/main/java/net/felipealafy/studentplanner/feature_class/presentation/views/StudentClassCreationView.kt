@@ -63,7 +63,8 @@ import net.felipealafy.studentplanner.core.ui.theme.colorPallet
 @Composable
 fun StudentClassCreationView(
     viewModel: StudentClassCreationViewModel,
-    onReturnAction: () -> Unit
+    onReturnAction: () -> Unit,
+    onSuccess: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -131,9 +132,17 @@ fun StudentClassCreationView(
                                         )
                                     }
                                 },
+
                                 colors = TopAppBarDefaults.topAppBarColors(
                                     containerColor = PlannerTheme.colors.surface
-                                )
+                                ),
+                                actions = {
+                                    Icon(
+                                        painter = painterResource(R.drawable.class_icon),
+                                        contentDescription = stringResource(R.string.class_icon),
+                                        tint = PlannerTheme.colors.onSurface
+                                    )
+                                }
                             )
                         }
                     ) { innerPadding ->
@@ -189,7 +198,7 @@ fun StudentClassCreationView(
                                         verticalArrangement = Arrangement.Center
                                     ) {
                                         Text(
-                                            text = stringResource(R.string.exam_date_time_start),
+                                            text = stringResource(R.string.date_start),
                                             style = Typography.bodyMedium,
                                             modifier = Modifier.padding(start = 16.dp),
                                             color = PlannerTheme.colors.onCardTop
@@ -219,7 +228,7 @@ fun StudentClassCreationView(
                                         Spacer(modifier = Modifier.padding(top = 16.dp))
 
                                         Text(
-                                            text = stringResource(R.string.exam_date_time_end),
+                                            text = stringResource(R.string.date_end),
                                             style = Typography.bodyMedium,
                                             modifier = Modifier.padding(start = 16.dp),
                                             color = PlannerTheme.colors.onCardTop
@@ -275,6 +284,7 @@ fun StudentClassCreationView(
                                         ButtonWithBackgroundColor(
                                             onClick = {
                                                 viewModel.saveStudentClass()
+                                                onSuccess()
                                             },
                                             placeholderTextPath = R.string.create_button,
                                             isButtonEnabled = state.formState.isValid
