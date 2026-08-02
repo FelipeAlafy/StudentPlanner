@@ -64,7 +64,8 @@ import net.felipealafy.studentplanner.core.ui.theme.colorPallet
 @Composable
 fun ExamCreationView(
     viewModel: ExamCreationViewModel,
-    onReturnAction: () -> Unit
+    onReturnAction: () -> Unit,
+    onSuccess: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -355,7 +356,7 @@ fun ExamCreationView(
                             ButtonWithBackgroundColor(
                                 onClick = {
                                     viewModel.saveExam()
-                                    onReturnAction()
+                                    onSuccess()
                                 },
                                 placeholderTextPath = R.string.create_button
                             )

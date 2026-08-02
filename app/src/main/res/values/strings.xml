@@ -141,4 +141,8 @@
     <string name="add_time_to_class">add time to class</string>
     <string name="add_time_to_exam">Add time to exam</string>
     <string name="hourglass_icon">Hourglass Icon</string>
+    <string name="exam_icon">clipboard icon.</string>
+    <string name="not_started">Not Started</string>
+    <string name="in_progress">In Progress</string>
+    <string name="reproved">reproved</string>
 </resources>

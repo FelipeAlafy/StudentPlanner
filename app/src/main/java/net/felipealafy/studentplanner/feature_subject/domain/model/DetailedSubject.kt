@@ -3,6 +3,7 @@ package net.felipealafy.studentplanner.feature_subject.domain.model
 import net.felipealafy.studentplanner.feature_exams.data.local.Exam
 import net.felipealafy.studentplanner.feature_class.domain.model.StudentClass
 import net.felipealafy.studentplanner.feature_planner.domain.exception.InvalidPlannerException
+import java.time.LocalDateTime
 
 data class DetailedSubject(
     val subject: Subject,
@@ -11,7 +12,7 @@ data class DetailedSubject(
 ) {
     val averageGrade: Float
         get() {
-            if(exams.isEmpty()) return 0F
+            if (exams.isEmpty()) return 0F
             return exams.sumOf { it.grade.toDouble() * it.gradeWeight.toDouble() }.toFloat()
         }
 
@@ -21,5 +22,18 @@ data class DetailedSubject(
     val countExamsTaken: Int
         get() = exams.size
 
-    fun isApproved(minimumGradeToPass: Float): Boolean =  averageGrade >= minimumGradeToPass
+    fun isApproved(minimumGradeToPass: Float): SubjectStatus {
+        val today = LocalDateTime.now()
+        if (today.isBefore(subject.start)) {
+            return SubjectStatus.NOT_STARTED
+        }
+        if (today.isAfter(subject.start) && today.isBefore(subject.end)) {
+            return SubjectStatus.IN_PROGRESS
+        }
+        if (averageGrade >= minimumGradeToPass) {
+            return SubjectStatus.APPROVED
+        } else {
+            return SubjectStatus.REPROVED
+        }
+    }
 }

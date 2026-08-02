@@ -101,7 +101,7 @@ fun EditStudentClassView(
         }
 
         is EditStudentClassUiState.Success -> {
-            PlannerThemeProvider(baseColor = state.detailedPlanner.planner.color) {
+            PlannerThemeProvider(baseColor = state.formState.selectedColor) {
                 Scaffold(
                     topBar = {
                         TopAppBar(
@@ -127,20 +127,14 @@ fun EditStudentClassView(
                                 }
                             },
                             actions = {
-                                if (state.formState.isValid) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.check_icon),
-                                        contentDescription = stringResource(R.string.class_is_able_to_save),
-                                    )
-                                } else {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.baseline_close),
-                                        contentDescription = stringResource(R.string.class_is_not_able_to_save)
-                                    )
-                                }
+                                Icon(
+                                    painter = painterResource(id = R.drawable.class_icon),
+                                    contentDescription = stringResource(R.string.class_is_not_able_to_save),
+                                    tint = PlannerTheme.colors.onSurface
+                                )
                             },
                             colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = PlannerTheme.colors.primary
+                                containerColor = PlannerTheme.colors.surface
                             )
                         )
                     }
@@ -150,7 +144,7 @@ fun EditStudentClassView(
                         modifier = Modifier
                             .fillMaxSize()
                             .background(
-                                color = PlannerTheme.colors.cardTop
+                                color = PlannerTheme.colors.background
                             )
                             .padding(innerPadding),
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -160,9 +154,6 @@ fun EditStudentClassView(
                                 .fillMaxSize()
                                 .padding(start = 8.dp, end = 8.dp)
                         ) {
-                            item {
-                                NewClassTitle()
-                            }
                             item {
                                 Spacer(modifier = Modifier.padding(top = 16.dp))
                             }

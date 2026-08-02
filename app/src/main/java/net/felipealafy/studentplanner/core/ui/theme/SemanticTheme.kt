@@ -21,7 +21,11 @@ data class SemanticTheme(
     val onError: Color = Color.White,
     val success: Color = SuccessGreen,
     val onSuccess: Color = Color.White,
-    val background: Color = Color.White
+    val background: Color = Color.White,
+    val gray: Color = Color.DarkGray,
+    val onGray: Color = Color.White,
+    val yellow: Color = Color(0xFFf9c440),
+    val onYellow: Color = Color.Black
 )
 
 fun generateThemeFromColor(baseColor: Long, isDarkTheme: Boolean = false): SemanticTheme {

@@ -132,7 +132,13 @@ class MainActivity : ComponentActivity() {
                         val viewModel: StudentClassCreationViewModel = hiltViewModel()
                         StudentClassCreationView(
                             viewModel = viewModel,
-                            onReturnAction = { navController.popBackStack() }
+                            onReturnAction = { navController.popBackStack() },
+                            onSuccess = {
+                                navController.popBackStack(
+                                    route = StudentPlannerRoutes.TodayView.route,
+                                    inclusive = false
+                                )
+                            }
                         )
                     }
 
@@ -178,7 +184,13 @@ class MainActivity : ComponentActivity() {
                         val viewModel: ExamCreationViewModel = hiltViewModel()
                         ExamCreationView(
                             viewModel = viewModel,
-                            onReturnAction = { navController.popBackStack() }
+                            onReturnAction = { navController.popBackStack() },
+                            onSuccess = {
+                                navController.popBackStack(
+                                    route = StudentPlannerRoutes.TodayView.route,
+                                    inclusive = false
+                                )
+                            }
                         )
                     }
 

@@ -564,7 +564,7 @@ private fun TodayViewContents(
                     DropdownMenuItem(
                         leadingIcon = {
                             Icon(
-                                painter = painterResource(R.drawable.grade),
+                                painter = painterResource(R.drawable.exam_icon),
                                 contentDescription = stringResource(R.string.grade),
                                 tint = PlannerTheme.colors.onPrimary
                             )
@@ -778,7 +778,7 @@ fun ExamCard(
                     modifier = Modifier.fillMaxWidth().background(PlannerTheme.colors.cardTop)
                 ) {
                     Icon(
-                        painterResource(R.drawable.grade),
+                        painterResource(R.drawable.exam_icon),
                         contentDescription = stringResource(R.string.grade),
                         tint = PlannerTheme.colors.onCardTop,
                         modifier = Modifier.padding(start = 12.dp)

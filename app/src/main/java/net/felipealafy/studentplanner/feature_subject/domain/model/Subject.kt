@@ -38,14 +38,3 @@ data class Subject(
         return result
     }
 }
-/*
-fun Subject.isApproved(minimumGradeToPass: Float): Boolean {
-    return exams.sumOf {
-        it.grade.toDouble() * it.gradeWeight.toDouble()
-    }.toFloat() >= minimumGradeToPass
-}
-
-fun Subject.getAverage(): Float {
-    return exams.sumOf { it.grade.toDouble() * it.gradeWeight.toDouble() }.toFloat()
-}
-*/

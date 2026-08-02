@@ -90,11 +90,11 @@ fun DetailedClassView(
             val studentClass = state.enrichedSubject.studentClass
             PlannerThemeProvider(subject.color) {
                 Scaffold(
-                    containerColor = PlannerTheme.colors.container,
+                    containerColor = PlannerTheme.colors.background,
                     topBar = {
                         TopAppBar(
                             colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = PlannerTheme.colors.primary
+                                containerColor = PlannerTheme.colors.surface
                             ),
                             title = {
                                 Box(
@@ -147,7 +147,7 @@ fun DetailedClassView(
                                 classTitle = studentClass.title
                             )
                             Spacer(modifier = Modifier.padding(top = 10.dp))
-                            Observation(observation = studentClass.noteTakingLink)
+                            Observation(observation = studentClass.observation)
                         }
                     }
                 }

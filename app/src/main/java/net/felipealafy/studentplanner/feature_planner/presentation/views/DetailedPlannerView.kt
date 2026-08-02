@@ -53,6 +53,7 @@ import net.felipealafy.studentplanner.feature_subject.domain.model.DetailedSubje
 import net.felipealafy.studentplanner.core.ui.extensions.formattedValue
 import net.felipealafy.studentplanner.core.ui.extensions.getPercentageFromZeroToOneHundred
 import net.felipealafy.studentplanner.core.ui.extensions.getValueInDisplayStyleForAverage
+import net.felipealafy.studentplanner.feature_subject.domain.model.SubjectStatus
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,6 +74,7 @@ fun DetailedPlannerView(
                 Text(text = "No planners available.")
             }
         }
+
         is DetailedPlannerUiState.Loading -> {
             Box(
                 modifier = Modifier
@@ -83,6 +85,7 @@ fun DetailedPlannerView(
                 CircularProgressIndicator()
             }
         }
+
         is DetailedPlannerUiState.Success -> {
             val detailedPlanner = state.planner
             val planner = detailedPlanner.planner
@@ -90,7 +93,7 @@ fun DetailedPlannerView(
                 baseColor = planner.color
             ) {
                 Scaffold(
-                    containerColor = PlannerTheme.colors.container,
+                    containerColor = PlannerTheme.colors.background,
                     topBar = {
                         TopAppBar(
                             title = {
@@ -104,14 +107,14 @@ fun DetailedPlannerView(
                                 }
                             },
                             colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = PlannerTheme.colors.primary
+                                containerColor = PlannerTheme.colors.surface
                             ),
                             navigationIcon = {
                                 IconButton(onClick = { onReturnToPreviousView() }) {
                                     Icon(
                                         painter = painterResource(R.drawable.back_arrow),
                                         contentDescription = stringResource(R.string.back_to_past_view),
-                                        tint = PlannerTheme.colors.onPrimary
+                                        tint = PlannerTheme.colors.onSurface
                                     )
                                 }
                             },
@@ -120,7 +123,7 @@ fun DetailedPlannerView(
                                     Icon(
                                         painter = painterResource(R.drawable.edit_document),
                                         contentDescription = stringResource(R.string.go_on_edit_mode_for_planner),
-                                        tint = PlannerTheme.colors.onPrimary
+                                        tint = PlannerTheme.colors.onSurface
                                     )
                                 }
                             }
@@ -132,6 +135,18 @@ fun DetailedPlannerView(
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(4.dp)
+                                .background(PlannerTheme.colors.surface)
+                                .padding(start = 4.dp, end = 8.dp)
+                                .border(
+                                    width = 8.dp,
+                                    color = PlannerTheme.colors.primary,
+                                    shape = RoundedCornerShape(2.dp)
+                                )
+                        ) { }
                         TopPlannerCard(
                             planner,
                             plannerProgress = detailedPlanner.plannerProgress,
@@ -150,12 +165,17 @@ fun DetailedPlannerView(
 }
 
 @Composable
-fun TopPlannerCard(planner: Planner, plannerProgress: Float, passedSubjectCount: Int, globalAverage: Float) {
+fun TopPlannerCard(
+    planner: Planner,
+    plannerProgress: Float,
+    passedSubjectCount: Int,
+    globalAverage: Float
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = PlannerTheme.colors.cardTop,
+                color = PlannerTheme.colors.surface,
                 shape = RoundedCornerShape(
                     topStart = 0.dp,
                     topEnd = 0.dp,
@@ -275,7 +295,7 @@ fun SubjectCard(
     endDate: String,
     formattedAverage: String,
     countClassTaken: Int,
-    isSubjectApproved: Boolean,
+    isSubjectApproved: SubjectStatus,
     subjectColor: Long
 ) {
     PlannerThemeProvider(baseColor = subjectColor) {
@@ -309,39 +329,56 @@ private fun SubjectCardComponents(
     endDate: String,
     formattedAverage: String,
     countClassTaken: Int,
-    isSubjectApproved: Boolean
+    isSubjectApproved: SubjectStatus
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(start = 8.dp)
     ) {
-            SubjectTitle(subjectName)
-            Spacer(modifier = Modifier.padding(top = 16.dp))
-            Date(startDate, endDate)
-            Spacer(modifier = Modifier.padding(top = 4.dp))
-            AverageGrade(
-                formattedAverage,
-                isSubjectApproved
-            )
-            Spacer(modifier = Modifier.padding(top = 8.dp))
-            ClassesTaken(countClassTaken)
-            Spacer(modifier = Modifier.padding(bottom = 8.dp))
-        }
+        SubjectTitle(subjectName)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(4.dp)
+                .background(PlannerTheme.colors.cardTop)
+                .padding(start = 4.dp, end = 8.dp)
+                .border(
+                    width = 8.dp,
+                    color = PlannerTheme.colors.surface,
+                    shape = RoundedCornerShape(2.dp)
+                )
+        ) { }
+        Date(startDate, endDate)
+        Spacer(modifier = Modifier.padding(top = 4.dp))
+        AverageGrade(
+            formattedAverage,
+            isSubjectApproved
+        )
+        Spacer(modifier = Modifier.padding(top = 8.dp))
+        ClassesTaken(countClassTaken)
+        Spacer(modifier = Modifier.padding(bottom = 8.dp))
+    }
 }
 
 @Composable
 fun AverageGrade(
     formattedAverage: String,
-    isSubjectApproved: Boolean
+    isSubjectApproved: SubjectStatus
 ) {
-    val borderColor = if (isSubjectApproved) {
-        PlannerTheme.colors.success
-    } else {
-        PlannerTheme.colors.error
+    val borderColor = when (isSubjectApproved) {
+        SubjectStatus.NOT_STARTED -> PlannerTheme.colors.gray
+        SubjectStatus.IN_PROGRESS -> PlannerTheme.colors.yellow
+        SubjectStatus.APPROVED -> PlannerTheme.colors.success
+        SubjectStatus.REPROVED -> PlannerTheme.colors.error
     }
 
-    val isApproved = if (isSubjectApproved) stringResource(R.string.approved) else stringResource(R.string.failed)
+    val label = when (isSubjectApproved) {
+        SubjectStatus.NOT_STARTED -> R.string.not_started
+        SubjectStatus.IN_PROGRESS -> R.string.in_progress
+        SubjectStatus.APPROVED -> R.string.approved
+        SubjectStatus.REPROVED -> R.string.reproved
+    }
 
     Row {
         Icon(
@@ -355,16 +392,19 @@ fun AverageGrade(
         )
         Spacer(modifier = Modifier.padding(start = 8.dp))
         Box(
-            modifier = Modifier.border(
-                width = 2.dp,
-                color = borderColor,
-                shape = RoundedCornerShape(20.dp)
-            ).padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 4.dp),
+            modifier = Modifier
+                .border(
+                    width = 2.dp,
+                    color = borderColor,
+                    shape = RoundedCornerShape(20.dp)
+                )
+                .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 4.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = isApproved,
-                style = Typography.labelSmall
+                text = stringResource(label),
+                style = Typography.labelSmall,
+                color = PlannerTheme.colors.onPrimary
             )
         }
     }
@@ -405,12 +445,22 @@ fun Date(subject: Subject) {
 
 @Composable
 fun SubjectTitle(title: String) {
-    Text(
-        modifier = Modifier.padding(top = 8.dp),
-        text = title,
-        style = Typography.bodyMedium,
-        color = PlannerTheme.colors.onCardTop,
-        maxLines = 2,
-        overflow = TextOverflow.Ellipsis
-    )
+    Row(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.subject),
+            contentDescription = stringResource(R.string.subject_icon),
+            tint = PlannerTheme.colors.onPrimary,
+            modifier = Modifier.padding(top = 10.dp)
+        )
+        Text(
+            modifier = Modifier.padding(top = 8.dp),
+            text = title,
+            style = Typography.bodyMedium,
+            color = PlannerTheme.colors.onCardTop,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
+        )
+    }
 }

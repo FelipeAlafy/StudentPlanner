@@ -84,8 +84,9 @@ class EditStudentClassViewModel @Inject constructor(
         if (formState == null) {
             EditStudentClassUiState.Loading as EditStudentClassUiState
         } else {
+            val subjectColor = detailedPlanner.subjects.first {it.subject.id == formState.subjectId}.subject.color
             EditStudentClassUiState.Success(
-                formState = formState,
+                formState = formState.copy(selectedColor = subjectColor),
                 detailedPlanner = detailedPlanner
             ) as EditStudentClassUiState
         }

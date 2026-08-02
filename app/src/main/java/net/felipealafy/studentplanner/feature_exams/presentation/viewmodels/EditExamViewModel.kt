@@ -90,8 +90,9 @@ class EditExamViewModel @Inject constructor (
         }
         if (formState == null) { EditExamUiState.Loading as EditExamUiState }
         else {
+            val color = detailedPlanner.subjects.first { it.subject.id == formState.subjectId }.subject.color
             EditExamUiState.Success(
-                examForm = formState,
+                examForm = formState.copy(color = color),
                 detailedPlanner = detailedPlanner
             ) as EditExamUiState
         }
