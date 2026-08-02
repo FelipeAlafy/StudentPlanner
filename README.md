@@ -24,21 +24,21 @@ Este projeto serve como um laboratório de engenharia de software mobile, utiliz
 
 O diferencial deste projeto está no que o usuário *não* vê:
 
-### **1\. Integridade Relacional Rigorosa (SQL)**
+### **1. Integridade Relacional Rigorosa (SQL)**
 
 Muitos apps mobile tratam dados como documentos soltos (NoSQL style). O Student Planner impõe integridade relacional estrita.  
 Utilizei Foreign Keys com ON DELETE CASCADE para garantir que não existam dados "órfãos". Se um Semestre (Planner) é deletado, todas as matérias, provas e aulas associadas são limpas automaticamente pelo motor do banco.  
 // Exemplo: ExamTable.kt
 ```kotlin
-@Entity(tableName \= "exam",  
-    foreignKeys \= \[  
+@Entity(tableName = "exam",  
+    foreignKeys = [  
         ForeignKey(  
-            entity \= SubjectTable::class,  
-            parentColumns \= \["id"\],  
-            childColumns \= \["subjectId"\],  
-            onDelete \= ForeignKey.CASCADE // Garante a higiene do banco  
+            entity = SubjectTable::class,  
+            parentColumns = ["id"],  
+            childColumns \= \["subjectId"],  
+            onDelete = ForeignKey.CASCADE
         )  
-    \]  
+    ]  
 )
 ```
 data class ExamTable(...)
@@ -55,8 +55,8 @@ A camada de UI nunca toca na camada de Banco de Dados.
 ```kotlin
 fun ClassTable.toDomainModel(): StudentClass {  
     return StudentClass(  
-        id \= this.id,  
-        title \= this.title,  
+        id = this.id,  
+        title = this.title,  
         // ... mapeamento seguro  
     )  
 }
@@ -70,24 +70,31 @@ fun ClassTable.toDomainModel(): StudentClass {
 * **Totalmente Offline:** Seus dados pertencem a você. Armazenamento local seguro.
 
 ## **🗺 Roadmap**
+* \[x\] **Suporte a visualização/criação/edição de aulas**
+* \[x\] **Suporte a visualização/criação/edição de provas**
+* \[x\] **Suporte a criação de matérias**
+* \[x\] **Suporte a visualização/criação de planners**
 * \[x\] **Detailed Planner View**
 * \[ \] **Detailed Subject View**
 * \[ \] **Planner Editing View**
 * \[ \] **Subject Editing View**
+* \[ \] **Configurações e Créditos:** Implementar a tela de configurações e créditos do aplicativo.
 * \[x\] **Injeção de Dependência:** Finalizar migração para Dagger Hilt.  
 * \[ \] **Testes:** Implementar Testes Unitários para Repositories e UI Tests.  
-* \[ \] **Desktop:** Migração para Desktop visando suporte nativo a Linux (GTK).  
 * \[x\] **CI/CD:** Pipelines de build automatizado via GitHub Actions.
-* \[ \] **Publicar no F-Droid**
-* \[ \] **Publicar na Playstore**
+* \[x\] **Clean Architecture:** Implementar principios de arquitetura limpa e código limpo no projeto.
+* \[x\] **Funcionalidade StopWatch:** Implementar a funcionalidade de cronometro para monitorar ciclos de estudos.
+* \[ \] **Aba desempenho:** Implementar uma aba capaz de exibir vários gráficos sobre a performance do aluno relacionado a tempo de estudo em cada matéria e notas.
+* \[x\] **Publicar na Playstore**
+* \[ \] **Desktop:** Migração para Desktop visando suporte nativo a Linux.
 
 ## **🤝 Como Contribuir**
 
-Contribuições são bem-vindas\! Se você é estudante ou dev Android e quer aprender sobre arquitetura:
+Contribuições são bem-vindas! Se você é estudante ou dev Android e quer aprender sobre arquitetura:
 
 1. Faça um Fork do projeto.  
-2. Crie uma Feature Branch (git checkout \-b feature/MinhaFeature).  
-3. Commit suas mudanças (git commit \-m 'Adiciona funcionalidade X').  
+2. Crie uma Feature Branch (git checkout -b feature/MinhaFeature).  
+3. Commit suas mudanças (git commit -m 'Adiciona funcionalidade X').  
 4. Push para a Branch (git push origin feature/MinhaFeature).  
 5. Abra um Pull Request.
 
