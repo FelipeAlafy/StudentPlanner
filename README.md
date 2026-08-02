@@ -35,7 +35,7 @@ Utilizei Foreign Keys com ON DELETE CASCADE para garantir que não existam dados
         ForeignKey(  
             entity = SubjectTable::class,  
             parentColumns = ["id"],  
-            childColumns \= \["subjectId"],  
+            childColumns = ["subjectId"],  
             onDelete = ForeignKey.CASCADE
         )  
     ]  
