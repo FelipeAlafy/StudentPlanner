@@ -85,8 +85,10 @@ fun ClassTable.toDomainModel(): StudentClass {
 * \[x\] **Clean Architecture:** Implementar principios de arquitetura limpa e código limpo no projeto.
 * \[x\] **Funcionalidade StopWatch:** Implementar a funcionalidade de cronometro para monitorar ciclos de estudos.
 * \[ \] **Aba desempenho:** Implementar uma aba capaz de exibir vários gráficos sobre a performance do aluno relacionado a tempo de estudo em cada matéria e notas.
-* \[x\] **Publicar na Playstore**
+* \[x\] **Publicar na Playstore:** Teste fechado
 * \[ \] **Desktop:** Migração para Desktop visando suporte nativo a Linux.
+* \[x\] **Publicar link:** para inscrição no teste fechado da playstore.
+* \[x\] **Lançamento na Playstore:** Publico.
 
 ## **🤝 Como Contribuir**
 
