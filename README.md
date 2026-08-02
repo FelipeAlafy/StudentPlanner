@@ -88,7 +88,7 @@ fun ClassTable.toDomainModel(): StudentClass {
 * \[x\] **Publicar na Playstore:** Teste fechado
 * \[ \] **Desktop:** Migração para Desktop visando suporte nativo a Linux.
 * \[x\] **Publicar link:** para inscrição no teste fechado da playstore.
-* \[x\] **Lançamento na Playstore:** Publico.
+* \[ \] **Lançamento na Playstore:** Publico.
 
 ## **🤝 Como Contribuir**
 
