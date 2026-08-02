@@ -43,7 +43,7 @@ Utilizei Foreign Keys com ON DELETE CASCADE para garantir que não existam dados
 ```
 data class ExamTable(...)
 
-### **2\. Clean Architecture (Mappers Pattern)**
+### **2. Clean Architecture (Mappers Pattern)**
 
 A camada de UI nunca toca na camada de Banco de Dados.
 
@@ -87,7 +87,7 @@ fun ClassTable.toDomainModel(): StudentClass {
 * \[ \] **Aba desempenho:** Implementar uma aba capaz de exibir vários gráficos sobre a performance do aluno relacionado a tempo de estudo em cada matéria e notas.
 * \[x\] **Publicar na Playstore:** Teste fechado
 * \[ \] **Desktop:** Migração para Desktop visando suporte nativo a Linux.
-* \[x\] **Publicar link:** para inscrição no teste fechado da playstore.
+* \[ \] **Publicar link:** para inscrição no teste fechado da playstore.
 * \[ \] **Lançamento na Playstore:** Publico.
 
 ## **🤝 Como Contribuir**
