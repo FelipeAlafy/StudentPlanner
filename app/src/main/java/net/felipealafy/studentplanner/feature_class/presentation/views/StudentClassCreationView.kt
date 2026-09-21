@@ -80,7 +80,7 @@ fun StudentClassCreationView(
                 }
                 is StudentClassCreationEvent.ClassCreatedSuccessfully -> {
                     Toast.makeText(context, R.string.created_successfully, Toast.LENGTH_SHORT).show()
-                    onReturnAction()
+                    onSuccess()
                 }
             }
         }
