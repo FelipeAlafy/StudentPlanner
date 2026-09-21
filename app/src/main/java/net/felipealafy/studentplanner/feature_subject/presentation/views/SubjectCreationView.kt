@@ -60,10 +60,18 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturnAction: () 
     LaunchedEffect(key1 = Unit) {
         viewModel.events.collectLatest { event ->
             when (event) {
-                is SubjectCreationEvent.ShowError -> Toast.makeText(context, event.messageResId,
-                    Toast.LENGTH_SHORT).show()
-                SubjectCreationEvent.SubjectCreatedSuccessfully -> Toast.makeText(context,
-                    R.string.created_successfully, Toast.LENGTH_SHORT).show()
+                is SubjectCreationEvent.ShowError -> Toast.makeText(
+                    context, event.messageResId,
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                SubjectCreationEvent.SubjectCreatedSuccessfully -> {
+                    Toast.makeText(
+                        context,
+                        R.string.created_successfully, Toast.LENGTH_SHORT
+                    ).show()
+                    onReturnAction()
+                }
             }
         }
     }
@@ -263,7 +271,6 @@ fun SubjectCreationView(viewModel: SubjectCreationViewModel, onReturnAction: () 
                             ButtonWithBackgroundColor(
                                 onClick = {
                                     viewModel.saveSubject()
-                                    onReturnAction()
                                 },
                                 placeholderTextPath = R.string.create_button
                             )

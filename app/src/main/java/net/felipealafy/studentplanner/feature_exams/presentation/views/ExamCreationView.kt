@@ -79,6 +79,7 @@ fun ExamCreationView(
                 is ExamCreationEvent.ExamCreatedSuccessfully -> {
                     Toast.makeText(context, R.string.created_successfully, Toast.LENGTH_SHORT)
                         .show()
+                    onSuccess()
                 }
             }
         }
@@ -356,7 +357,6 @@ fun ExamCreationView(
                             ButtonWithBackgroundColor(
                                 onClick = {
                                     viewModel.saveExam()
-                                    onSuccess()
                                 },
                                 placeholderTextPath = R.string.create_button
                             )
