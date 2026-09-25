@@ -1,4 +1,4 @@
-package net.felipealafy.studentplanner.planner_feature.domain
+package net.felipealafy.studentplanner.feature_planner.domain
 
 import io.mockk.every
 import io.mockk.mockk

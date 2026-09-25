@@ -1,4 +1,4 @@
-package net.felipealafy.studentplanner.planner_feature.domain
+package net.felipealafy.studentplanner.feature_planner.domain
 
 import net.felipealafy.studentplanner.feature_planner.domain.repository.PlannerRepository
 import org.junit.Before
