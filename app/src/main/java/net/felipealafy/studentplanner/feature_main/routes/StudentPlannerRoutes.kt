@@ -37,7 +37,6 @@ sealed class StudentPlannerRoutes(val route: String) {
         }
     }
 
-    // Rotas que precisam de MÚLTIPLOS argumentos (Hierarquia completa)
     data object DetailedSubjectView : StudentPlannerRoutes("detailed_subject/{plannerId}/{subjectId}") {
         fun createRoute(plannerId: String, subjectId: String) = "detailed_subject/$plannerId/$subjectId"
     }

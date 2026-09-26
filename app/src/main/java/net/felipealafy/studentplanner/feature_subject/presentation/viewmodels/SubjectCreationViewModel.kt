@@ -135,6 +135,7 @@ class SubjectCreationViewModel @Inject constructor(
                         end = form.end
                     )
                 )
+                _events.emit(SubjectCreationEvent.SubjectCreatedSuccessfully)
             } catch (e: Exception) {
                 when (e) {
                     is InvalidSubjectExceptions.InvalidDateSelection -> {

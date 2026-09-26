@@ -38,6 +38,8 @@ import net.felipealafy.studentplanner.core.ui.theme.StudentPlannerTheme
 import net.felipealafy.studentplanner.feature_main.routes.StudentPlannerRoutes
 import net.felipealafy.studentplanner.feature_stopwatch.presentation.view.StopWatchView
 import net.felipealafy.studentplanner.feature_stopwatch.presentation.viewmodel.StopWatchViewModel
+import net.felipealafy.studentplanner.feature_subject.presentation.viewmodels.DetailedSubjectViewModel
+import net.felipealafy.studentplanner.feature_subject.presentation.views.DetailedSubjectView
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -111,10 +113,27 @@ class MainActivity : ComponentActivity() {
                         val viewModel: DetailedPlannerViewModel = hiltViewModel()
                         DetailedPlannerView(
                             viewModel = viewModel,
-                            onReturnToPreviousView = { navController.popBackStack() }
+                            onReturnToPreviousView = { navController.popBackStack() },
+                            onSubjectClicked = { plannerId, subjectId ->
+                                navController.navigate(StudentPlannerRoutes.DetailedSubjectView.createRoute(plannerId, subjectId))
+                            },
                         )
                     }
-
+                    
+                    composable(
+                        route = StudentPlannerRoutes.DetailedSubjectView.route,
+                        arguments = listOf(
+                            navArgument("plannerId") { type = NavType.StringType },
+                            navArgument("subjectId") { type = NavType.StringType }
+                        ),
+                    ) {
+                        val viewModel: DetailedSubjectViewModel = hiltViewModel()
+                        DetailedSubjectView(
+                            detailedSubjectViewModel = viewModel,
+                            onReturnAction = { navController.popBackStack() },
+                        )    
+                    }
+                    
                     composable(
                         route = StudentPlannerRoutes.StudentClassCreationView.route,
                         arguments = listOf(
