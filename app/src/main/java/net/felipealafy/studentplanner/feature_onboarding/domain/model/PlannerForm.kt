@@ -1,6 +1,6 @@
 package net.felipealafy.studentplanner.feature_onboarding.domain.model
 
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
+import net.felipealafy.studentplanner.feature_exam.domain.use_case.GradeStyle
 import net.felipealafy.studentplanner.core.ui.theme.colorPallet
 
 data class PlannerForm(

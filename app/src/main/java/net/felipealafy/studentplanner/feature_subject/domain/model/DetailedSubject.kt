@@ -1,8 +1,7 @@
 package net.felipealafy.studentplanner.feature_subject.domain.model
 
-import net.felipealafy.studentplanner.feature_exams.data.local.Exam
+import net.felipealafy.studentplanner.feature_exam.data.local.Exam
 import net.felipealafy.studentplanner.feature_class.domain.model.StudentClass
-import net.felipealafy.studentplanner.feature_planner.domain.exception.InvalidPlannerException
 import java.time.LocalDateTime
 
 data class DetailedSubject(

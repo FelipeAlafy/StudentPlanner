@@ -39,7 +39,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.core.ui.components.text.label.ClassesTaken
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
+import net.felipealafy.studentplanner.feature_exam.domain.use_case.GradeStyle
 import net.felipealafy.studentplanner.feature_planner.domain.model.Planner
 import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.DetailedPlannerUiState
 import net.felipealafy.studentplanner.feature_subject.domain.model.Subject

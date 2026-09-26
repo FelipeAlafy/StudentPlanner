@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.core.ui.theme.Typography
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.getResourceLocation
+import net.felipealafy.studentplanner.feature_exam.domain.use_case.GradeStyle
+import net.felipealafy.studentplanner.feature_exam.domain.use_case.getResourceLocation
 
 @Composable
 fun GradeStyleComboBox(onSelectItem: (GradeStyle) -> Unit) {

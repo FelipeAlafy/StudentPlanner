@@ -70,8 +70,8 @@ import net.felipealafy.studentplanner.core.ui.theme.Typography
 import net.felipealafy.studentplanner.core.ui.theme.colorutils.getContrastingColorForText
 import net.felipealafy.studentplanner.core.ui.extensions.getValueInDisplayStyle
 import net.felipealafy.studentplanner.feature_class.domain.model.StudentClass
-import net.felipealafy.studentplanner.feature_exams.data.local.Exam
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
+import net.felipealafy.studentplanner.feature_exam.data.local.Exam
+import net.felipealafy.studentplanner.feature_exam.domain.use_case.GradeStyle
 import net.felipealafy.studentplanner.feature_planner.domain.model.DetailedPlanner
 import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 import net.felipealafy.studentplanner.feature_today.presentation.viewmodels.TodayUiState

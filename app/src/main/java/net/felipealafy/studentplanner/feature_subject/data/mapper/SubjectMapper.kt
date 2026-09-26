@@ -1,7 +1,5 @@
 package net.felipealafy.studentplanner.feature_subject.data.mapper
 
-import net.felipealafy.studentplanner.feature_exams.data.local.Exam
-import net.felipealafy.studentplanner.feature_class.domain.model.StudentClass
 import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 import net.felipealafy.studentplanner.feature_subject.data.local.SubjectTable
 

@@ -1,6 +1,5 @@
 package net.felipealafy.studentplanner.feature_onboarding.domain.use_case
 
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
 import net.felipealafy.studentplanner.feature_onboarding.domain.model.PlannerForm
 import net.felipealafy.studentplanner.feature_planner.domain.exception.InvalidPlannerException
 import net.felipealafy.studentplanner.feature_planner.domain.model.Planner

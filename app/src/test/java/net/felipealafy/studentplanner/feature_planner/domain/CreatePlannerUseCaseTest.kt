@@ -7,7 +7,7 @@ import io.mockk.mockk
 import io.mockk.coVerify
 import kotlinx.coroutines.test.runTest
 import net.felipealafy.studentplanner.core.ui.theme.colorPallet
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
+import net.felipealafy.studentplanner.feature_exam.domain.use_case.GradeStyle
 import net.felipealafy.studentplanner.feature_planner.domain.exception.InvalidPlannerException
 import net.felipealafy.studentplanner.feature_planner.domain.model.Planner
 import net.felipealafy.studentplanner.feature_planner.domain.use_case.CreatePlannerUseCase
