@@ -145,4 +145,6 @@
     <string name="not_started">Not Started</string>
     <string name="in_progress">In Progress</string>
     <string name="reproved">reproved</string>
+    <string name="date_time_out_of_subject_boundaries_error">The Start and End dates should be inside of the subject Start/End interval.</string>
+    <string name="subject_does_not_exist">The selected subject was possibly deleted on other device.</string>
 </resources>

@@ -7,4 +7,6 @@ sealed class InvalidClassExceptions(val exception: String): Exception(exception)
     class InvalidDateTime: InvalidClassExceptions("The start date must be before the end date.")
     class ClassNotFound: InvalidClassExceptions("The class was not found.")
     class EmptySubject: InvalidClassExceptions("The subject can't be empty.")
+    class DateTimeOutOfSubjectBoundaries: InvalidClassExceptions("The start and end date/time of a class should be inside of the subject start/end interval.")
+    class SubjectDoesNotExist: InvalidClassExceptions("The provided subject does not exist in the data base.")
 }

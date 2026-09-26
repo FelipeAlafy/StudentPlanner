@@ -149,6 +149,8 @@ class EditStudentClassViewModel @Inject constructor(
                         is InvalidClassExceptions.EmptyName -> R.string.empty_name_error
                         is InvalidClassExceptions.EmptySubject -> R.string.empty_subject_error
                         is InvalidClassExceptions.InvalidDateTime -> R.string.invalid_date_time_selection_error
+                        is InvalidClassExceptions.DateTimeOutOfSubjectBoundaries -> R.string.date_time_out_of_subject_boundaries_error
+                        is InvalidClassExceptions.SubjectDoesNotExist -> R.string.subject_does_not_exist
                     }
                     _events.emit(EditStudentClassEvents.ShowError(errorMessageId))
                 }

@@ -37,8 +37,8 @@ class GetClassUseCaseTest {
                 id = "testUUID",
                 subjectId = "subjectTestUUID",
                 title = "TestSubject",
-                start = LocalDateTime.parse("2026-09-21 20:40"),
-                end = LocalDateTime.parse("2026-09-21 21:00"),
+                start = LocalDateTime.now(),
+                end = LocalDateTime.now().plusMinutes(50),
                 noteTakingLink = "No notetaking link provided",
                 observation = "Obs"
             ),
@@ -47,8 +47,8 @@ class GetClassUseCaseTest {
                 plannerId = "plannerTestUUID",
                 name = "Test Planner",
                 color = colorPallet[0][1],
-                start = LocalDateTime.parse("2026-09-21 20:40"),
-                end = LocalDateTime.parse("2026-09-21 21:00")
+                start = LocalDateTime.now(),
+                end = LocalDateTime.now().plusDays(50)
             )
         )
 
@@ -72,6 +72,6 @@ class GetClassUseCaseTest {
             getClassUseCase("testUUID").first()
         }.message
 
-        assertEquals("The class was not found.", message.toString())
+        assertEquals("The class was not found.", exception)
     }
 }

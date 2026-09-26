@@ -16,7 +16,7 @@ interface SubjectDao {
     @Query("SELECT * FROM subject WHERE plannerId = :plannerId ORDER BY name ASC")
     fun getSubjectsOfAPlanner(plannerId: String): Flow<List<SubjectTable>>
     @Query("SELECT * FROM subject WHERE id = :subjectId LIMIT 1")
-    fun getSubjectById(subjectId: String): Flow<List<SubjectTable>>
+    fun getSubjectById(subjectId: String): Flow<SubjectTable?>
 
     @Transaction
     @Query("SELECT * FROM subject WHERE id = :subjectId")

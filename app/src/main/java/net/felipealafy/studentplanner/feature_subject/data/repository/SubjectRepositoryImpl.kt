@@ -1,6 +1,8 @@
 package net.felipealafy.studentplanner.feature_subject.data.repository
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import net.felipealafy.studentplanner.feature_subject.data.local.SubjectDao
 import net.felipealafy.studentplanner.feature_subject.data.mapper.toDatabaseEntry
@@ -32,9 +34,9 @@ class SubjectRepositoryImpl @Inject constructor(private val dao: SubjectDao) : S
         dao.delete(subjectTable = subject.toDatabaseEntry())
     }
 
-    override fun getSubjectById(subjectId: String): Flow<List<Subject>> {
+    override fun getSubjectById(subjectId: String): Flow<Subject?> {
         return dao.getSubjectById(subjectId).map {
-            it.toDomainModel()
+            it?.toDomainModel()
         }
     }
 

@@ -9,8 +9,8 @@ import kotlinx.coroutines.test.runTest
 import net.felipealafy.studentplanner.core.ui.theme.colorPallet
 import net.felipealafy.studentplanner.feature_class.domain.exception.InvalidClassExceptions
 import net.felipealafy.studentplanner.feature_class.domain.repository.ClassRepository
-import net.felipealafy.studentplanner.feature_class.domain.use_case.CreateClassParams
-import net.felipealafy.studentplanner.feature_class.domain.use_case.CreateClassUseCase
+import net.felipealafy.studentplanner.feature_class.domain.use_case.UpdateClassParams
+import net.felipealafy.studentplanner.feature_class.domain.use_case.UpdateClassUseCase
 import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 import net.felipealafy.studentplanner.feature_subject.domain.repository.SubjectRepository
 import org.junit.Before
@@ -19,8 +19,8 @@ import java.time.LocalDateTime
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class CreateClassUseCaseTest {
-    private lateinit var createClassUseCase: CreateClassUseCase
+class UpdateClassUseCaseTest {
+    private lateinit var updateClassUseCase: UpdateClassUseCase
     private lateinit var classRepository: ClassRepository
     private lateinit var subjectRepository: SubjectRepository
 
@@ -29,23 +29,41 @@ class CreateClassUseCaseTest {
         classRepository = mockk(relaxed = true)
         subjectRepository = mockk(relaxed = true)
 
-        createClassUseCase = CreateClassUseCase(
+        updateClassUseCase = UpdateClassUseCase(
             classRepository = classRepository,
             subjectRepository = subjectRepository
         )
     }
+    @Test
+    fun shouldEmitAnErrorWhenNoClassIdWasProvided(): Unit = runTest {
+        val exception = assertFailsWith<InvalidClassExceptions.ClassNotFound> {
+            updateClassUseCase(
+                params = UpdateClassParams(
+                    title = "Class",
+                    subjectId = "subjectID",
+                    start = LocalDateTime.now(),
+                    end = LocalDateTime.now(),
+                    noteTakingLink = "",
+                    observation = "",
+                    classId = ""
+                )
+            )
+        }
+        assertEquals("The class was not found.", exception.message)
+    }
 
     @Test
-    fun shouldEmitAnErrorWhenNoTitleProvided(): Unit = runTest {
+    fun shouldEmitAnErrorWhenNoTitleWasProvided(): Unit = runTest {
         val exception = assertFailsWith<InvalidClassExceptions.EmptyName> {
-            createClassUseCase(
-                params = CreateClassParams(
+            updateClassUseCase(
+                params = UpdateClassParams(
                     title = "",
                     subjectId = "subjectID",
                     start = LocalDateTime.now(),
                     end = LocalDateTime.now(),
                     noteTakingLink = "",
-                    observation = ""
+                    observation = "",
+                    classId = "ClassId"
                 )
             )
         }
@@ -55,14 +73,15 @@ class CreateClassUseCaseTest {
     @Test
     fun shouldEmitAnErrorWhenNoSubjectIdProvided(): Unit = runTest {
         val exception = assertFailsWith<InvalidClassExceptions.EmptySubject> {
-            createClassUseCase(
-                params = CreateClassParams(
+            updateClassUseCase(
+                params = UpdateClassParams(
                     title = "Test",
                     subjectId = "",
                     start = LocalDateTime.now(),
                     end = LocalDateTime.now(),
                     noteTakingLink = "",
-                    observation = ""
+                    observation = "",
+                    classId = "ClassId",
                 )
             )
         }
@@ -72,14 +91,15 @@ class CreateClassUseCaseTest {
     @Test
     fun shouldEmitAnErrorWhenInvalidDateTimeProvided(): Unit = runTest {
         val exception = assertFailsWith<InvalidClassExceptions.InvalidDateTime> {
-            createClassUseCase(
-                params = CreateClassParams(
+            updateClassUseCase(
+                params = UpdateClassParams(
                     title = "Test",
                     subjectId = "subjectID",
                     start = LocalDateTime.now(),
                     end = LocalDateTime.now().minusDays(1),
                     noteTakingLink = "",
-                    observation = ""
+                    observation = "",
+                    classId = "ClassId",
                 )
             )
         }
@@ -98,13 +118,14 @@ class CreateClassUseCaseTest {
                 end = LocalDateTime.now().plusDays(3)
             )
 
-            val stClass = CreateClassParams(
+            val stClass = UpdateClassParams(
                 title = "Test",
                 subjectId = "subjectId",
                 start = LocalDateTime.now().minusDays(2),
                 end = LocalDateTime.now().minusDays(1),
                 noteTakingLink = "",
-                observation = ""
+                observation = "",
+                classId = "ClassId",
             )
 
             every {
@@ -112,7 +133,7 @@ class CreateClassUseCaseTest {
             } returns flowOf(mockHeavySubject)
 
             val exception = assertFailsWith<InvalidClassExceptions.DateTimeOutOfSubjectBoundaries> {
-                createClassUseCase(
+                updateClassUseCase(
                     params = stClass
                 )
             }
@@ -131,13 +152,14 @@ class CreateClassUseCaseTest {
                 end = LocalDateTime.now().plusDays(3)
             )
 
-            val stClass = CreateClassParams(
+            val stClass = UpdateClassParams(
                 title = "Test",
                 subjectId = "subjectId",
                 start = LocalDateTime.now(),
                 end = LocalDateTime.now().plusDays(10),
                 noteTakingLink = "",
-                observation = ""
+                observation = "",
+                classId = "ClassId"
             )
 
             every {
@@ -145,7 +167,7 @@ class CreateClassUseCaseTest {
             } returns flowOf(mockHeavySubject)
 
             val exception = assertFailsWith<InvalidClassExceptions.DateTimeOutOfSubjectBoundaries> {
-                createClassUseCase(
+                updateClassUseCase(
                     params = stClass
                 )
             }
@@ -154,13 +176,14 @@ class CreateClassUseCaseTest {
 
     @Test
     fun shouldEmitErrorWhenSubjectIsNotFoundedInDatabase(): Unit = runTest {
-        val stClass = CreateClassParams(
+        val stClass = UpdateClassParams(
             title = "Test",
             subjectId = "Subject",
             start = LocalDateTime.now(),
             end = LocalDateTime.now().plusDays(10),
             noteTakingLink = "https://studentplanner.felipealafy.net",
-            observation = "This is a class"
+            observation = "This is a class",
+            classId = "ClassId",
         )
 
         every {
@@ -168,7 +191,7 @@ class CreateClassUseCaseTest {
         } returns flowOf(null)
 
         val exception = assertFailsWith<InvalidClassExceptions.SubjectDoesNotExist> {
-            createClassUseCase(stClass)
+            updateClassUseCase(stClass)
         }
 
         assertEquals("The provided subject does not exist in the data base.", exception.message)
@@ -176,7 +199,7 @@ class CreateClassUseCaseTest {
 
 
     @Test
-    fun shouldCreateAClassSuccessfully(): Unit = runTest {
+    fun shouldUpdateAClassSuccessfully(): Unit = runTest {
         val mockHeavySubject = Subject(
             id = "Subject",
             plannerId = "Planner",
@@ -185,23 +208,24 @@ class CreateClassUseCaseTest {
             start = LocalDateTime.now(),
             end = LocalDateTime.now().plusDays(3)
         )
-        val stClass = CreateClassParams(
+        val stClass = UpdateClassParams(
             title = "Test",
             subjectId = "Subject",
             start = LocalDateTime.now(),
             end = LocalDateTime.now().plusMinutes(50),
             noteTakingLink = "https://studentplanner.felipealafy.net",
-            observation = "This is a class"
+            observation = "This is a class",
+            classId = "ClassId"
         )
 
         every {
             subjectRepository.getSubjectById("Subject")
         } returns flowOf(mockHeavySubject)
 
-        createClassUseCase(stClass)
+        updateClassUseCase(stClass)
 
         coVerify(exactly = 1) {
-            classRepository.insert(any())
+            classRepository.update(any())
         }
     }
 }
