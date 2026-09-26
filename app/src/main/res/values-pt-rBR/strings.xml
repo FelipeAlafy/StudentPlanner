@@ -148,4 +148,9 @@
     <string name="reproved">reprovou</string>
     <string name="date_time_out_of_subject_boundaries_error">The Start and End dates should be inside of the subject Start/End interval.</string>
     <string name="subject_does_not_exist">The selected subject was possibly deleted on other device.</string>
+    <string name="delete_class_error">Not able to delete this class.</string>
+    <string name="delete_class">Delete this class?</string>
+    <string name="delete_class_confirmation">Are you sure that you want to delete this class?</string>
+    <string name="delete_successfully">Class deleted.</string>
+    <string name="database_error">An error occurred in the database.</string>
 </resources>

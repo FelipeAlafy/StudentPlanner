@@ -24,11 +24,14 @@ import net.felipealafy.studentplanner.feature_class.domain.use_case.UpdateClassU
 import net.felipealafy.studentplanner.feature_planner.domain.model.DetailedPlanner
 import net.felipealafy.studentplanner.feature_planner.domain.use_case.GetDetailedPlannerUseCase
 import net.felipealafy.studentplanner.core.ui.extensions.parseToDateTime
+import net.felipealafy.studentplanner.feature_class.domain.use_case.DeleteClassUseCase
 import javax.inject.Inject
 
 sealed interface EditStudentClassEvents {
     data class ShowError(@param:StringRes val messageResId: Int): EditStudentClassEvents
     data object ClassUpdatedSuccessfully: EditStudentClassEvents
+
+    data object ClassDeletedSuccessfully: EditStudentClassEvents
 }
 
 sealed interface EditStudentClassUiState {
@@ -45,7 +48,8 @@ class EditStudentClassViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getDetailedPlannerUseCase: GetDetailedPlannerUseCase,
     private val getClassUseCase: GetClassUseCase,
-    private val updateClassUseCase: UpdateClassUseCase
+    private val updateClassUseCase: UpdateClassUseCase,
+    private val deleteClassUseCase: DeleteClassUseCase
 
 ): ViewModel() {
     private val plannerId: String = checkNotNull(savedStateHandle["plannerId"])
@@ -126,6 +130,27 @@ class EditStudentClassViewModel @Inject constructor(
         _formState.update { it?.copy(observation = newObs) }
     }
 
+    suspend fun delete() {
+        try {
+            viewModelScope.launch {
+                deleteClassUseCase(classId)
+                _events.emit(EditStudentClassEvents.ClassDeletedSuccessfully)
+            }
+        } catch (e: InvalidClassExceptions) {
+            val errorMessageId = when (e) {
+                is InvalidClassExceptions.ClassNotFound -> R.string.class_not_founded_error
+                is InvalidClassExceptions.EmptyName -> R.string.empty_name_error
+                is InvalidClassExceptions.EmptySubject -> R.string.empty_subject_error
+                is InvalidClassExceptions.InvalidDateTime -> R.string.invalid_date_time_selection_error
+                is InvalidClassExceptions.DateTimeOutOfSubjectBoundaries -> R.string.date_time_out_of_subject_boundaries_error
+                is InvalidClassExceptions.SubjectDoesNotExist -> R.string.subject_does_not_exist
+                is InvalidClassExceptions.ClassDeletionError -> R.string.delete_class_error
+                is InvalidClassExceptions.ClassDeletionIODBError -> R.string.database_error
+            }
+            _events.emit(EditStudentClassEvents.ShowError(errorMessageId))
+        }
+    }
+
     fun saveStudentClass() {
         val currentForm = _formState.value ?: return
         if (currentForm.isValid) {
@@ -151,6 +176,8 @@ class EditStudentClassViewModel @Inject constructor(
                         is InvalidClassExceptions.InvalidDateTime -> R.string.invalid_date_time_selection_error
                         is InvalidClassExceptions.DateTimeOutOfSubjectBoundaries -> R.string.date_time_out_of_subject_boundaries_error
                         is InvalidClassExceptions.SubjectDoesNotExist -> R.string.subject_does_not_exist
+                        is InvalidClassExceptions.ClassDeletionError -> R.string.delete_class_error
+                        is InvalidClassExceptions.ClassDeletionIODBError -> R.string.database_error
                     }
                     _events.emit(EditStudentClassEvents.ShowError(errorMessageId))
                 }

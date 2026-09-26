@@ -28,8 +28,8 @@ interface ClassDao {
     @Update
     suspend fun update(data: ClassTable)
 
-    @Delete
-    suspend fun delete(data: ClassTable)
+    @Query("DELETE FROM class WHERE id = :id")
+    suspend fun delete(id: String): Int
     @Query("SELECT * FROM class WHERE subjectId = :subjectId ORDER BY start ASC")
     fun getClassesBySubjectId(subjectId: String): Flow<List<ClassTable>>
     @Query("SELECT * FROM class WHERE id = :id")

@@ -191,6 +191,14 @@ class StudentClassCreationViewModel @Inject constructor(
                         is InvalidClassExceptions.SubjectDoesNotExist -> {
                             _events.emit(ShowErrorToast(R.string.subject_does_not_exist))
                         }
+
+                        is InvalidClassExceptions.ClassDeletionError -> {
+                            _events.emit(ShowErrorToast(R.string.delete_class_error))
+                        }
+
+                        is InvalidClassExceptions.ClassDeletionIODBError -> {
+                            _events.emit(ShowErrorToast(R.string.database_error))
+                        }
                     }
                 }
 

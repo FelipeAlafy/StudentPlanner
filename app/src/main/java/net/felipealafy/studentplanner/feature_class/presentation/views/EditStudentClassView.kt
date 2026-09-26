@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -36,6 +37,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.runBlocking
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.feature_class.presentation.viewmodels.EditStudentClassEvents
 import net.felipealafy.studentplanner.feature_class.presentation.viewmodels.EditStudentClassUiState
@@ -59,6 +61,7 @@ fun EditStudentClassView(
 ) {
     var showStartDateTimeSelectorDialog by rememberSaveable { mutableStateOf(false) }
     var showEndDateTimeSelectorDialog by rememberSaveable { mutableStateOf(false) }
+    var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
 
     LaunchedEffect(key1 = Unit) {
@@ -70,6 +73,11 @@ fun EditStudentClassView(
 
                 is EditStudentClassEvents.ClassUpdatedSuccessfully -> {
                     Toast.makeText(context, R.string.update_successfully, Toast.LENGTH_SHORT).show()
+                    onReturnAction()
+                }
+
+                EditStudentClassEvents.ClassDeletedSuccessfully -> {
+                    Toast.makeText(context, R.string.delete_successfully, Toast.LENGTH_SHORT).show()
                     onReturnAction()
                 }
             }
@@ -127,11 +135,17 @@ fun EditStudentClassView(
                                 }
                             },
                             actions = {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.class_icon),
-                                    contentDescription = stringResource(R.string.class_is_not_able_to_save),
-                                    tint = PlannerTheme.colors.onSurface
-                                )
+                                IconButton(
+                                    onClick = {
+                                        showDeleteDialog = true
+                                    }
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.delete),
+                                        contentDescription = stringResource(R.string.delete),
+                                        tint = PlannerTheme.colors.onSurface
+                                    )
+                                }
                             },
                             colors = TopAppBarDefaults.topAppBarColors(
                                 containerColor = PlannerTheme.colors.surface
@@ -139,6 +153,41 @@ fun EditStudentClassView(
                         )
                     }
                 ) { innerPadding ->
+                    if (showDeleteDialog) {
+                        AlertDialog(
+                            onDismissRequest = { showDeleteDialog = false },
+                            title = { Text(text = stringResource(R.string.delete_class)) },
+                            text = { Text(text = stringResource(R.string.delete_class_confirmation)) },
+                            confirmButton = {
+                                IconButton(
+                                    onClick = {
+                                        runBlocking {
+                                            viewModel.delete()
+                                        }
+                                    }
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.delete),
+                                        contentDescription = stringResource(R.string.delete),
+                                        tint = PlannerTheme.colors.error
+                                    )
+                                }
+                            },
+                            dismissButton = {
+                                IconButton(
+                                    onClick = {
+                                        showDeleteDialog = false
+                                    }
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.back_arrow),
+                                        contentDescription = stringResource(R.string.back_to_past_view),
+                                        tint = PlannerTheme.colors.success
+                                    )
+                                }
+                            }
+                        )
+                    }
 
                     Column(
                         modifier = Modifier
