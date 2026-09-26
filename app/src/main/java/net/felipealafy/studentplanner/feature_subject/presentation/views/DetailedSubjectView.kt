@@ -60,7 +60,9 @@ import net.felipealafy.studentplanner.core.ui.theme.colorPallet
 @Composable
 fun DetailedSubjectView(
     detailedSubjectViewModel: DetailedSubjectViewModel,
-    onReturnAction: () -> Unit
+    onReturnAction: () -> Unit,
+    onClassClicked: (String, String) -> Unit,
+    onExamClicked: (String, String, String) -> Unit
 ) {
     val uiState by detailedSubjectViewModel.uiState.collectAsState()
 
@@ -141,12 +143,19 @@ fun DetailedSubjectView(
 
                         LazyColumn {
                             items(classes) {
-                                ClassCard(studentClass = it)
+                                ClassCard(
+                                    studentClass = it,
+                                    onClassClicked = onClassClicked
+                                )
                             }
 
 
                             items(exams) {
-                                ExamCard(exam = it)
+                                ExamCard(
+                                    exam = it,
+                                    plannerId = subject.plannerId,
+                                    onExamClicked = onExamClicked,
+                                )
                             }
                         }
                     }
@@ -191,7 +200,7 @@ fun SubjectGradeIndicator(averageGradeFormatted: String) {
 }
 
 @Composable
-fun ClassCard(studentClass: StudentClass) {
+fun ClassCard(studentClass: StudentClass, onClassClicked: (String, String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -201,7 +210,8 @@ fun ClassCard(studentClass: StudentClass) {
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 5.dp
-        )
+        ),
+        onClick = { onClassClicked(studentClass.subjectId, studentClass.id) }
     ) {
         ClassComponents(
             classTitle = studentClass.title,
@@ -217,12 +227,12 @@ private fun ClassComponents(
     classTitle: String,
     startDate: String,
     endDate: String,
-    noteTakingLink: String
+    noteTakingLink: String,
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 8.dp)
+            .padding(start = 8.dp),
     ) {
         SubjectTitle(title = classTitle)
         Spacer(modifier = Modifier.padding(top = 16.dp))
@@ -297,7 +307,7 @@ fun Date(startDate: String, endDate: String) {
 }
 
 @Composable
-fun ExamCard(exam: Exam) {
+fun ExamCard(exam: Exam, plannerId: String, onExamClicked: (String, String, String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -307,7 +317,10 @@ fun ExamCard(exam: Exam) {
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 5.dp
-        )
+        ),
+        onClick = {
+            onExamClicked(plannerId, exam.subjectId, exam.id)
+        }
     ) {
         ExamComponents(exam = exam)
     }
