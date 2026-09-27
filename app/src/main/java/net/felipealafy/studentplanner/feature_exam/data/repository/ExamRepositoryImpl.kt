@@ -10,6 +10,7 @@ import net.felipealafy.studentplanner.feature_exam.domain.repository.ExamReposit
 import java.time.LocalDateTime
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.jvm.Throws
 
 @Singleton
 class ExamRepositoryImpl @Inject constructor(private val dao : ExamDao): ExamRepository {
