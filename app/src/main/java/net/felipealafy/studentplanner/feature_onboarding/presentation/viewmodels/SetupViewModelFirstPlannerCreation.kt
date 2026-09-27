@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
+import net.felipealafy.studentplanner.feature_exam.domain.use_case.GradeStyle
 import net.felipealafy.studentplanner.feature_onboarding.domain.model.PlannerForm
 import net.felipealafy.studentplanner.feature_onboarding.domain.use_case.CreateFirstPlanner
 import net.felipealafy.studentplanner.feature_planner.domain.exception.InvalidPlannerException

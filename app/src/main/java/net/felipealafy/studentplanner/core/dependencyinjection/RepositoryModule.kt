@@ -6,8 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import net.felipealafy.studentplanner.feature_class.data.repository.ClassRepositoryImpl
 import net.felipealafy.studentplanner.feature_class.domain.repository.ClassRepository
-import net.felipealafy.studentplanner.feature_exams.data.repository.ExamRepositoryImpl
-import net.felipealafy.studentplanner.feature_exams.domain.repository.ExamRepository
+import net.felipealafy.studentplanner.feature_exam.data.repository.ExamRepositoryImpl
+import net.felipealafy.studentplanner.feature_exam.domain.repository.ExamRepository
 import net.felipealafy.studentplanner.feature_planner.data.repository.PlannerRepositoryImpl
 import net.felipealafy.studentplanner.feature_planner.domain.repository.PlannerRepository
 import net.felipealafy.studentplanner.feature_subject.data.repository.SubjectRepositoryImpl

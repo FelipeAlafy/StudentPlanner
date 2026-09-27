@@ -6,7 +6,7 @@ import net.felipealafy.studentplanner.feature_class.domain.model.StudentClass
 import java.time.LocalDateTime
 
 interface ClassRepository {
-    suspend fun delete(studentClass: StudentClass)
+    suspend fun delete(classId: String): Int
     suspend fun insert(studentClass: StudentClass)
     suspend fun update(studentClass: StudentClass)
     fun getClassById(classId: String): Flow<List<StudentClass>>

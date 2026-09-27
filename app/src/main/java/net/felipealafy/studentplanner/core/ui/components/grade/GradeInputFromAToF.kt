@@ -27,7 +27,7 @@ import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.core.ui.theme.DarkGray
 import net.felipealafy.studentplanner.core.ui.theme.PlannerTheme
 import net.felipealafy.studentplanner.core.ui.theme.Typography
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeAToF
+import net.felipealafy.studentplanner.feature_exam.domain.use_case.GradeAToF
 
 @Composable
 fun GradeInputFromAToF(onSelectItem: (GradeAToF) -> Unit) {

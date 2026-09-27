@@ -23,6 +23,7 @@ import net.felipealafy.studentplanner.feature_planner.domain.model.DetailedPlann
 import net.felipealafy.studentplanner.feature_planner.domain.use_case.GetDetailedPlannerUseCase
 import net.felipealafy.studentplanner.core.ui.extensions.parseToDateTime
 import net.felipealafy.studentplanner.core.ui.theme.colorPallet
+import net.felipealafy.studentplanner.feature_class.presentation.viewmodels.StudentClassCreationEvent.*
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -172,16 +173,31 @@ class StudentClassCreationViewModel @Inject constructor(
                 } catch (e: InvalidClassExceptions) {
                     when (e) {
                         is InvalidClassExceptions.ClassNotFound -> {
-                            _events.emit(StudentClassCreationEvent.ShowErrorToast(R.string.class_not_founded_error))
+                            _events.emit(ShowErrorToast(R.string.class_not_founded_error))
                         }
                         is InvalidClassExceptions.EmptyName -> {
-                            _events.emit(StudentClassCreationEvent.ShowErrorToast(R.string.empty_name_error))
+                            _events.emit(ShowErrorToast(R.string.empty_name_error))
                         }
                         is InvalidClassExceptions.EmptySubject -> {
-                            _events.emit(StudentClassCreationEvent.ShowErrorToast(R.string.empty_subject_error))
+                            _events.emit(ShowErrorToast(R.string.empty_subject_error))
                         }
                         is InvalidClassExceptions.InvalidDateTime -> {
-                            _events.emit(StudentClassCreationEvent.ShowErrorToast(R.string.invalid_date_time_selection_error))
+                            _events.emit(ShowErrorToast(R.string.invalid_date_time_selection_error))
+                        }
+
+                        is InvalidClassExceptions.DateTimeOutOfSubjectBoundaries -> {
+                            _events.emit(ShowErrorToast(R.string.date_time_out_of_subject_boundaries_error))
+                        }
+                        is InvalidClassExceptions.SubjectDoesNotExist -> {
+                            _events.emit(ShowErrorToast(R.string.subject_does_not_exist))
+                        }
+
+                        is InvalidClassExceptions.ClassDeletionError -> {
+                            _events.emit(ShowErrorToast(R.string.delete_class_error))
+                        }
+
+                        is InvalidClassExceptions.ClassDeletionIODBError -> {
+                            _events.emit(ShowErrorToast(R.string.database_error))
                         }
                     }
                 }

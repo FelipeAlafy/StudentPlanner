@@ -3,6 +3,7 @@ package net.felipealafy.studentplanner.feature_subject.presentation.views
 import net.felipealafy.studentplanner.core.ui.components.text.label.SubjectTitleForAnyCard
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -40,8 +42,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.feature_exams.data.local.Exam
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
+import net.felipealafy.studentplanner.feature_exam.data.local.Exam
+import net.felipealafy.studentplanner.feature_exam.domain.use_case.GradeStyle
 import net.felipealafy.studentplanner.feature_class.domain.model.StudentClass
 import net.felipealafy.studentplanner.feature_subject.presentation.viewmodels.DetailedSubjectViewModel
 import net.felipealafy.studentplanner.feature_subject.presentation.viewmodels.SubjectDetailsUiState
@@ -53,11 +55,19 @@ import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
 import net.felipealafy.studentplanner.core.ui.theme.Typography
 import net.felipealafy.studentplanner.feature_planner.presentation.views.SubjectTitle
 import net.felipealafy.studentplanner.core.ui.extensions.formattedValue
+import net.felipealafy.studentplanner.core.ui.extensions.getFormattedDateTime
 import net.felipealafy.studentplanner.core.ui.extensions.getValueInDisplayStyle
+import net.felipealafy.studentplanner.core.ui.theme.colorPallet
+import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailedSubjectView(detailedSubjectViewModel: DetailedSubjectViewModel) {
+fun DetailedSubjectView(
+    detailedSubjectViewModel: DetailedSubjectViewModel,
+    onReturnAction: () -> Unit,
+    onClassClicked: (String, String) -> Unit,
+    onExamClicked: (String, String, String) -> Unit
+) {
     val uiState by detailedSubjectViewModel.uiState.collectAsState()
 
     when (val state = uiState) {
@@ -66,11 +76,13 @@ fun DetailedSubjectView(detailedSubjectViewModel: DetailedSubjectViewModel) {
                 Text(text = "Erro: ${state.exception}", color = Color.Red)
             }
         }
+
         is SubjectDetailsUiState.Loading -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator(color = PlannerTheme.colors.primary)
+                CircularProgressIndicator(color = Color(colorPallet[0][1]))
             }
         }
+
         is SubjectDetailsUiState.Success -> {
             val detailedSubject = state.data
             val subject = detailedSubject.subject
@@ -81,7 +93,7 @@ fun DetailedSubjectView(detailedSubjectViewModel: DetailedSubjectViewModel) {
                 baseColor = subject.color
             ) {
                 Scaffold(
-                    containerColor = PlannerTheme.colors.container,
+                    containerColor = PlannerTheme.colors.background,
                     topBar = {
                         TopAppBar(
                             title = {
@@ -95,16 +107,16 @@ fun DetailedSubjectView(detailedSubjectViewModel: DetailedSubjectViewModel) {
                                 }
                             },
                             colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = PlannerTheme.colors.primary
+                                containerColor = PlannerTheme.colors.surface
                             ),
                             navigationIcon = {
                                 IconButton(
-                                    onClick = {}
+                                    onClick = { onReturnAction() }
                                 ) {
                                     Icon(
                                         painter = painterResource(R.drawable.back_arrow),
                                         contentDescription = stringResource(R.string.back_to_past_view),
-                                        tint = PlannerTheme.colors.onPrimary
+                                        tint = PlannerTheme.colors.onSurface
                                     )
                                 }
                             },
@@ -113,7 +125,7 @@ fun DetailedSubjectView(detailedSubjectViewModel: DetailedSubjectViewModel) {
                                     onClick = {}
                                 ) {
                                     Icon(
-                                        painter = painterResource(R.drawable.edit_document),
+                                        painter = painterResource(R.drawable.subject),
                                         contentDescription = stringResource(R.string.go_on_edit_mode_for_subject),
                                         tint = PlannerTheme.colors.onPrimary
                                     )
@@ -128,16 +140,41 @@ fun DetailedSubjectView(detailedSubjectViewModel: DetailedSubjectViewModel) {
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
-                        SubjectBox(detailedSubject.countClassesTaken, detailedSubject.averageGrade.toString())
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(4.dp)
+                                .background(PlannerTheme.colors.surface)
+                                .padding(start = 4.dp, end = 8.dp)
+                                .border(
+                                    width = 8.dp,
+                                    color = PlannerTheme.colors.primary,
+                                    shape = RoundedCornerShape(16.dp)
+                                )
+                        ) { }
+
+                        SubjectBox(
+                            detailedSubject.countClassesTaken,
+                            detailedSubject.averageGrade.toString(),
+                            start = detailedSubject.subject.start,
+                            end = detailedSubject.subject.end,
+                        )
 
                         LazyColumn {
                             items(classes) {
-                                ClassCard(studentClass = it)
+                                ClassCard(
+                                    studentClass = it,
+                                    onClassClicked = onClassClicked
+                                )
                             }
 
 
                             items(exams) {
-                                ExamCard(exam = it)
+                                ExamCard(
+                                    exam = it,
+                                    plannerId = subject.plannerId,
+                                    onExamClicked = onExamClicked,
+                                )
                             }
                         }
                     }
@@ -148,12 +185,17 @@ fun DetailedSubjectView(detailedSubjectViewModel: DetailedSubjectViewModel) {
 }
 
 @Composable
-fun SubjectBox(countClassesTaken: Int, averageGradeFormatted: String) {
+fun SubjectBox(
+    countClassesTaken: Int,
+    averageGradeFormatted: String,
+    start: LocalDateTime,
+    end: LocalDateTime
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = PlannerTheme.colors.cardTop,
+                color = PlannerTheme.colors.surface,
                 shape = RoundedCornerShape(
                     topStart = 0.dp,
                     topEnd = 0.dp,
@@ -167,6 +209,26 @@ fun SubjectBox(countClassesTaken: Int, averageGradeFormatted: String) {
         SubjectTitleForAnyCard(stringResource(R.string.about_this_subject))
         ClassesTaken(countClassesTaken)
         SubjectGradeIndicator(averageGradeFormatted)
+        Column (
+            modifier = Modifier.fillMaxWidth(0.95F).background(PlannerTheme.colors.cardTop, shape = RoundedCornerShape(16.dp)).padding(16.dp),
+        ) {
+            Row {
+                Icon(
+                    painter = painterResource(R.drawable.calendar_start),
+                    tint = PlannerTheme.colors.onSurface,
+                    contentDescription = stringResource(R.string.subject_period)
+                )
+                Text(text = stringResource(R.string.subject_period), style = Typography.labelLarge)
+            }
+            Text(
+                text = "${stringResource(R.string.start_date)} ${start.getFormattedDateTime()}",
+                style = Typography.labelSmall
+            )
+            Text(
+                text = " ${stringResource(R.string.end_date)} ${end.getFormattedDateTime()}",
+                style = Typography.labelSmall
+            )
+        }
         Spacer(modifier = Modifier.padding(bottom = 8.dp))
     }
 }
@@ -174,12 +236,15 @@ fun SubjectBox(countClassesTaken: Int, averageGradeFormatted: String) {
 @Composable
 fun SubjectGradeIndicator(averageGradeFormatted: String) {
     Row {
-        AverageGrade(averageGradeFormatted = averageGradeFormatted, text =  R.string.subject_grade_indicator)
+        AverageGrade(
+            averageGradeFormatted = averageGradeFormatted,
+            text = R.string.subject_grade_indicator
+        )
     }
 }
 
 @Composable
-fun ClassCard(studentClass: StudentClass) {
+fun ClassCard(studentClass: StudentClass, onClassClicked: (String, String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -189,7 +254,8 @@ fun ClassCard(studentClass: StudentClass) {
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 5.dp
-        )
+        ),
+        onClick = { onClassClicked(studentClass.subjectId, studentClass.id) }
     ) {
         ClassComponents(
             classTitle = studentClass.title,
@@ -201,11 +267,16 @@ fun ClassCard(studentClass: StudentClass) {
 }
 
 @Composable
-private fun ClassComponents(classTitle: String, startDate: String, endDate: String, noteTakingLink: String) {
+private fun ClassComponents(
+    classTitle: String,
+    startDate: String,
+    endDate: String,
+    noteTakingLink: String,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 8.dp)
+            .padding(start = 8.dp),
     ) {
         SubjectTitle(title = classTitle)
         Spacer(modifier = Modifier.padding(top = 16.dp))
@@ -238,7 +309,11 @@ fun NoteTakingLink(classTitle: String, noteTakingLink: String) {
             contentDescription = stringResource(R.string.notetaking_link),
             tint = PlannerTheme.colors.onCardTop
         )
-        Text(annotatedLink, modifier = Modifier.padding(start = 8.dp, top = 8.dp), style = Typography.labelMedium)
+        Text(
+            annotatedLink,
+            modifier = Modifier.padding(start = 8.dp, top = 8.dp),
+            style = Typography.labelMedium
+        )
     }
 }
 
@@ -253,14 +328,8 @@ fun Date(startDate: String, endDate: String) {
                 contentDescription = stringResource(R.string.date_icon),
                 tint = PlannerTheme.colors.onCardTop
             )
-            Spacer(modifier = Modifier.padding(end= 8.dp))
+            Spacer(modifier = Modifier.padding(end = 8.dp))
             Column {
-                Text(
-                    text = "${stringResource(R.string.subject_period)}:",
-                    style = Typography.labelMedium,
-                    color = PlannerTheme.colors.onCardTop
-                )
-                Spacer(modifier = Modifier.padding(start = 16.dp))
                 Text(
                     text = "${stringResource(R.string.from)} $startDate → ${
                         stringResource(
@@ -276,7 +345,7 @@ fun Date(startDate: String, endDate: String) {
 }
 
 @Composable
-fun ExamCard(exam: Exam) {
+fun ExamCard(exam: Exam, plannerId: String, onExamClicked: (String, String, String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -286,7 +355,10 @@ fun ExamCard(exam: Exam) {
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 5.dp
-        )
+        ),
+        onClick = {
+            onExamClicked(plannerId, exam.subjectId, exam.id)
+        }
     ) {
         ExamComponents(exam = exam)
     }
@@ -316,14 +388,9 @@ fun ExamDate(startDate: String, endDate: String) {
                 contentDescription = stringResource(R.string.date_icon),
                 tint = PlannerTheme.colors.onCardTop
             )
-            Column (
+            Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Text(
-                    text = "${stringResource(R.string.subject_period)}:",
-                    style = Typography.labelMedium,
-                    color = PlannerTheme.colors.onCardTop
-                )
                 Text(
                     text = "${stringResource(R.string.from)} $startDate → ${
                         stringResource(
@@ -353,7 +420,7 @@ fun ExamGrade(
             modifier = Modifier.padding(start = 8.dp),
             text = stringResource(text) +
                     " ${displayStyle.getValueInDisplayStyle(value = grade)} " +
-            stringResource(R.string.on_this_exam),
+                    stringResource(R.string.on_this_exam),
             style = Typography.labelLarge,
             color = PlannerTheme.colors.onCardTop
         )

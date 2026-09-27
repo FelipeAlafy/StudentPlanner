@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
@@ -8,14 +7,15 @@ plugins {
 
 android {
     namespace = "net.felipealafy.studentplanner"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "net.felipealafy.studentplanner"
         minSdk = 26
+        //noinspection OldTargetApi
         targetSdk = 36
-        versionCode = (project.findProperty("versionCode") as String?)?.toInt() ?: 4
-        versionName = (project.findProperty("versionName") as String?) ?: "1.0.8"
+        versionCode = (project.findProperty("versionCode") as String?)?.toInt() ?: 5
+        versionName = (project.findProperty("versionName") as String?) ?: "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -33,16 +33,14 @@ android {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
-    kotlinOptions {
-        jvmTarget = "21"
-    }
     buildFeatures {
         compose = true
     }
 }
 
+@Suppress("UnusedOptionalImplementation")
 dependencies {
-
+    implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -67,4 +65,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
+    androidTestImplementation(libs.mockk.android)
+    testImplementation(kotlin("test"))
 }

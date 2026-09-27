@@ -49,9 +49,8 @@ class ClassRepositoryImpl @Inject constructor(private val dao: ClassDao): ClassR
         dao.insert(entity)
     }
 
-    override suspend fun delete(studentClass: StudentClass) {
-        val entity: ClassTable = studentClass.toDatabaseEntity()
-        dao.delete(entity)
+    override suspend fun delete(classId: String): Int {
+        return dao.delete(classId)
     }
 
     override suspend fun update(studentClass: StudentClass) {

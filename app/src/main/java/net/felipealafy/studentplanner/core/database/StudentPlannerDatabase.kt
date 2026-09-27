@@ -9,8 +9,8 @@ import net.felipealafy.studentplanner.feature_class.data.local.ClassDao
 import net.felipealafy.studentplanner.feature_planner.data.local.PlannerDao
 import net.felipealafy.studentplanner.feature_subject.data.local.SubjectDao
 import net.felipealafy.studentplanner.feature_class.data.local.ClassTable
-import net.felipealafy.studentplanner.feature_exams.data.local.ExamDao
-import net.felipealafy.studentplanner.feature_exams.data.local.ExamTable
+import net.felipealafy.studentplanner.feature_exam.data.local.ExamDao
+import net.felipealafy.studentplanner.feature_exam.data.local.ExamTable
 import net.felipealafy.studentplanner.feature_planner.data.local.PlannerTable
 import net.felipealafy.studentplanner.feature_subject.data.local.SubjectTable
 

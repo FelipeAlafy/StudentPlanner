@@ -11,7 +11,7 @@ interface SubjectRepository {
     suspend fun delete(subject: Subject)
 
     fun getAllSubjects(): Flow<List<Subject>>
-    fun getSubjectById(subjectId: String): Flow<List<Subject>>
+    fun getSubjectById(subjectId: String): Flow<Subject?>
     fun getAllSubjectsOfAPlanner(plannerId: String): Flow<List<Subject>>
     fun getSubjectWithDetails(subjectId: String): Flow<DetailedSubject?>
 }

@@ -1,11 +1,11 @@
 package net.felipealafy.studentplanner.core.ui.extensions
 
 import net.felipealafy.studentplanner.R
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle.FROM_A_TO_F
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle.FROM_A_TO_F_WITH_E
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle.FROM_ZERO_TO_ONE_HUNDRED
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle.FROM_ZERO_TO_TEN
+import net.felipealafy.studentplanner.feature_exam.domain.use_case.GradeStyle
+import net.felipealafy.studentplanner.feature_exam.domain.use_case.GradeStyle.FROM_A_TO_F
+import net.felipealafy.studentplanner.feature_exam.domain.use_case.GradeStyle.FROM_A_TO_F_WITH_E
+import net.felipealafy.studentplanner.feature_exam.domain.use_case.GradeStyle.FROM_ZERO_TO_ONE_HUNDRED
+import net.felipealafy.studentplanner.feature_exam.domain.use_case.GradeStyle.FROM_ZERO_TO_TEN
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime

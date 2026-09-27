@@ -146,4 +146,15 @@
     <string name="not_started">não começou</string>
     <string name="in_progress">em andamento</string>
     <string name="reproved">reprovou</string>
+    <string name="date_time_out_of_subject_boundaries_error">The Start and End dates should be inside of the subject Start/End interval.</string>
+    <string name="subject_does_not_exist">The selected subject was possibly deleted on other device.</string>
+    <string name="delete_class_error">Not able to delete this class.</string>
+    <string name="delete_class">Delete this class?</string>
+    <string name="delete_class_confirmation">Are you sure that you want to delete this class?</string>
+    <string name="delete_successfully">Class deleted.</string>
+    <string name="database_error">An error occurred in the database.</string>
+    <string name="delete_error">Was not able to delete.</string>
+    <string name="selected_date_is_out_of_subject_boundaries">Please select exam dates that fit within the subject\'s schedule.</string>
+    <string name="start_date">"Início: "</string>
+    <string name="end_date">"Fim: "</string>
 </resources>

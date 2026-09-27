@@ -135,6 +135,7 @@ class SubjectCreationViewModel @Inject constructor(
                         end = form.end
                     )
                 )
+                _events.emit(SubjectCreationEvent.SubjectCreatedSuccessfully)
             } catch (e: Exception) {
                 when (e) {
                     is InvalidSubjectExceptions.InvalidDateSelection -> {
@@ -143,7 +144,7 @@ class SubjectCreationViewModel @Inject constructor(
                     is InvalidSubjectExceptions.EmptyName -> {
                         _events.emit(SubjectCreationEvent.ShowError(R.string.empty_name_error))
                     }
-                    is InvalidSubjectExceptions.PlannerNotFound -> {
+                    is InvalidSubjectExceptions.SubjectNotFound -> {
                         _events.emit(SubjectCreationEvent.ShowError(R.string.planner_not_found))
                     }
                 }

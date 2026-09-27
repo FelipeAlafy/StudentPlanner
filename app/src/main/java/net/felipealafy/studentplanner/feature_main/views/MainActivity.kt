@@ -18,12 +18,12 @@ import net.felipealafy.studentplanner.feature_class.presentation.viewmodels.Stud
 import net.felipealafy.studentplanner.feature_class.presentation.views.DetailedClassView
 import net.felipealafy.studentplanner.feature_class.presentation.views.EditStudentClassView
 import net.felipealafy.studentplanner.feature_class.presentation.views.StudentClassCreationView
-import net.felipealafy.studentplanner.feature_exams.presentation.viewmodels.DetailedExamViewModel
-import net.felipealafy.studentplanner.feature_exams.presentation.viewmodels.EditExamViewModel
-import net.felipealafy.studentplanner.feature_exams.presentation.viewmodels.ExamCreationViewModel
-import net.felipealafy.studentplanner.feature_exams.presentation.views.DetailedExamView
-import net.felipealafy.studentplanner.feature_exams.presentation.views.EditExamView
-import net.felipealafy.studentplanner.feature_exams.presentation.views.ExamCreationView
+import net.felipealafy.studentplanner.feature_exam.presentation.viewmodels.DetailedExamViewModel
+import net.felipealafy.studentplanner.feature_exam.presentation.viewmodels.EditExamViewModel
+import net.felipealafy.studentplanner.feature_exam.presentation.viewmodels.ExamCreationViewModel
+import net.felipealafy.studentplanner.feature_exam.presentation.views.DetailedExamView
+import net.felipealafy.studentplanner.feature_exam.presentation.views.EditExamView
+import net.felipealafy.studentplanner.feature_exam.presentation.views.ExamCreationView
 import net.felipealafy.studentplanner.feature_main.viewmodels.MainViewModel
 import net.felipealafy.studentplanner.feature_onboarding.presentation.views.WelcomeView
 import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.DetailedPlannerViewModel
@@ -38,6 +38,8 @@ import net.felipealafy.studentplanner.core.ui.theme.StudentPlannerTheme
 import net.felipealafy.studentplanner.feature_main.routes.StudentPlannerRoutes
 import net.felipealafy.studentplanner.feature_stopwatch.presentation.view.StopWatchView
 import net.felipealafy.studentplanner.feature_stopwatch.presentation.viewmodel.StopWatchViewModel
+import net.felipealafy.studentplanner.feature_subject.presentation.viewmodels.DetailedSubjectViewModel
+import net.felipealafy.studentplanner.feature_subject.presentation.views.DetailedSubjectView
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -79,28 +81,59 @@ class MainActivity : ComponentActivity() {
                         TodayView(
                             viewModel = todayViewModel,
                             onStudentClassClicked = { plannerId, subjectId ->
-                                navController.navigate(StudentPlannerRoutes.DetailedClassView.createRoute(plannerId, subjectId))
+                                navController.navigate(
+                                    StudentPlannerRoutes.DetailedClassView.createRoute(
+                                        plannerId,
+                                        subjectId
+                                    )
+                                )
                             },
                             onExamClicked = { plannerId, subjectId, examId ->
-                                navController.navigate(StudentPlannerRoutes.DetailedExamView.createRoute(plannerId, subjectId, examId))
+                                navController.navigate(
+                                    StudentPlannerRoutes.DetailedExamView.createRoute(
+                                        plannerId,
+                                        subjectId,
+                                        examId
+                                    )
+                                )
                             },
                             onCreatePlannerClicked = {
                                 navController.navigate(StudentPlannerRoutes.SetupView.route)
                             },
                             onCreateSubjectClicked = { plannerId ->
-                                navController.navigate(StudentPlannerRoutes.SubjectCreationView.createRoute(plannerId))
+                                navController.navigate(
+                                    StudentPlannerRoutes.SubjectCreationView.createRoute(
+                                        plannerId
+                                    )
+                                )
                             },
                             onCreateClassClicked = { plannerId ->
-                                navController.navigate(StudentPlannerRoutes.StudentClassCreationView.createRoute(plannerId))
+                                navController.navigate(
+                                    StudentPlannerRoutes.StudentClassCreationView.createRoute(
+                                        plannerId
+                                    )
+                                )
                             },
                             onCreateExamClicked = { plannerId ->
-                                navController.navigate(StudentPlannerRoutes.ExamCreationView.createRoute(plannerId))
+                                navController.navigate(
+                                    StudentPlannerRoutes.ExamCreationView.createRoute(
+                                        plannerId
+                                    )
+                                )
                             },
                             onAccessDetailedPlannerView = { plannerId ->
-                                navController.navigate(StudentPlannerRoutes.DetailedPlannerView.createRoute(plannerId))
+                                navController.navigate(
+                                    StudentPlannerRoutes.DetailedPlannerView.createRoute(
+                                        plannerId
+                                    )
+                                )
                             },
                             onStopWatchClicked = { plannerId ->
-                                navController.navigate(StudentPlannerRoutes.StopWatchView.createRoute(plannerId))
+                                navController.navigate(
+                                    StudentPlannerRoutes.StopWatchView.createRoute(
+                                        plannerId
+                                    )
+                                )
                             }
                         )
                     }
@@ -111,7 +144,46 @@ class MainActivity : ComponentActivity() {
                         val viewModel: DetailedPlannerViewModel = hiltViewModel()
                         DetailedPlannerView(
                             viewModel = viewModel,
-                            onReturnToPreviousView = { navController.popBackStack() }
+                            onReturnToPreviousView = { navController.popBackStack() },
+                            onSubjectClicked = { plannerId, subjectId ->
+                                navController.navigate(
+                                    StudentPlannerRoutes.DetailedSubjectView.createRoute(
+                                        plannerId,
+                                        subjectId
+                                    )
+                                )
+                            },
+                        )
+                    }
+
+                    composable(
+                        route = StudentPlannerRoutes.DetailedSubjectView.route,
+                        arguments = listOf(
+                            navArgument("plannerId") { type = NavType.StringType },
+                            navArgument("subjectId") { type = NavType.StringType }
+                        ),
+                    ) {
+                        val viewModel: DetailedSubjectViewModel = hiltViewModel()
+                        DetailedSubjectView(
+                            detailedSubjectViewModel = viewModel,
+                            onReturnAction = { navController.popBackStack() },
+                            onClassClicked = { subjectId, classId ->
+                                navController.navigate(
+                                    StudentPlannerRoutes.DetailedClassView.createRoute(
+                                        subjectId = subjectId,
+                                        studentClassId = classId
+                                    )
+                                )
+                            },
+                            onExamClicked = { plannerId, subjectId, examId ->
+                                navController.navigate(
+                                    StudentPlannerRoutes.DetailedExamView.createRoute(
+                                        plannerId = plannerId,
+                                        subjectId = subjectId,
+                                        examId = examId
+                                    )
+                                )
+                            },
                         )
                     }
 
@@ -161,7 +233,13 @@ class MainActivity : ComponentActivity() {
                         DetailedClassView(
                             viewModel,
                             onEditMode = { plannerId, subjectId, classId ->
-                                navController.navigate(StudentPlannerRoutes.EditingClassView.createRoute(plannerId, subjectId, classId))
+                                navController.navigate(
+                                    StudentPlannerRoutes.EditingClassView.createRoute(
+                                        plannerId,
+                                        subjectId,
+                                        classId
+                                    )
+                                )
                             },
                             onReturnAction = { navController.popBackStack() }
                         )
@@ -206,7 +284,13 @@ class MainActivity : ComponentActivity() {
                         DetailedExamView(
                             viewModel = viewModel,
                             onEditMode = { plannerId, subjectId, examId ->
-                                navController.navigate(StudentPlannerRoutes.EditExamView.createRoute(plannerId, subjectId, examId))
+                                navController.navigate(
+                                    StudentPlannerRoutes.EditExamView.createRoute(
+                                        plannerId,
+                                        subjectId,
+                                        examId
+                                    )
+                                )
                             },
                             onReturnAction = { navController.popBackStack() }
                         )
@@ -254,7 +338,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    composable (
+                    composable(
                         route = StudentPlannerRoutes.StopWatchView.route,
                         arguments = listOf(
                             navArgument("plannerId") { type = NavType.StringType }

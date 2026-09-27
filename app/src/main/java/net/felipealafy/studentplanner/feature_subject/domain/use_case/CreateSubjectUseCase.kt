@@ -1,8 +1,8 @@
 package net.felipealafy.studentplanner.feature_subject.domain.use_case
 
-import net.felipealafy.studentplanner.feature_subject.data.repository.SubjectRepositoryImpl
 import net.felipealafy.studentplanner.feature_subject.domain.exception.InvalidSubjectExceptions
 import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
+import net.felipealafy.studentplanner.feature_subject.domain.repository.SubjectRepository
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
@@ -16,7 +16,7 @@ data class CreateSubjectParams(
 )
 
 class CreateSubjectUseCase @Inject constructor(
-    private val repository: SubjectRepositoryImpl
+    private val repository: SubjectRepository
 ) {
     suspend operator fun invoke(params: CreateSubjectParams) {
         if (params.name.isBlank()) {

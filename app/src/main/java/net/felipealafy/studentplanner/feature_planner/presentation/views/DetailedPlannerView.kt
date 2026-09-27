@@ -39,7 +39,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import net.felipealafy.studentplanner.R
 import net.felipealafy.studentplanner.core.ui.components.text.label.ClassesTaken
-import net.felipealafy.studentplanner.feature_exams.domain.use_case.GradeStyle
+import net.felipealafy.studentplanner.feature_exam.domain.use_case.GradeStyle
 import net.felipealafy.studentplanner.feature_planner.domain.model.Planner
 import net.felipealafy.studentplanner.feature_planner.presentation.viewmodels.DetailedPlannerUiState
 import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
@@ -59,7 +59,8 @@ import net.felipealafy.studentplanner.feature_subject.domain.model.SubjectStatus
 @Composable
 fun DetailedPlannerView(
     viewModel: DetailedPlannerViewModel,
-    onReturnToPreviousView: () -> Unit
+    onReturnToPreviousView: () -> Unit,
+    onSubjectClicked: (String, String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -155,7 +156,8 @@ fun DetailedPlannerView(
                         )
                         SubjectsColumn(
                             subjects = detailedPlanner.subjects,
-                            minimumGradeToPass = planner.minimumGradeToPass
+                            minimumGradeToPass = planner.minimumGradeToPass,
+                            onSubjectClicked = onSubjectClicked,
                         )
                     }
                 }
@@ -272,7 +274,11 @@ fun PercentageText(percentage: Float) {
 }
 
 @Composable
-fun SubjectsColumn(subjects: List<DetailedSubject>, minimumGradeToPass: Float) {
+fun SubjectsColumn(
+    subjects: List<DetailedSubject>,
+    minimumGradeToPass: Float,
+    onSubjectClicked: (String, String) -> Unit
+) {
     LazyColumn {
         items(subjects) { detailedSubject ->
             SubjectCard(
@@ -282,7 +288,10 @@ fun SubjectsColumn(subjects: List<DetailedSubject>, minimumGradeToPass: Float) {
                 formattedAverage = detailedSubject.averageGrade.toString(),
                 countClassTaken = detailedSubject.countClassesTaken,
                 isSubjectApproved = detailedSubject.isApproved(minimumGradeToPass),
-                subjectColor = detailedSubject.subject.color
+                subjectColor = detailedSubject.subject.color,
+                plannerId = detailedSubject.subject.id,
+                subjectId = detailedSubject.subject.id,
+                onSubjectClicked = onSubjectClicked,
             )
         }
     }
@@ -296,7 +305,10 @@ fun SubjectCard(
     formattedAverage: String,
     countClassTaken: Int,
     isSubjectApproved: SubjectStatus,
-    subjectColor: Long
+    subjectColor: Long,
+    plannerId: String,
+    subjectId: String,
+    onSubjectClicked: (String, String) -> Unit
 ) {
     PlannerThemeProvider(baseColor = subjectColor) {
         Card(
@@ -308,7 +320,8 @@ fun SubjectCard(
             ),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 5.dp
-            )
+            ),
+            onClick = { onSubjectClicked(plannerId, subjectId) }
         ) {
             SubjectCardComponents(
                 subjectName = subjectName,

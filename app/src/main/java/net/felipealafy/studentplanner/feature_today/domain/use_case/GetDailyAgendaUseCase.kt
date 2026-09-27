@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import net.felipealafy.studentplanner.feature_class.data.repository.ClassRepositoryImpl
-import net.felipealafy.studentplanner.feature_exams.data.repository.ExamRepositoryImpl
+import net.felipealafy.studentplanner.feature_exam.data.repository.ExamRepositoryImpl
 import net.felipealafy.studentplanner.feature_planner.data.repository.PlannerRepositoryImpl
 import net.felipealafy.studentplanner.feature_planner.domain.model.DetailedPlanner
 import net.felipealafy.studentplanner.feature_subject.data.repository.SubjectRepositoryImpl
