@@ -225,4 +225,6 @@ private fun getErrorStringRes(e: InvalidExamExceptions): Int = when (e) {
     is InvalidExamExceptions.ExamDeletionError -> R.string.delete_error
     is InvalidExamExceptions.ExamDeletionIODBError -> R.string.database_error
     is InvalidExamExceptions.ExamNotFound -> R.string.exam_not_founded
+    is InvalidExamExceptions.SelectedDateIsOutOfSubjectPeriodBoundaries -> R.string.selected_date_is_out_of_subject_boundaries
+    is InvalidExamExceptions.SubjectDoesNotExistAnyMore -> R.string.subject_does_not_exist
 }

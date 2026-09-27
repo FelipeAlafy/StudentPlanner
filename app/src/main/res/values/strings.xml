@@ -153,4 +153,5 @@
     <string name="delete_successfully">Class deleted.</string>
     <string name="database_error">An error occurred in the database.</string>
     <string name="delete_error">Was not able to delete.</string>
+    <string name="selected_date_is_out_of_subject_boundaries">Please select exam dates that fit within the subject\'s schedule.</string>
 </resources>
