@@ -155,4 +155,6 @@
     <string name="database_error">An error occurred in the database.</string>
     <string name="delete_error">Was not able to delete.</string>
     <string name="selected_date_is_out_of_subject_boundaries">Please select exam dates that fit within the subject\'s schedule.</string>
+    <string name="start_date">"Início: "</string>
+    <string name="end_date">"Fim: "</string>
 </resources>

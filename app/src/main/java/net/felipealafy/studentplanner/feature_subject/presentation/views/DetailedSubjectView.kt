@@ -3,6 +3,7 @@ package net.felipealafy.studentplanner.feature_subject.presentation.views
 import net.felipealafy.studentplanner.core.ui.components.text.label.SubjectTitleForAnyCard
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -53,8 +55,10 @@ import net.felipealafy.studentplanner.core.ui.theme.PlannerThemeProvider
 import net.felipealafy.studentplanner.core.ui.theme.Typography
 import net.felipealafy.studentplanner.feature_planner.presentation.views.SubjectTitle
 import net.felipealafy.studentplanner.core.ui.extensions.formattedValue
+import net.felipealafy.studentplanner.core.ui.extensions.getFormattedDateTime
 import net.felipealafy.studentplanner.core.ui.extensions.getValueInDisplayStyle
 import net.felipealafy.studentplanner.core.ui.theme.colorPallet
+import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -89,7 +93,7 @@ fun DetailedSubjectView(
                 baseColor = subject.color
             ) {
                 Scaffold(
-                    containerColor = PlannerTheme.colors.container,
+                    containerColor = PlannerTheme.colors.background,
                     topBar = {
                         TopAppBar(
                             title = {
@@ -103,7 +107,7 @@ fun DetailedSubjectView(
                                 }
                             },
                             colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = PlannerTheme.colors.primary
+                                containerColor = PlannerTheme.colors.surface
                             ),
                             navigationIcon = {
                                 IconButton(
@@ -112,7 +116,7 @@ fun DetailedSubjectView(
                                     Icon(
                                         painter = painterResource(R.drawable.back_arrow),
                                         contentDescription = stringResource(R.string.back_to_past_view),
-                                        tint = PlannerTheme.colors.onPrimary
+                                        tint = PlannerTheme.colors.onSurface
                                     )
                                 }
                             },
@@ -121,7 +125,7 @@ fun DetailedSubjectView(
                                     onClick = {}
                                 ) {
                                     Icon(
-                                        painter = painterResource(R.drawable.edit_document),
+                                        painter = painterResource(R.drawable.subject),
                                         contentDescription = stringResource(R.string.go_on_edit_mode_for_subject),
                                         tint = PlannerTheme.colors.onPrimary
                                     )
@@ -136,9 +140,24 @@ fun DetailedSubjectView(
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(4.dp)
+                                .background(PlannerTheme.colors.surface)
+                                .padding(start = 4.dp, end = 8.dp)
+                                .border(
+                                    width = 8.dp,
+                                    color = PlannerTheme.colors.primary,
+                                    shape = RoundedCornerShape(16.dp)
+                                )
+                        ) { }
+
                         SubjectBox(
                             detailedSubject.countClassesTaken,
-                            detailedSubject.averageGrade.toString()
+                            detailedSubject.averageGrade.toString(),
+                            start = detailedSubject.subject.start,
+                            end = detailedSubject.subject.end,
                         )
 
                         LazyColumn {
@@ -166,12 +185,17 @@ fun DetailedSubjectView(
 }
 
 @Composable
-fun SubjectBox(countClassesTaken: Int, averageGradeFormatted: String) {
+fun SubjectBox(
+    countClassesTaken: Int,
+    averageGradeFormatted: String,
+    start: LocalDateTime,
+    end: LocalDateTime
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = PlannerTheme.colors.cardTop,
+                color = PlannerTheme.colors.surface,
                 shape = RoundedCornerShape(
                     topStart = 0.dp,
                     topEnd = 0.dp,
@@ -185,6 +209,26 @@ fun SubjectBox(countClassesTaken: Int, averageGradeFormatted: String) {
         SubjectTitleForAnyCard(stringResource(R.string.about_this_subject))
         ClassesTaken(countClassesTaken)
         SubjectGradeIndicator(averageGradeFormatted)
+        Column (
+            modifier = Modifier.fillMaxWidth(0.95F).background(PlannerTheme.colors.cardTop, shape = RoundedCornerShape(16.dp)).padding(16.dp),
+        ) {
+            Row {
+                Icon(
+                    painter = painterResource(R.drawable.calendar_start),
+                    tint = PlannerTheme.colors.onSurface,
+                    contentDescription = stringResource(R.string.subject_period)
+                )
+                Text(text = stringResource(R.string.subject_period), style = Typography.labelLarge)
+            }
+            Text(
+                text = "${stringResource(R.string.start_date)} ${start.getFormattedDateTime()}",
+                style = Typography.labelSmall
+            )
+            Text(
+                text = " ${stringResource(R.string.end_date)} ${end.getFormattedDateTime()}",
+                style = Typography.labelSmall
+            )
+        }
         Spacer(modifier = Modifier.padding(bottom = 8.dp))
     }
 }
@@ -287,12 +331,6 @@ fun Date(startDate: String, endDate: String) {
             Spacer(modifier = Modifier.padding(end = 8.dp))
             Column {
                 Text(
-                    text = "${stringResource(R.string.subject_period)}:",
-                    style = Typography.labelMedium,
-                    color = PlannerTheme.colors.onCardTop
-                )
-                Spacer(modifier = Modifier.padding(start = 16.dp))
-                Text(
                     text = "${stringResource(R.string.from)} $startDate → ${
                         stringResource(
                             R.string.to
@@ -353,11 +391,6 @@ fun ExamDate(startDate: String, endDate: String) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Text(
-                    text = "${stringResource(R.string.subject_period)}:",
-                    style = Typography.labelMedium,
-                    color = PlannerTheme.colors.onCardTop
-                )
                 Text(
                     text = "${stringResource(R.string.from)} $startDate → ${
                         stringResource(
