@@ -14,8 +14,8 @@ android {
         minSdk = 26
         //noinspection OldTargetApi
         targetSdk = 36
-        versionCode = (project.findProperty("versionCode") as String?)?.toInt() ?: 4
-        versionName = (project.findProperty("versionName") as String?) ?: "1.0.9"
+        versionCode = (project.findProperty("versionCode") as String?)?.toInt() ?: 5
+        versionName = (project.findProperty("versionName") as String?) ?: "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
