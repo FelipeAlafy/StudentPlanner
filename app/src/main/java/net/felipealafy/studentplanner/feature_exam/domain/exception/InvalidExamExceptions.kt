@@ -11,4 +11,6 @@ sealed class InvalidExamExceptions(val exception: String): Exception(exception) 
     class InvalidGradeFormat: InvalidExamExceptions("Grade needs to be in one of the following format 0 to 100 or 0,00 to 10.00")
     class ExamDeletionError: InvalidExamExceptions( "An error occurred while deleting the class.")
     class ExamDeletionIODBError: InvalidExamExceptions("An error occurred in the database.")
+    class SubjectDoesNotExistAnyMore: InvalidExamExceptions("The subject does not exist anymore.")
+    class SelectedDateIsOutOfSubjectPeriodBoundaries: InvalidExamExceptions("The selected date is out of the subject period boundaries.")
 }
