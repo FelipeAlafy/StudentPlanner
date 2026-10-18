@@ -38,10 +38,14 @@ class CreateClassUseCase @Inject constructor(
             throw InvalidClassExceptions.EmptySubject()
         }
 
-        val parentSubject = subjectRepository.getSubjectById(params.subjectId).firstOrNull()
-            ?: throw InvalidClassExceptions.SubjectDoesNotExist()
+        val subjectDatesProjection =
+            subjectRepository.getSubjectDates(subjectId = params.subjectId).firstOrNull()
+                ?: throw InvalidClassExceptions.SubjectDoesNotExist()
 
-        if (params.start.isBefore(parentSubject.start) || params.end.isAfter(parentSubject.end)) {
+        if (params.start.isBefore(subjectDatesProjection.start) || params.end.isAfter(
+                subjectDatesProjection.end
+            )
+        ) {
             throw InvalidClassExceptions.DateTimeOutOfSubjectBoundaries()
         }
 

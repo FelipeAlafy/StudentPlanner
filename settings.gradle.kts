@@ -24,3 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Student Planner"
 include(":app")
+include(":benchmark")

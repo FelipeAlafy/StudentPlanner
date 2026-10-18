@@ -1,8 +1,10 @@
 package net.felipealafy.studentplanner.feature_subject.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import net.felipealafy.studentplanner.feature_class.data.local.SubjectDatesProjection
 import net.felipealafy.studentplanner.feature_subject.domain.model.DetailedSubject
 import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
+import java.time.LocalDateTime
 
 interface SubjectRepository {
 
@@ -14,4 +16,6 @@ interface SubjectRepository {
     fun getSubjectById(subjectId: String): Flow<Subject?>
     fun getAllSubjectsOfAPlanner(plannerId: String): Flow<List<Subject>>
     fun getSubjectWithDetails(subjectId: String): Flow<DetailedSubject?>
+
+    fun getSubjectDates(subjectId: String): Flow<SubjectDatesProjection?>
 }
