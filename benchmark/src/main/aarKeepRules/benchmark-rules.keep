@@ -1,0 +1,21 @@
+# Add benchmark module specific R8 rules here.
+# AGP will combine all keep rule files in src/main/keepRules to pass to R8
+#
+# For more details, see
+#   https://d.android.com/r/tools/r8/keep-rules
+
+-dontobfuscate
+
+-ignorewarnings
+
+-keepattributes *Annotation*
+
+-dontnote junit.framework.**
+-dontnote junit.runner.**
+
+-dontwarn androidx.test.**
+-dontwarn org.junit.**
+-dontwarn org.hamcrest.**
+-dontwarn com.squareup.javawriter.JavaWriter
+
+-keepclasseswithmembers @org.junit.runner.RunWith public class *
