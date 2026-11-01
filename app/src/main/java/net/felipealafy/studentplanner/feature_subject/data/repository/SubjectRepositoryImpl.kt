@@ -4,12 +4,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import net.felipealafy.studentplanner.feature_class.data.local.SubjectDatesProjection
 import net.felipealafy.studentplanner.feature_subject.data.local.SubjectDao
 import net.felipealafy.studentplanner.feature_subject.data.mapper.toDatabaseEntry
 import net.felipealafy.studentplanner.feature_subject.data.mapper.toDomainModel
 import net.felipealafy.studentplanner.feature_subject.domain.model.DetailedSubject
 import net.felipealafy.studentplanner.feature_subject.domain.model.Subject
 import net.felipealafy.studentplanner.feature_subject.domain.repository.SubjectRepository
+import java.time.LocalDateTime
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -44,5 +46,9 @@ class SubjectRepositoryImpl @Inject constructor(private val dao: SubjectDao) : S
         return dao.getSubjectWithDetails(subjectId).map {
             it.toDomainModel()
         }
+    }
+
+    override fun getSubjectDates(subjectId: String): Flow<SubjectDatesProjection?> {
+        return dao.getSubjectDates(subjectId)
     }
 }

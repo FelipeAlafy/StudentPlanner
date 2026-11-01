@@ -17,7 +17,9 @@ android {
         versionCode = (project.findProperty("versionCode") as String?)?.toInt() ?: 5
         versionName = (project.findProperty("versionName") as String?) ?: "1.1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
+        testInstrumentationRunnerArguments["androidx.benchmark.suppressErrors"] = "DEBUGGABLE,ACTIVITY-MISSING,NOT-AOT-COMPILED,EMULATOR"
+        testBuildType = "benchmark"
     }
 
     buildTypes {
@@ -27,6 +29,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        create("benchmark") {
+            initWith(buildTypes.getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+            isDebuggable = false
         }
     }
     compileOptions {
@@ -69,4 +77,6 @@ dependencies {
     testImplementation(libs.coroutines.test)
     androidTestImplementation(libs.mockk.android)
     testImplementation(kotlin("test"))
+    androidTestImplementation(libs.androidx.benchmark.junit4)
+    add("benchmarkImplementation", libs.androidx.benchmark.junit4)
 }

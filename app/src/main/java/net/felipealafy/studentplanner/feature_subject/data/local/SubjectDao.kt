@@ -7,6 +7,8 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
+import net.felipealafy.studentplanner.feature_class.data.local.SubjectDatesProjection
+import java.time.LocalDateTime
 
 @Dao
 interface SubjectDao {
@@ -22,6 +24,8 @@ interface SubjectDao {
     @Query("SELECT * FROM subject WHERE id = :subjectId")
     fun getSubjectWithDetails(subjectId: String): Flow<SubjectWithDetailsTable>
 
+    @Query("SELECT `start`, `end` FROM subject WHERE id = :subjectId")
+    fun getSubjectDates(subjectId: String): Flow<SubjectDatesProjection?>
     @Insert
     suspend fun insert(subjectTable: SubjectTable)
 
